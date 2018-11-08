@@ -12,4 +12,6 @@ https://pan.baidu.com/s/11r0y44dk2J4j0yxycX7URw
 
 #### 配置文件相关
 * config.properties
-> 数据库配置相关信息
+> 数据库配置相关信息、netty通讯服务端口配置、HttpClient通讯链接配置；
+
+

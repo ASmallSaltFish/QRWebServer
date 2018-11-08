@@ -7,4 +7,5 @@ create table t_user(
   user_name varchar(32)
 );
 
-update t_user set user_name='张三' where user_id='1111';
+insert into t_user values('1111','张三');
+insert into t_user values('2222','李四');
