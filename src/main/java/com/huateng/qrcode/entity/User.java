@@ -1,7 +1,8 @@
 package com.huateng.qrcode.entity;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable {
     private String userId;
 
     private String userName;

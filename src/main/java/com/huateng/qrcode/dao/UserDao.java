@@ -4,5 +4,5 @@ import com.huateng.qrcode.entity.User;
 
 public interface UserDao {
 
-    User getUserByUserName(String userName);
+    User findByUser(User user);
 }
