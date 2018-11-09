@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Spring数据库事物配置 -->
+    <bean id="beanNameAutoProxyCreator"
+          class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <list>
+                <value>qrManager</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <!-- 日志记录 -->
+                <value>logAdvice</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 日志记录拦截器 -->
+    <bean id="logAdvice" class="com.huateng.qrcode.base.interceptor.LogInterceptor"/>
+</beans>
