@@ -1,4 +1,4 @@
-package mybatis;
+package com.huateng.test.mybatis;
 
 
 import com.huateng.qrcode.dao.UserDao;

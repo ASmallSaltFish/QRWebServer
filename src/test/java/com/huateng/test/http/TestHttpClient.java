@@ -1,4 +1,4 @@
-package http;
+package com.huateng.test.http;
 
 import com.huateng.qrcode.utils.ConfigConstants;
 import com.huateng.qrcode.utils.http.UpopHttpClient;

@@ -1,4 +1,4 @@
-package netty;
+package com.huateng.test.netty;
 
 import io.netty.util.CharsetUtil;
 import org.junit.Test;
