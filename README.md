@@ -11,7 +11,7 @@ https://pan.baidu.com/s/11r0y44dk2J4j0yxycX7URw
 
 
 #### 环境和版本相关
-> spring4.3.18，mybatis3.2.8，netty4.1.25
+> spring4.3.18，mybatis3.4.6，netty4.1.25，druid1.1.10，pageHelper4.1.6；
 
 #### 配置文件相关
 * config.properties
@@ -48,4 +48,9 @@ mybatis-generator:generate -e
 ```
 
 4、点击idea中plugin对应的maven命令即可
+
+
+#### mybatis-plus提供了代码生成工具
+> 如需偷懒使用代码生成注解，请移至：
+https://github.com/ASmallSaltFish/mybatis-generator
 
