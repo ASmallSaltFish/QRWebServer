@@ -19,11 +19,10 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <spring-framework.version>4.3.18.RELEASE</spring-framework.version>
         <jackson.version>2.9.5</jackson.version>
-        <mybatis.version>3.2.8</mybatis.version>
-        <mybatis.spring.version>1.2.2</mybatis.spring.version>
+        <mybaitsplus.version>2.3</mybaitsplus.version>
         <mybatis.paginator.version>1.2.15</mybatis.paginator.version>
-        <mapper.version>2.3.4</mapper.version>
-        <pagehelper.version>3.7.5</pagehelper.version>
+        <druid.version>1.1.10</druid.version>
+        <pagehelper.version>4.1.6</pagehelper.version>
         <netty.version>4.1.25.Final</netty.version>
         <jsqlparser.version>0.9.1</jsqlparser.version>
         <logback.version>1.1.4</logback.version>
@@ -37,31 +36,21 @@
             <scope>test</scope>
         </dependency>
 
-        <!--日志开始-->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.2</version>
-        </dependency>
+        <!--日志开始 使用logback输出日志-->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
+            <version>1.1.11</version>
         </dependency>
         <dependency>
             <groupId>org.logback-extensions</groupId>
             <artifactId>logback-ext-spring</artifactId>
             <version>0.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.25</version>
         </dependency>
         <!-- 日志结束 -->
 
@@ -163,29 +152,25 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!--dbcp数据库连接池管理-->
+        <!-- Druid数据库连接池 -->
         <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
         </dependency>
 
-        <!-- Mybatis -->
+        <!-- Mybatis-Plus -->
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybaitsplus.version}</version>
         </dependency>
+
+        <!-- 模板引擎（mp代码生成是默认模板） -->
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>${mybatis.spring.version}</version>
-        </dependency>
-        <!-- 通用Mapper -->
-        <dependency>
-            <groupId>com.github.abel533</groupId>
-            <artifactId>mapper</artifactId>
-            <version>${mapper.version}</version>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
         </dependency>
 
         <!-- 分页助手 -->
@@ -285,7 +270,6 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
                 </plugin>
-
 
                 <!-- mybatis逆向工程 -->
                 <plugin>

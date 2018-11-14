@@ -6,8 +6,6 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @ChannelHandler.Sharable
 public class NettyChannelHandler extends ChannelInboundHandlerAdapter {

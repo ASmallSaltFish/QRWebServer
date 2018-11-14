@@ -7,7 +7,7 @@
     <!--优先加载Properties属性文件，用于后面bean的注解,多个文件用逗号隔开-->
     <context:property-placeholder location="classpath:config.properties"/>
 
-    <!--1. 扫描注解，这里过滤掉SpringMVC的注解-->
+    <!--扫描注解，这里过滤掉SpringMVC的注解-->
     <context:component-scan base-package="com.huateng.qrcode">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>

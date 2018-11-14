@@ -24,7 +24,7 @@ public class SocketServerHandler extends Thread {
     }
 
     public void run() {
-        System.out.println("二维码socket服务启动。。");
+        logger.info("二维码socket服务启动。。");
         NettyServer nettyServer = new NettyServer(qrManager);
         nettyServer.bind(Integer.parseInt(ConfigConstants.getParam("qrCode.netty.port")));
     }

@@ -5,26 +5,41 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 事务管理器 对mybatis操作数据库事务控制，spring使用jdbc的事务控制类-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <!-- 配置事务管理 -->
+    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- 通知 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <!-- 事务管理属性：默认propagation="REQUIRED",transaction-manager="transactionManager" -->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <!-- 传播行为，不指定propagation表示默认为REQUIRED -->
+            <!-- 新增 -->
+            <tx:method name="add*"/>
+            <tx:method name="append*"/>
             <tx:method name="save*"/>
-            <tx:method name="delete*"/>
             <tx:method name="insert*"/>
+
+            <!-- 修改 -->
             <tx:method name="update*"/>
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="modify*"/>
+            <tx:method name="edit*"/>
+
+            <!-- 删除-->
+            <tx:method name="delete*"/>
+            <tx:method name="remove*"/>
+
+            <!-- 查询 -->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="load*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
+            <tx:method name="*" read-only="true"/>
         </tx:attributes>
     </tx:advice>
 
-    <!-- aop -->
+    <!-- 配置切面 -->
     <aop:config>
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.huateng.qrcode.service.impl.*.*(..))"/>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.huateng.qrcode.service.impl.*.*(..))"/>
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
     </aop:config>
 </beans>

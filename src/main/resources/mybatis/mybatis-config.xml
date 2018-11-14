@@ -4,15 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <!-- 配置别名 -->
-    <typeAliases>
-        <!-- 指定类型的别名 -->
-        <typeAlias alias="String" type="java.lang.String"/>
-        <typeAlias alias="Integer" type="java.lang.Integer"/>
-        <typeAlias alias="Long" type="java.lang.Long"/>
-        <typeAlias alias="HashMap" type="java.util.HashMap"/>
-        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap"/>
-        <typeAlias alias="ArrayList" type="java.util.ArrayList"/>
-        <typeAlias alias="HashSet" type="java.util.HashSet"/>
-    </typeAliases>
+    <settings>
+        <!-- 由于mybatis不直接支持logback日志输出，需要在mybatis中指定日志方式 -->
+        <!--<setting name="logImpl" value="SLF4J"/>-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 这个配置使全局的映射器启用或禁用缓存（默认为true） -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 是否允许单一语句返回多结果集 -->
+        <!--<setting name="multipleResultSetsEnabled" value="true"/>-->
+        <setting name="useColumnLabel" value="true"/>
+        <!-- 默认为SAMPLE,REUSE表示执行器会重用预处理语句(prepared statements) -->
+        <setting name="defaultExecutorType" value="REUSE"/>
+        <!--设置超时时间，它决定驱动等待数据库响应的秒数-->
+        <setting name="defaultStatementTimeout" value="25000"/>
+    </settings>
+
+    <!-- 配置分页插件 -->
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- 指定数据库类型 -->
+            <property name="dialect" value="db2"/>
+        </plugin>
+    </plugins>
+
 </configuration>

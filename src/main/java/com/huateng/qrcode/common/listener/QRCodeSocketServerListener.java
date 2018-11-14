@@ -1,4 +1,4 @@
-package com.huateng.qrcode.base.listener;
+package com.huateng.qrcode.common.listener;
 
 import com.huateng.qrcode.qrserver.manager.QRManager;
 import com.huateng.qrcode.qrserver.thread.SocketServerHandler;

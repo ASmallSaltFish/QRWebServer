@@ -1,4 +1,4 @@
-package com.huateng.qrcode.base.listener;
+package com.huateng.qrcode.common.listener;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;

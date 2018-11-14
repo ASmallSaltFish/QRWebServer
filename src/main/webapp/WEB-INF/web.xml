@@ -19,7 +19,7 @@
     <listener>
         <description>Socket服务随应用启动</description>
         <listener-class>
-            com.huateng.qrcode.base.listener.QRCodeSocketServerListener
+            com.huateng.qrcode.common.listener.QRCodeSocketServerListener
         </listener-class>
     </listener>
 

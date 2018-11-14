@@ -2,34 +2,88 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <!-- 配置数据源 ，使用dbcp连接池 -->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}"/>
+    <!-- 配置数据源 -->
+    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
-        <property name="maxActive" value="30"/>
-        <property name="maxIdle" value="5"/>
+        <!-- 数据库驱动，可以不配置，会自动根据url去获取，建议还是配置下 -->
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="0"/>
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="20"/>
+        <!-- 连接池最大空闲 -->
+        <!--<property name="maxIdle" value="20"/>-->
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="0"/>
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000"/>
+
+        <property name="validationQuery" value="${validationQuery}"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="true"/>
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000"/>
+
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true"/>
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="1800"/>
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true"/>
+
+        <!-- 监控数据库 -->
+        <property name="filters" value="mergeStat"/>
     </bean>
 
-    <!-- sqlSessionFactory -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!-- 数据库连接池 -->
+    <!-- Spring整合Mybatis，更多查看文档：http://mp.baomidou.com -->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!-- 加载mybatis的全局配置文件 -->
+        <!-- 自动扫描Mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath:mybatis/*/*Mapper.xml"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
-        <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"/>
+        <!-- 配置别名，在mapper.xml中可以使用类的别名替代全路径（注释掉，是因为日志中输出部分乱码，mapper.xml为代码为全路径类型） -->
+        <!--<property name="typeAliasesPackage" value="com.baomidou.springmvc.entity.*"/>-->
+        <!--<property name="typeEnumsPackage" value="com.huateng.qrcode.common.enums"/>-->
+        <property name="plugins">
+            <array>
+                <!-- 分页插件配置 -->
+                <bean id="paginationInterceptor" class="com.baomidou.mybatisplus.plugins.PaginationInterceptor"/>
+            </array>
+        </property>
+
+        <!-- 全局配置注入 -->
+        <property name="globalConfig" ref="globalConfig"/>
     </bean>
+
+    <bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+        <!--
+            AUTO->`0`("数据库ID自增")
+            INPUT->`1`(用户输入ID")
+            ID_WORKER->`2`("全局唯一ID")
+            UUID->`3`("全局唯一ID")
+        -->
+        <!-- todo 确定主键生成策略 -->
+        <property name="idType" value="1"/>
+    </bean>
+
 
     <!-- sqlSession -->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
-    <!-- mapper扫描器 -->
+    <!-- mapper动态扫描 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 扫描包路径，如果需要扫描多个包，中间使用半角逗号隔开 -->
-        <property name="basePackage" value="com.huateng.qrcode.service.mapper"/>
+        <property name="basePackage" value="com.huateng.qrcode.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+
+
 </beans>
