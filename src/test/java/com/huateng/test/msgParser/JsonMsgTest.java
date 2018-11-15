@@ -2,13 +2,18 @@ package com.huateng.test.msgParser;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.huateng.qrcode.model.vo.RequestVo;
+import com.huateng.qrcode.model.param.RequestVo;
+import com.huateng.qrcode.model.param.base.AppParamHeader;
+import com.huateng.qrcode.model.param.base.BusParamBody;
+import com.huateng.qrcode.model.param.base.SysParamHeader;
 import com.huateng.qrcode.qrserver.parser.JsonMsgParserFactory;
 import org.junit.Test;
 
 import java.io.IOException;
 
 public class JsonMsgTest {
+
+    private String json = "{\"sysHeader\":{\"serviceCode\":\"001\",\"version\":\"1.0.0\",\"sender\":\"zhangsan\",\"receiver\":\"lisi\",\"sendTime\":\"2018-10-10\",\"sendMsgId\":\"11111\",\"teller\":\"zhangsan\",\"chlSendTime\":\"2018-10-10 22:10:10\",\"chlMsgId\":\"2222222\"},\"appHeader\":{\"reqSys\":\"医疗云\",\"industryapp\":\"010\",\"useType\":\"002\",\"scene\":\"100\"},\"busBody\":{\"validDate\":\"5000\",\"version\":\"2.0.1\",\"productNo\":\"111000111\"}}";
 
 
     /**
@@ -17,10 +22,33 @@ public class JsonMsgTest {
     @Test
     public void testObj2Json() throws IOException {
         RequestVo requestVo = new RequestVo();
-        requestVo.setIndustryapp("001");
-        requestVo.setReqSys("医疗云平台");
-        requestVo.setScene("01");
-        requestVo.setUseType("1");
+        //系统头信息
+        SysParamHeader sysHeader = new SysParamHeader();
+        sysHeader.setServiceCode("001");
+        sysHeader.setVersion("1.0.0");
+        sysHeader.setSender("zhangsan");
+        sysHeader.setReceiver("lisi");
+        sysHeader.setSendTime("2018-10-10");
+        sysHeader.setSendMsgId("11111");
+        sysHeader.setTeller("zhangsan");
+        sysHeader.setChlSendTime("2018-10-10 22:10:10");
+        sysHeader.setChlMsgId("2222222");
+        requestVo.setSysHeader(sysHeader);
+
+        //应用头信息
+        AppParamHeader appHeader = new AppParamHeader();
+        appHeader.setIndustryapp("010");
+        appHeader.setReqSys("医疗云");
+        appHeader.setScene("100");
+        appHeader.setUseType("002");
+        requestVo.setAppHeader(appHeader);
+
+        //业务体
+        BusParamBody busBody = new BusParamBody();
+        busBody.setVersion("2.0.1");
+        busBody.setProductNo("111000111");
+        busBody.setValidDate("5000");
+        requestVo.setBusBody(busBody);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(requestVo);
@@ -30,7 +58,6 @@ public class JsonMsgTest {
 
     @Test
     public void testJson2Obj() throws IOException {
-        String json = "{\"reqSys\":\"医疗云平台\",\"industryapp\":\"001\",\"useType\":\"1\",\"scene\":\"01\"}";
         ObjectMapper objectMapper = new ObjectMapper();
         //配置忽略未知的属性（User类中只定义了getter方法，没有定义属性，解析json为pojo时，该属性会被忽略）
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -44,9 +71,8 @@ public class JsonMsgTest {
      */
     @Test
     public void testJsonParser() throws IOException {
-        String msg = "{\"reqSys\":\"医疗云平台\",\"industryapp\":\"001\",\"useType\":\"1\",\"scene\":\"01\"}";
         JsonMsgParserFactory<RequestVo> factory = new JsonMsgParserFactory<>(RequestVo.class);
-        RequestVo requestVo = factory.parser(msg);
+        RequestVo requestVo = factory.parser(json);
         System.out.println("==>>requestVo=" + requestVo);
     }
 }

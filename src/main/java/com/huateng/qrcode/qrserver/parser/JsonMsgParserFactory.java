@@ -2,17 +2,18 @@ package com.huateng.qrcode.qrserver.parser;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.huateng.qrcode.model.vo.BaseVo;
 import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
- * 定义json报文通用方式的解析抽象类
+ * 定义json报文通用方式的解析工厂类
  *
- * @param <T> 泛型限定，解析报文生成的对象必须为BaseVo类的子类
+ * @author qinyupeng
+ * @since 2018-11-15 16:30:55
  */
-public class JsonMsgParserFactory<T extends BaseVo> implements MsgParserFactory<T> {
+public class JsonMsgParserFactory<T extends Serializable> implements MsgParserFactory<T> {
 
     private Class<T> clazz;
 

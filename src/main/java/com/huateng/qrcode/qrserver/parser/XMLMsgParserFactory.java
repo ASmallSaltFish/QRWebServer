@@ -1,21 +1,21 @@
 package com.huateng.qrcode.qrserver.parser;
 
-import com.huateng.qrcode.model.vo.BaseVo;
 import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * 定义xml报文通用解析实现
  *
- * @param <T> 泛型限定，解析报文生成的对象必须为BaseVo类的子类
  * @author qinyupeng
  * @since 2018-11-14 19:55:33
  */
-public class XMLMsgParserFactory<T extends BaseVo> implements MsgParserFactory {
+public class XMLMsgParserFactory<T extends Serializable> implements MsgParserFactory {
 
+    //标签名和类名映射map，配置解析xml类和标签的关联关系
     private Map<String, Class> aliasMap;
 
     public void setAliasMap(Map<String, Class> aliasMap) {

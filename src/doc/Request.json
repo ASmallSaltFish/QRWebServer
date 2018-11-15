@@ -1,0 +1,24 @@
+{
+  "sysHeader": {
+    "serviceCode": "001",
+    "version": "1.0.0",
+    "sender": "zhangsan",
+    "receiver": "lisi",
+    "sendTime": "2018-10-10",
+    "sendMsgId": "11111",
+    "teller": "zhangsan",
+    "chlSendTime": "2018-10-10 22:10:10",
+    "chlMsgId": "2222222"
+  },
+  "appHeader": {
+    "reqSys": "医疗云",
+    "industryapp": "010",
+    "useType": "002",
+    "scene": "100"
+  },
+  "busBody": {
+    "validDate": "5000",
+    "version": "2.0.1",
+    "productNo": "111000111"
+  }
+}

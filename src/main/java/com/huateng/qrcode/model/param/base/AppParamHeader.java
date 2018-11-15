@@ -1,15 +1,9 @@
-package com.huateng.qrcode.model.vo;
-
-import javax.xml.bind.annotation.XmlElement;
-import java.io.Serializable;
+package com.huateng.qrcode.model.param.base;
 
 /**
- * 定义公共的请求参数，被所有用来解析报文的类继承
- *
- * @author qinyupeng
- * @since 2018-11-14 19:30:04
+ * 应用头信息参数
  */
-public class BaseVo implements Serializable {
+public class AppParamHeader {
 
     //请求系统名
     private String reqSys;
