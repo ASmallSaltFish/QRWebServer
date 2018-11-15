@@ -2,10 +2,9 @@ package com.huateng.test.mybatis;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.huateng.qrcode.entity.User;
+import com.huateng.qrcode.model.entity.User;
 import com.huateng.qrcode.service.UserService;
 import com.huateng.test.BaseTest;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.junit.Test;
 

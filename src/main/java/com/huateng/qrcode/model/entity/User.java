@@ -1,4 +1,4 @@
-package com.huateng.qrcode.entity;
+package com.huateng.qrcode.model.entity;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *   实体类
+ * 实体类
  * </p>
  *
  * @author auto generator

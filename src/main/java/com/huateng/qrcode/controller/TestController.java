@@ -1,7 +1,7 @@
 package com.huateng.qrcode.controller;
 
 import com.huateng.qrcode.controller.base.BaseController;
-import com.huateng.qrcode.entity.User;
+import com.huateng.qrcode.model.entity.User;
 import com.huateng.qrcode.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

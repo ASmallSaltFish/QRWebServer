@@ -3,7 +3,7 @@ package com.huateng.test.mybatis;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.huateng.qrcode.entity.User;
+import com.huateng.qrcode.model.entity.User;
 import com.huateng.qrcode.mapper.UserMapper;
 import com.huateng.test.BaseTest;
 import org.junit.Test;

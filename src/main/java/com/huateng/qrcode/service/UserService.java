@@ -1,6 +1,6 @@
 package com.huateng.qrcode.service;
 
-import com.huateng.qrcode.entity.User;
+import com.huateng.qrcode.model.entity.User;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
