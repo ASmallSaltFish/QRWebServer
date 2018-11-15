@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 /**
  * 定义json报文通用方式的解析工厂类
@@ -13,7 +12,7 @@ import java.io.Serializable;
  * @author qinyupeng
  * @since 2018-11-15 16:30:55
  */
-public class JsonMsgParserFactory<T extends Serializable> implements MsgParserFactory<T> {
+public class JsonMsgParserFactory<T> implements MsgParserFactory<T> {
 
     private Class<T> clazz;
 

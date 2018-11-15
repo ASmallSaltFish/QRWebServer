@@ -4,7 +4,6 @@ import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Map;
  * @author qinyupeng
  * @since 2018-11-14 19:55:33
  */
-public class XMLMsgParserFactory<T extends Serializable> implements MsgParserFactory {
+public class XMLMsgParserFactory<T> implements MsgParserFactory {
 
     //标签名和类名映射map，配置解析xml类和标签的关联关系
     private Map<String, Class> aliasMap;

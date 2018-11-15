@@ -5,6 +5,7 @@ import com.huateng.qrcode.model.param.base.AppParamHeader;
 import com.huateng.qrcode.model.param.base.BusParamBody;
 import com.huateng.qrcode.model.param.base.SysParamHeader;
 import com.huateng.qrcode.qrserver.parser.XMLMsgParserFactory;
+import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.junit.Test;
@@ -131,13 +132,14 @@ public class XmlMsgTest {
      * 测试通用xml解析工厂（解析简单对象）
      */
     @Test
-    public void testXml2ObjUseParserFactory() {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void testXml2ObjUseParserFactory() throws Exception {
         Map<String, Class> aliasMap = new HashMap<>();
         aliasMap.put("requestVo", RequestVo.class);
         aliasMap.put("sysHeader", SysParamHeader.class);
         aliasMap.put("appHeader", AppParamHeader.class);
         aliasMap.put("busBody", BusParamBody.class);
-        XMLMsgParserFactory<RequestVo> factory = new XMLMsgParserFactory<>(aliasMap);
+        MsgParserFactory<RequestVo> factory = new XMLMsgParserFactory<RequestVo>(aliasMap);
         RequestVo requestVo = factory.parser(xml);
         System.out.println(requestVo);
     }

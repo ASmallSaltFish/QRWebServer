@@ -7,6 +7,7 @@ import com.huateng.qrcode.model.param.base.AppParamHeader;
 import com.huateng.qrcode.model.param.base.BusParamBody;
 import com.huateng.qrcode.model.param.base.SysParamHeader;
 import com.huateng.qrcode.qrserver.parser.JsonMsgParserFactory;
+import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -70,8 +71,8 @@ public class JsonMsgTest {
      * 测试json报文解析工厂
      */
     @Test
-    public void testJsonParser() throws IOException {
-        JsonMsgParserFactory<RequestVo> factory = new JsonMsgParserFactory<>(RequestVo.class);
+    public void testJsonParser() throws Exception {
+        MsgParserFactory<RequestVo> factory = new JsonMsgParserFactory<>(RequestVo.class);
         RequestVo requestVo = factory.parser(json);
         System.out.println("==>>requestVo=" + requestVo);
     }
