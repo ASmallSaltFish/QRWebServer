@@ -1,26 +1,18 @@
 package com.huateng.qrcode.qrserver.netty;
 
-import com.huateng.qrcode.qrserver.manager.QRManager;
+import com.huateng.qrcode.qrserver.config.ServiceConfigEnums;
+import com.huateng.qrcode.qrserver.manager.QrServerManager;
+import com.huateng.qrcode.qrserver.manager.ServiceConfigMapping;
+import com.huateng.qrcode.utils.SpringContextUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
+import org.springframework.context.ApplicationContext;
 
 @ChannelHandler.Sharable
 public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
-
-    //todo 处理二维码解析的类实例
-    private QRManager qrManager;
-
-
-    public NettyChannelHandler() {
-
-    }
-
-    public NettyChannelHandler(QRManager qrManager) {
-        this.qrManager = qrManager;
-    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -36,15 +28,27 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
         System.out.println("------------>>>>text=" + text);
         System.out.println("------>>>获取数据成功啦。。。");
 
-        //todo 开始解析二维码，具体业务
-        qrManager.parserQRCode(text);
+        //开始解析二维码，获取服务码，获得对应处理服务对象，调用handler方法处理具体业务
+        handler();
 
-        //这里服务端响应客户端信息，需要返回一个byteBuf，使用池化bytebuf，提高性能
+        //这里服务端响应客户端信息，需要返回一个byteBuf，使用池化bytebuf，用来提高性能
         String resposeStr = "服务端处理完成了，我是来告诉客户端的~~";
         ByteBufAllocator alloc = channel.alloc();
         ByteBuf buffer = alloc.buffer();
         buffer.writeBytes(resposeStr.getBytes(CharsetUtil.UTF_8));
         ctx.writeAndFlush(buffer);
+    }
+
+
+    private void handler() throws ClassNotFoundException {
+        ApplicationContext applicationContext = SpringContextUtil.getInstance().getApplicationContext();
+//        ServiceConfigMapping serviceConfigMapping = (ServiceConfigMapping) applicationContext.getBean("serviceConfigMapping");
+        String serviceCode = "001";
+//        String serviceFullClassName = serviceConfigMapping.getFullClassName(serviceCode);
+//        Class<?> serviceClass = Class.forName(serviceFullClassName);
+        Class serviceClass = ServiceConfigEnums.getByServiceCode(serviceCode);
+        QrServerManager qrServerManager = (QrServerManager) applicationContext.getBean(serviceClass);
+        qrServerManager.handler(serviceCode);
     }
 
     @Override

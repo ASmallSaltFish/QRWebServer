@@ -2,7 +2,6 @@ package com.huateng.qrcode.qrserver.parser;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 
 import java.io.IOException;
 
@@ -12,11 +11,11 @@ import java.io.IOException;
  * @author qinyupeng
  * @since 2018-11-15 16:30:55
  */
-public class JsonMsgParserFactory<T> implements MsgParserFactory<T> {
+public class JsonMsgParser<T> implements MsgParser<T> {
 
     private Class<T> clazz;
 
-    public JsonMsgParserFactory(Class<T> clazz) {
+    public JsonMsgParser(Class<T> clazz) {
         this.clazz = clazz;
     }
 

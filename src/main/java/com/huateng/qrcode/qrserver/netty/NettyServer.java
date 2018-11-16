@@ -1,6 +1,5 @@
 package com.huateng.qrcode.qrserver.netty;
 
-import com.huateng.qrcode.qrserver.manager.QRManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
@@ -13,17 +12,6 @@ public class NettyServer {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private QRManager qrManager;
-
-
-    public NettyServer(){
-
-    }
-
-    public NettyServer(QRManager qrManager){
-        this.qrManager = qrManager;
-    }
-
     /**
      * 绑定监听端口
      */
@@ -34,7 +22,7 @@ public class NettyServer {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new NettyChannelInitializer(qrManager));
+                    .childHandler(new NettyChannelInitializer());
             ChannelFuture future = bootstrap.bind(port).sync();
             future.channel().closeFuture().sync();
         } catch (Exception e) {

@@ -23,6 +23,13 @@
         </listener-class>
     </listener>
 
+    <!--<listener>-->
+        <!--<description>应用启动加载服务码和接口关联数据</description>-->
+        <!--<listener-class>-->
+            <!--com.huateng.qrcode.common.listener.MappingServiceCodeListener-->
+        <!--</listener-class>-->
+    <!--</listener>-->
+
     <!-- 字符集编码 -->
     <filter>
         <filter-name>encodingFilter</filter-name>

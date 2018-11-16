@@ -4,8 +4,8 @@ import com.huateng.qrcode.model.param.RequestVo;
 import com.huateng.qrcode.model.param.base.AppParamHeader;
 import com.huateng.qrcode.model.param.base.BusParamBody;
 import com.huateng.qrcode.model.param.base.SysParamHeader;
-import com.huateng.qrcode.qrserver.parser.XMLMsgParserFactory;
-import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
+import com.huateng.qrcode.qrserver.parser.MsgParser;
+import com.huateng.qrcode.qrserver.parser.XMLMsgParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.junit.Test;
@@ -139,8 +139,8 @@ public class XmlMsgTest {
         aliasMap.put("sysHeader", SysParamHeader.class);
         aliasMap.put("appHeader", AppParamHeader.class);
         aliasMap.put("busBody", BusParamBody.class);
-        MsgParserFactory<RequestVo> factory = new XMLMsgParserFactory<RequestVo>(aliasMap);
-        RequestVo requestVo = factory.parser(xml);
+        MsgParser<RequestVo> parser = new XMLMsgParser<RequestVo>(aliasMap);
+        RequestVo requestVo = parser.parser(xml);
         System.out.println(requestVo);
     }
 }

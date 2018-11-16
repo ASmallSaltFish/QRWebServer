@@ -1,6 +1,5 @@
 package com.huateng.qrcode.qrserver.parser;
 
-import com.huateng.qrcode.qrserver.parser.factory.MsgParserFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -12,7 +11,7 @@ import java.util.Map;
  * @author qinyupeng
  * @since 2018-11-14 19:55:33
  */
-public class XMLMsgParserFactory<T> implements MsgParserFactory {
+public class XMLMsgParser<T> implements MsgParser<T> {
 
     //标签名和类名映射map，配置解析xml类和标签的关联关系
     private Map<String, Class> aliasMap;
@@ -25,11 +24,11 @@ public class XMLMsgParserFactory<T> implements MsgParserFactory {
         return aliasMap;
     }
 
-    public XMLMsgParserFactory() {
+    public XMLMsgParser() {
 
     }
 
-    public XMLMsgParserFactory(Map<String, Class> aliasMap) {
+    public XMLMsgParser(Map<String, Class> aliasMap) {
         this.aliasMap = aliasMap;
     }
 
