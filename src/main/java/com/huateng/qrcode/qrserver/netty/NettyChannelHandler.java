@@ -9,10 +9,14 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 @ChannelHandler.Sharable
 public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
+
+    private static Logger logger = LoggerFactory.getLogger(NettyChannelHandler.class);
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -60,7 +64,12 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        System.out.println("-->>exceptionCaught");
-        ctx.close();
+        logger.error("channel出现异常情况" + cause.getMessage());
+        Channel channel = ctx.channel();
+        if (!channel.isActive()) {
+            logger.info("关闭channel");
+            channel.close();
+            ctx.close();
+        }
     }
 }

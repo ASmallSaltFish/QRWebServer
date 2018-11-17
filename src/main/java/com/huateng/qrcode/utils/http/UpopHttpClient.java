@@ -2,17 +2,17 @@ package com.huateng.qrcode.utils.http;
 
 
 import com.huateng.qrcode.utils.ConfigConstants;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.*;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 银联在线收单通讯
+ * HttpClient通讯工具类
  *
  * @author Administrator
  */
@@ -32,9 +32,9 @@ public class UpopHttpClient {
     }
 
     /**
-     * 初始化银联Http查询
+     * 初始化HttpClient相关关参数
      *
-     * @param url
+     * @param url               请求链接
      * @param connectionTimeout 请求超时时间
      * @param readTimeOut       响应超时时间
      */
@@ -52,20 +52,20 @@ public class UpopHttpClient {
     }
 
     /**
-     * 发送银联在线收单报文
+     * 发送http请求报文
      *
      * @param data     上送的报文
      * @param encoding 上送的编码
      * @return 响应状态码
-     * @throws Exception
      */
     public int send(Map<String, String> data, String encoding) throws Exception {
         try {
             logger.info("开始上送报文...");
             HttpURLConnection httpURLConnection = createConnection(encoding);
             if (null == httpURLConnection) {
-                throw new Exception("创建联接失败");
+                throw new Exception("创建连接失败！");
             }
+
             requestServer(httpURLConnection, getRequestParamString(data, encoding), encoding);
             this.result = response(httpURLConnection, encoding);
             return httpURLConnection.getResponseCode();
@@ -86,25 +86,20 @@ public class UpopHttpClient {
             out = new PrintStream(connection.getOutputStream(), false, encoder);
             out.print(message);
             out.flush();
-            if (null != out)
-                out.close();
             logger.info("上送服务报文完成...");
         } catch (Exception e) {
             logger.error("上送服务报文异常" + e.getMessage(), e);
         } finally {
-            if (null != out)
+            if (null != out) {
                 out.close();
+            }
         }
     }
 
     /**
      * 接收服务器响应测试
-     *
-     * @throws URISyntaxException
-     * @throws IOException
-     * @throws Exception
      */
-    private String response(HttpURLConnection connection, String encoding) throws URISyntaxException, IOException, Exception {
+    private String response(HttpURLConnection connection, String encoding) throws Exception {
         logger.info("接收服务器响应报文开始...");
         InputStream in = null;
         StringBuilder sb = new StringBuilder(1024);
@@ -122,25 +117,27 @@ public class UpopHttpClient {
                 br = new BufferedReader(new InputStreamReader(in, encoding));
                 while (null != (temp = br.readLine())) {
                     sb.append(temp);
-
                 }
             }
 
-            String str1 = sb.toString();
-            logger.debug("报文： [ " + str1 + " ] ");
+            String responseStr = sb.toString();
+            logger.debug("报文： [ " + responseStr + " ] ");
             logger.info("接收服务器响应报文完成");
-            return str1;
+            return responseStr;
         } catch (Exception e) {
             throw e;
         } finally {
             if (null != br) {
                 br.close();
             }
+
             if (null != in) {
                 in.close();
             }
-            if (null != connection)
+
+            if (null != connection) {
                 connection.disconnect();
+            }
         }
     }
 
@@ -148,7 +145,6 @@ public class UpopHttpClient {
      * 创建连接
      *
      * @param encoding 编码
-     * @throws ProtocolException
      */
     private HttpURLConnection createConnection(String encoding)
             throws ProtocolException {
@@ -171,20 +167,21 @@ public class UpopHttpClient {
             logger.error("服务器连接异常..." + e.getMessage(), e);
             return null;
         }
+
         httpURLConnection.setConnectTimeout(this.connectionTimeout);
         httpURLConnection.setReadTimeout(this.readTimeOut);
         httpURLConnection.setDoInput(true);
         httpURLConnection.setDoOutput(true);
         httpURLConnection.setUseCaches(false);
-        httpURLConnection.setRequestProperty("Content-type", new StringBuilder().append("application/x-www-form-urlencoded;charset=").append(encoding).toString());
+        httpURLConnection.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=" + encoding);
         httpURLConnection.setRequestMethod("POST");
         if ("https".equalsIgnoreCase(this.url.getProtocol())) {
             logger.info("请求方式[ https,POST ]");
-            HttpsURLConnection husn = (HttpsURLConnection) httpURLConnection;
-            husn.setSSLSocketFactory(new BaseHttpSSLSocketFactory());
-            husn.setHostnameVerifier(new BaseHttpSSLSocketFactory.TrustAnyHostnameVerifier());
+            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) httpURLConnection;
+            httpsURLConnection.setSSLSocketFactory(new BaseHttpSSLSocketFactory());
+            httpsURLConnection.setHostnameVerifier(new BaseHttpSSLSocketFactory.TrustAnyHostnameVerifier());
             logger.info("服务器连接完成...");
-            return husn;
+            return httpsURLConnection;
         } else {
             logger.info("请求方式[ http,POST ]");
             logger.info("服务器连接完成...");
@@ -199,7 +196,7 @@ public class UpopHttpClient {
         String proxyIp = ConfigConstants.getParam("proxyIP");
         int proxyPort = Integer.parseInt(ConfigConstants.getParam("proxyPort"));
         Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyIp, proxyPort));
-        logger.info("银联在线收单代理 [ip：" + proxyIp + " http代理端口:" + proxyPort + " ] ");
+        logger.info(" [http代理ip：" + proxyIp + " http代理端口:" + proxyPort + " ] ");
         return proxy;
     }
 
@@ -211,114 +208,26 @@ public class UpopHttpClient {
         if ((null == coder) || ("".equals(coder))) {
             coder = "UTF-8";
         }
-        StringBuffer sf = new StringBuffer("");
-        String reqstr = "";
+
+        StringBuilder sb = new StringBuilder();
+        String queryString = "";
         if ((null != requestParam) && (0 != requestParam.size())) {
-            for (Map.Entry en : requestParam.entrySet()) {
+            for (Map.Entry<String, String> entry : requestParam.entrySet()) {
                 try {
-                    sf.append(new StringBuilder()
-                            .append((String) en.getKey())
-                            .append("=")
-                            .append((null == en.getValue())
-                                    || ("".equals(en.getValue())) ? ""
-                                    : URLEncoder.encode((String) en.getValue(),
-                                    coder)).append("&").toString());
-                } catch (UnsupportedEncodingException e) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    sb.append(key).append("=").append(StringUtils.isBlank(value) ? "" : URLEncoder.encode(value, coder)).append("&");
+                } catch (Exception e) {
                     logger.error(e.getMessage(), e);
                     return "";
                 }
             }
-            reqstr = sf.substring(0, sf.length() - 1);
+
+            queryString = sb.substring(0, sb.length() - 1);
         }
-        logger.debug("报文： [ " + reqstr + " ] ");
+
+        logger.debug("报文： [ " + queryString + " ] ");
         logger.info("上送服务器报文组装完成");
-        return reqstr;
-    }
-
-    /**
-     * 字符转MAP
-     *
-     * @param res
-     * @return
-     */
-    public static Map<String, String> convertResultString2Map(String res) {
-        Map map = null;
-        if ((null != res) && (!"".equals(res.trim()))) {
-            String[] resArray = res.split("&");
-            if (0 != resArray.length) {
-                map = new HashMap(resArray.length);
-                for (String arrayStr : resArray) {
-                    if ((null == arrayStr) || ("".equals(arrayStr.trim()))) {
-                        continue;
-                    }
-                    int index = arrayStr.indexOf("=");
-                    if (-1 == index) {
-                        continue;
-                    }
-                    map.put(arrayStr.substring(0, index), arrayStr.substring(index + 1));
-                }
-            }
-        }
-        logger.info("服务器报文转换完成...");
-        return map;
-    }
-
-    private static void convertResultStringJoinMap(String res,
-                                                   Map<String, String> map) {
-        if ((null != res) && (!"".equals(res.trim()))) {
-            String[] resArray = res.split("&");
-            if (0 != resArray.length)
-                for (String arrayStr : resArray) {
-                    if ((null == arrayStr) || ("".equals(arrayStr.trim()))) {
-                        continue;
-                    }
-                    int index = arrayStr.indexOf("=");
-                    if (-1 == index) {
-                        continue;
-                    }
-                    map.put(arrayStr.substring(0, index),
-                            arrayStr.substring(index + 1));
-                }
-        }
-    }
-
-    /**
-     * 字符转Map
-     *
-     * @param result
-     * @return
-     */
-    public static Map<String, String> convertResultStringToMap(String result) {
-        logger.info("服务器报文转换开始...");
-        if (result.contains("{")) {
-            String separator = "\\{";
-            String[] res = result.split(separator);
-
-            Map map = new HashMap();
-
-            convertResultStringJoinMap(res[0], map);
-
-            for (int i = 1; i < res.length; i++) {
-                int index = res[i].indexOf("}");
-
-                String specialValue = new StringBuilder().append("{")
-                        .append(res[i].substring(0, index)).append("}")
-                        .toString();
-
-                int indexKey = res[(i - 1)].lastIndexOf("&");
-                String specialKey = res[(i - 1)].substring(indexKey + 1,
-                        res[(i - 1)].length() - 1);
-
-                map.put(specialKey, specialValue);
-
-                String normalResult = res[i].substring(index + 2, res[i].length());
-
-                convertResultStringJoinMap(normalResult, map);
-            }
-            logger.info("服务器报文转换完成...");
-            return map;
-        }
-
-        return convertResultString2Map(result);
+        return queryString;
     }
 }

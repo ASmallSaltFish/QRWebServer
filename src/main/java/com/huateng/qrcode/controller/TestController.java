@@ -25,9 +25,6 @@ public class TestController extends BaseController {
     @Resource
     private UserService userService;
 
-    @Autowired
-    private ServiceConfigMapping serviceConfigMapping;
-
     /**
      * 测试链接：http://localhost:8085/qrcode/index.do?userId=1111
      *
@@ -40,8 +37,6 @@ public class TestController extends BaseController {
             userId = "1111";
         }
 
-        String fullClassName = serviceConfigMapping.getFullClassName("001");
-        System.out.println(fullClassName);
         User user = userService.findUserByUserId(userId);
         System.out.println("user=" + user);
         model.addAttribute("user", user);

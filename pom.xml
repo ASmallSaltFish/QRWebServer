@@ -23,7 +23,7 @@
         <mybatis.paginator.version>1.2.15</mybatis.paginator.version>
         <druid.version>1.1.10</druid.version>
         <pagehelper.version>4.1.6</pagehelper.version>
-        <netty.version>4.1.25.Final</netty.version>
+        <netty.version>4.1.0.Final</netty.version>
         <jsqlparser.version>0.9.1</jsqlparser.version>
         <logback.version>1.1.4</logback.version>
     </properties>
@@ -285,5 +285,15 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
