@@ -1,6 +1,6 @@
 package com.huateng.test.provider;
 
-import com.huateng.qrcode.qrserver.manager.QrServerManager;
+import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.test.BaseTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class TestProvider extends BaseTest {
     @Before
     public void before() {
         serviceCode = "001";
-        serviceCodeMap.put("001", "com.huateng.qrcode.qrserver.manager.QrServerManager");
+        serviceCodeMap.put("001", "com.huateng.qrcode.qrserver.QrServerManager");
     }
 
     @Test

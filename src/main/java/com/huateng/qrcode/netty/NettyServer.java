@@ -1,4 +1,4 @@
-package com.huateng.qrcode.qrserver.netty;
+package com.huateng.qrcode.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

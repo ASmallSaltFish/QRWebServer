@@ -1,4 +1,4 @@
-package com.huateng.qrcode.parser;
+package com.huateng.qrcode.base.parser;
 
 /**
  * 定义解析报文工厂类

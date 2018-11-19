@@ -7,9 +7,11 @@
         <useType>002</useType>
     </appHeader>
     <busBody>
-        <productNo>111000111</productNo>
-        <validDate>5000</validDate>
-        <version>2.0.1</version>
+        <map>
+            <productNo>111000111</productNo>
+            <validDate>5000</validDate>
+            <version>2.0.1</version>
+        </map>
     </busBody>
     <sysHeader>
         <chlMsgId>2222222</chlMsgId>

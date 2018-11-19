@@ -1,11 +1,12 @@
 ### 行业二维码项目
 
+
 #### 注意：项目中的db2驱动包为手动导入到本地maven仓库中，使用下面命令导入（注意修改命令中路径）
 ```$xslt
-
 mvn install:install-file -DgroupId=com.ibm.db2.jcc -DartifactId=db2jcc -Dversion=1.0.0 -Dpackaging=jar -Dfile=/Users/qinyupeng/Downloads/db2jcc.jar
 mvn install:install-file -DgroupId=com.ibm.db2.jcc -DartifactId=db2jcc-license-cu -Dversion=1.0.0 -Dpackaging=jar -Dfile=/Users/qinyupeng/Downloads/db2jcc.jar
 ```
+
 > 备注：jar包在这里 
 https://pan.baidu.com/s/11r0y44dk2J4j0yxycX7URw
 
@@ -16,38 +17,43 @@ https://pan.baidu.com/s/11r0y44dk2J4j0yxycX7URw
 #### 项目目录结构相关
 ```$xslt
 |--QRWebServer
-    |--src                                      #文档相关
+    |--src
         |--doc
         |--main
-            |--java                             #代码主目录
-                |--com.huateng.qrcode
-                    |--common                   #spring通用配置（拦截器、监听）
+            |--java                                         #主目录
+                |--com.huateng.qrcode                      
+                    |--base                                 #项目配置相关
                         |--interceptor
                         |--listener
-                    |--controller               #控制器
-                    |-mapper                    #mybatis数据接口
-                    |--model                    #模型层（实体类、请求报文参数类）
-                        |--entity
+                    |--common                               #项目通用代码    
+                        |--constants
+                        |--enums
+                        |--exception
+                        |--mapper
+                        |--model
+                    |--controller                           #控制器
+                        |--base
+                    |--parser                               #报文解析相关    
+                        |--impl
                         |--param
-                    |--qrserver                 #netty提供socket服务相关
-                        |--config               
+                    |--qrserver                             #socket通讯相关        
                         |--manager
                         |--netty
-                        |--parser
-                    |--service                  #service接口
-                    |--utils                    #工具类
-            |--resources                        #资源文件主目录
-                |--mybatis                      #mybatis相关配置
-                    |--mapper                   #mybatis数据接口关联配置文件
-                |--spring                       #spring框架整合配置文件
-            |--webapp                           #webapp静态资源目录
-                |--WEB-INF
-                    |--web.xml                  #web应用启动入口配置文件
-        |--test                                 #单元测试目录
-            |--java                             #单元测试主目录
-                
+                    |--service                              #服务接口相关
+                        |--impl
+                    |--utils                                #工具类
+                        |--http
+        |--resources
+            |--mybatis                                      #mybatis配置
+                |--mapper                                   #实体类对应的mapper.xml
+            |--spring                                       #spring配置文件
+        |--webapp
+            |--static                                       #静态资源
+            |--WEB-INF                                      #web.xml存放目录
+    |--test                                                 #单元测试目录
+        |--java
+            |--com.huateng.test
 ```
-
 
 
 #### 配置文件相关

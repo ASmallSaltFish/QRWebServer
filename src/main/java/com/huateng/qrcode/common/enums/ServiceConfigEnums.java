@@ -1,8 +1,8 @@
 package com.huateng.qrcode.common.enums;
 
-import com.huateng.qrcode.qrserver.manager.impl.QrGenerateManager;
-import com.huateng.qrcode.qrserver.manager.impl.QrParserManager;
-import com.huateng.qrcode.qrserver.manager.QrServerManager;
+import com.huateng.qrcode.qrserver.impl.QrGenerateManager;
+import com.huateng.qrcode.qrserver.impl.QrParserManager;
+import com.huateng.qrcode.qrserver.QrServerManager;
 
 /**
  * 定义服务码和处理接口类枚举（根据配置添加）

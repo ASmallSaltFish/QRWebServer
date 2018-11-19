@@ -1,8 +1,8 @@
-package com.huateng.qrcode.parser.param;
+package com.huateng.qrcode.base.parser.param;
 
-import com.huateng.qrcode.parser.param.base.AppParamHeader;
-import com.huateng.qrcode.parser.param.base.BusParamBody;
-import com.huateng.qrcode.parser.param.base.SysParamHeader;
+import com.huateng.qrcode.base.parser.param.base.AppParamHeader;
+import com.huateng.qrcode.base.parser.param.base.BusParamBody;
+import com.huateng.qrcode.base.parser.param.base.SysParamHeader;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
