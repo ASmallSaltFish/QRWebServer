@@ -13,7 +13,7 @@ https://pan.baidu.com/s/11r0y44dk2J4j0yxycX7URw
 #### 环境和版本相关
 > spring4.3.18，mybatis3.4.6，netty4.1.25，druid1.1.10，pageHelper4.1.6；
 
-#### 项目目录结构相关
+#### 项目目录结构相关 
 ```$xslt
 |--QRWebServer
     |--src                                      #文档相关
