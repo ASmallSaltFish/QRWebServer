@@ -1,6 +1,6 @@
 package com.huateng.qrcode.base.listener;
 
-import com.huateng.qrcode.qrserver.netty.NettyServer;
+import com.huateng.qrcode.netty.NettyServer;
 import com.huateng.qrcode.utils.ConfigConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

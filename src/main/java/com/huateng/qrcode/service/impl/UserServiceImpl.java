@@ -23,6 +23,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User findUserByUserId(String userId) {
+        int i = 1 / 0;
         return userMapper.findUserByUserId(userId);
     }
 }

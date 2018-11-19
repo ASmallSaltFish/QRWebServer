@@ -1,12 +1,12 @@
-package com.huateng.qrcode.qrserver.manager.impl;
+package com.huateng.qrcode.qrserver.impl;
 
 import com.huateng.qrcode.common.model.User;
-import com.huateng.qrcode.qrserver.manager.QrServerManager;
+import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.qrcode.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component(value = "qrGenerateManager")
 public class QrGenerateManager implements QrServerManager {
 
     @Autowired
@@ -14,10 +14,11 @@ public class QrGenerateManager implements QrServerManager {
 
     //todo 实际处理业务操作的方法
     @Override
-    public void handler(String serviceCode) {
+    public String handler() {
         System.out.println("===>>>生成二维码服务。。");
         User user = userService.findUserByUserId("1111");
         System.out.println(user);
         System.out.println("===>>>生成二维码服务完成。。");
+        return user.toString();
     }
 }
