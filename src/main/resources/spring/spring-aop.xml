@@ -20,5 +20,5 @@
     </bean>
 
     <!-- 日志记录拦截器 -->
-    <bean id="logAdvice" class="com.huateng.qrcode.common.interceptor.LogInterceptor"/>
+    <bean id="logAdvice" class="com.huateng.qrcode.base.interceptor.LogInterceptor"/>
 </beans>

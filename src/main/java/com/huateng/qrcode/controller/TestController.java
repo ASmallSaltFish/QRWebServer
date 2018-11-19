@@ -1,11 +1,9 @@
 package com.huateng.qrcode.controller;
 
 import com.huateng.qrcode.controller.base.BaseController;
-import com.huateng.qrcode.model.entity.User;
-import com.huateng.qrcode.qrserver.manager.ServiceConfigMapping;
+import com.huateng.qrcode.common.model.User;
 import com.huateng.qrcode.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

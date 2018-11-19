@@ -1,9 +1,9 @@
 package com.huateng.qrcode.service.impl;
 
-import com.huateng.qrcode.model.entity.User;
-import com.huateng.qrcode.mapper.UserMapper;
-import com.huateng.qrcode.service.UserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.huateng.qrcode.common.mapper.UserMapper;
+import com.huateng.qrcode.common.model.User;
+import com.huateng.qrcode.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

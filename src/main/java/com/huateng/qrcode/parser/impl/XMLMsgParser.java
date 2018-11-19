@@ -1,5 +1,6 @@
-package com.huateng.qrcode.qrserver.parser;
+package com.huateng.qrcode.parser.impl;
 
+import com.huateng.qrcode.parser.MsgParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 

@@ -1,4 +1,4 @@
-package com.huateng.qrcode.common.interceptor;
+package com.huateng.qrcode.base.interceptor;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;

@@ -1,7 +1,7 @@
-package com.huateng.qrcode.qrserver.config;
+package com.huateng.qrcode.common.enums;
 
-import com.huateng.qrcode.qrserver.manager.QrGenerateManager;
-import com.huateng.qrcode.qrserver.manager.QrParserManager;
+import com.huateng.qrcode.qrserver.manager.impl.QrGenerateManager;
+import com.huateng.qrcode.qrserver.manager.impl.QrParserManager;
 import com.huateng.qrcode.qrserver.manager.QrServerManager;
 
 /**

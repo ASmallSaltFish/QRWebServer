@@ -1,7 +1,7 @@
-package com.huateng.qrcode.mapper;
+package com.huateng.qrcode.common.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.huateng.qrcode.model.entity.User;
+import com.huateng.qrcode.common.model.User;
 
 import java.util.List;
 

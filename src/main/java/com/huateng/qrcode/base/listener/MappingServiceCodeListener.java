@@ -1,6 +1,6 @@
-package com.huateng.qrcode.common.listener;
+package com.huateng.qrcode.base.listener;
 
-import com.huateng.qrcode.qrserver.manager.ServiceConfigMapping;
+import com.huateng.qrcode.qrserver.manager.impl.ServiceConfigMapping;
 import com.huateng.qrcode.utils.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

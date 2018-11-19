@@ -1,4 +1,4 @@
-package com.huateng.qrcode.qrserver.manager;
+package com.huateng.qrcode.qrserver.manager.impl;
 
 import org.springframework.stereotype.Component;
 

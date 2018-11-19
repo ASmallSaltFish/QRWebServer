@@ -1,4 +1,4 @@
-package com.huateng.qrcode.model.param.base;
+package com.huateng.qrcode.parser.param.base;
 
 /**
  * 系统头信息参数

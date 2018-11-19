@@ -1,6 +1,6 @@
 package com.huateng.test.mybatis;
 
-import com.huateng.qrcode.model.entity.User;
+import com.huateng.qrcode.common.model.User;
 import com.huateng.qrcode.service.UserService;
 import com.huateng.test.BaseTest;
 import org.junit.Test;

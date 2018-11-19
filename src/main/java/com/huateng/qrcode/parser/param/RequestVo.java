@@ -1,11 +1,10 @@
-package com.huateng.qrcode.model.param;
+package com.huateng.qrcode.parser.param;
 
-import com.huateng.qrcode.model.param.base.AppParamHeader;
-import com.huateng.qrcode.model.param.base.BusParamBody;
-import com.huateng.qrcode.model.param.base.SysParamHeader;
+import com.huateng.qrcode.parser.param.base.AppParamHeader;
+import com.huateng.qrcode.parser.param.base.BusParamBody;
+import com.huateng.qrcode.parser.param.base.SysParamHeader;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
 /**
  * 组装报文类，将系统头信息、应用头信息、业务头信息对象组合

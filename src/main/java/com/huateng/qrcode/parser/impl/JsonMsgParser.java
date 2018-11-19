@@ -1,7 +1,8 @@
-package com.huateng.qrcode.qrserver.parser;
+package com.huateng.qrcode.parser.impl;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.huateng.qrcode.parser.MsgParser;
 
 import java.io.IOException;
 

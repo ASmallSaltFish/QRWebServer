@@ -1,11 +1,11 @@
 package com.huateng.test.msgParser;
 
-import com.huateng.qrcode.model.param.RequestVo;
-import com.huateng.qrcode.model.param.base.AppParamHeader;
-import com.huateng.qrcode.model.param.base.BusParamBody;
-import com.huateng.qrcode.model.param.base.SysParamHeader;
-import com.huateng.qrcode.qrserver.parser.MsgParser;
-import com.huateng.qrcode.qrserver.parser.XMLMsgParser;
+import com.huateng.qrcode.parser.param.RequestVo;
+import com.huateng.qrcode.parser.param.base.AppParamHeader;
+import com.huateng.qrcode.parser.param.base.BusParamBody;
+import com.huateng.qrcode.parser.param.base.SysParamHeader;
+import com.huateng.qrcode.parser.MsgParser;
+import com.huateng.qrcode.parser.impl.XMLMsgParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.junit.Test;

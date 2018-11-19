@@ -1,8 +1,7 @@
 package com.huateng.qrcode.qrserver.netty;
 
-import com.huateng.qrcode.qrserver.config.ServiceConfigEnums;
+import com.huateng.qrcode.common.enums.ServiceConfigEnums;
 import com.huateng.qrcode.qrserver.manager.QrServerManager;
-import com.huateng.qrcode.qrserver.manager.ServiceConfigMapping;
 import com.huateng.qrcode.utils.SpringContextUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -44,7 +43,7 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
     }
 
 
-    private void handler() throws ClassNotFoundException {
+    private void handler(){
         ApplicationContext applicationContext = SpringContextUtil.getInstance().getApplicationContext();
 //        ServiceConfigMapping serviceConfigMapping = (ServiceConfigMapping) applicationContext.getBean("serviceConfigMapping");
         String serviceCode = "001";

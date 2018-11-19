@@ -1,4 +1,4 @@
-package com.huateng.qrcode.common.listener;
+package com.huateng.qrcode.base.listener;
 
 import com.huateng.qrcode.qrserver.netty.NettyServer;
 import com.huateng.qrcode.utils.ConfigConstants;

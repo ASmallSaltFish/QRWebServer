@@ -2,12 +2,12 @@ package com.huateng.test.msgParser;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.huateng.qrcode.model.param.RequestVo;
-import com.huateng.qrcode.model.param.base.AppParamHeader;
-import com.huateng.qrcode.model.param.base.BusParamBody;
-import com.huateng.qrcode.model.param.base.SysParamHeader;
-import com.huateng.qrcode.qrserver.parser.JsonMsgParser;
-import com.huateng.qrcode.qrserver.parser.MsgParser;
+import com.huateng.qrcode.parser.param.RequestVo;
+import com.huateng.qrcode.parser.param.base.AppParamHeader;
+import com.huateng.qrcode.parser.param.base.BusParamBody;
+import com.huateng.qrcode.parser.param.base.SysParamHeader;
+import com.huateng.qrcode.parser.impl.JsonMsgParser;
+import com.huateng.qrcode.parser.MsgParser;
 import org.junit.Test;
 
 import java.io.IOException;

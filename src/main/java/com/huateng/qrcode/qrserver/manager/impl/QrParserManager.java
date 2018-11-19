@@ -1,6 +1,7 @@
-package com.huateng.qrcode.qrserver.manager;
+package com.huateng.qrcode.qrserver.manager.impl;
 
-import com.huateng.qrcode.model.entity.User;
+import com.huateng.qrcode.common.model.User;
+import com.huateng.qrcode.qrserver.manager.QrServerManager;
 import com.huateng.qrcode.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,12 +1,11 @@
-package com.huateng.qrcode.model.entity;
-
-import java.util.Date;
+package com.huateng.qrcode.common.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
