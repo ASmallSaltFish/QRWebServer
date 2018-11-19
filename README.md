@@ -16,7 +16,7 @@ https://pan.baidu.com/s/11r0y44dk2J4j0yxycX7URw
 #### 项目目录结构相关
 ```$xslt
 |--QRWebServer
-    |--src                                      #文档相关
+    |--src                                      #文档相关 
         |--doc
         |--main
             |--java                             #代码主目录
