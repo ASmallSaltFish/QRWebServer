@@ -1,5 +1,6 @@
 package com.huateng.qrcode.qrserver.impl;
 
+import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.common.model.User;
 import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.qrcode.service.UserService;
@@ -16,7 +17,7 @@ public class QrParserManager implements QrServerManager {
     //todo 实际处理业务操作的方法
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
     @Override
-    public String handler() {
+    public String handler(RequestVo requestVo) {
         System.out.println("===>>>解析二维码服务。。");
         User user = userService.findUserByUserId("1111");
         System.out.println(user);
