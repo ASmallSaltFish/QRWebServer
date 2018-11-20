@@ -1,5 +1,6 @@
 package com.huateng.test.provider;
 
+import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.test.BaseTest;
 import org.junit.Before;
@@ -32,6 +33,6 @@ public class TestProvider extends BaseTest {
         String classFullName = serviceCodeMap.get(serviceCode);
         Class<?> clazz = Class.forName(classFullName);
         QrServerManager manager = (QrServerManager) ctx.getBean(clazz);
-        manager.handler(serviceCode);
+        manager.handler(new RequestVo());
     }
 }

@@ -17,8 +17,10 @@
     "scene": "100"
   },
   "busBody": {
-    "validDate": "5000",
-    "version": "2.0.1",
-    "productNo": "111000111"
+    "resultMap": {
+      "validDate": "5000",
+      "version": "1.0.0",
+      "productNo": "20"
+    }
   }
 }

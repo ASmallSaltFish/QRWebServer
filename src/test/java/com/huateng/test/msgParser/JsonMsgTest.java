@@ -11,15 +11,14 @@ import com.huateng.qrcode.base.parser.MsgParser;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JsonMsgTest {
 
-    private String json = "{\"sysHeader\":{\"serviceCode\":\"001\",\"version\":\"1.0.0\",\"sender\":\"zhangsan\",\"receiver\":\"lisi\",\"sendTime\":\"2018-10-10\",\"sendMsgId\":\"11111\",\"teller\":\"zhangsan\",\"chlSendTime\":\"2018-10-10 22:10:10\",\"chlMsgId\":\"2222222\"},\"appHeader\":{\"reqSys\":\"医疗云\",\"industryapp\":\"010\",\"useType\":\"002\",\"scene\":\"100\"},\"busBody\":{\"validDate\":\"5000\",\"version\":\"2.0.1\",\"productNo\":\"111000111\"}}";
+    private String json = "{\"sysHeader\":{\"serviceCode\":\"001\",\"version\":\"1.0.0\",\"sender\":\"zhangsan\",\"receiver\":\"lisi\",\"sendTime\":\"2018-10-10\",\"sendMsgId\":\"11111\",\"teller\":\"zhangsan\",\"chlSendTime\":\"2018-10-10 22:10:10\",\"chlMsgId\":\"2222222\"},\"appHeader\":{\"reqSys\":\"医疗云\",\"industryapp\":\"010\",\"useType\":\"002\",\"scene\":\"100\"},\"busBody\":{\"resultMap\":{\"validDate\":\"5000\",\"version\":\"1.0.0\",\"productNo\":\"20\"}}}}";
 
 
-    /**
-     * {"reqSys":"医疗云平台","industryapp":"001","useType":"1","scene":"01"}
-     */
     @Test
     public void testObj2Json() throws IOException {
         RequestVo requestVo = new RequestVo();
@@ -38,7 +37,7 @@ public class JsonMsgTest {
 
         //应用头信息
         AppParamHeader appHeader = new AppParamHeader();
-        appHeader.setIndustryapp("010");
+        appHeader.setIndustryApp("010");
         appHeader.setReqSys("医疗云");
         appHeader.setScene("100");
         appHeader.setUseType("002");
@@ -46,11 +45,13 @@ public class JsonMsgTest {
 
         //业务体
         BusParamBody busBody = new BusParamBody();
-        busBody.setVersion("2.0.1");
-        busBody.setProductNo("111000111");
-        busBody.setValidDate("5000");
-        requestVo.setBusBody(busBody);
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("version", "1.0.0");
+        resultMap.put("productNo", "20");
+        resultMap.put("validDate", "5000");
+        busBody.setResultMap(resultMap);
 
+        requestVo.setBusBody(busBody);
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(requestVo);
         System.out.println(json);
@@ -64,6 +65,11 @@ public class JsonMsgTest {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         RequestVo requestVo = objectMapper.readValue(json, RequestVo.class);
         System.out.println("==>>requestVo=" + requestVo);
+        BusParamBody busBody = requestVo.getBusBody();
+        Map<String, String> resultMap = busBody.getResultMap();
+        System.out.println(resultMap.get("version"));
+        System.out.println(resultMap.get("productNo"));
+        System.out.println(resultMap.get("validDate"));
     }
 
 

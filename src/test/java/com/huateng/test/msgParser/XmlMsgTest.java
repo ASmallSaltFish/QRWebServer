@@ -1,5 +1,6 @@
 package com.huateng.test.msgParser;
 
+import com.huateng.qrcode.base.parser.impl.XMLRequestVoParser;
 import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.base.AppParamHeader;
 import com.huateng.qrcode.base.parser.param.base.BusParamBody;
@@ -21,29 +22,31 @@ public class XmlMsgTest {
 
     private String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<requestVo>\n" +
-            "  <sysHeader>\n" +
-            "    <serviceCode>001</serviceCode>\n" +
-            "    <version>1.0.0</version>\n" +
-            "    <sender>zhangsan</sender>\n" +
-            "    <receiver>lisi</receiver>\n" +
-            "    <sendTime>2018-10-10</sendTime>\n" +
-            "    <sendMsgId>11111</sendMsgId>\n" +
-            "    <teller>zhangsan</teller>\n" +
-            "    <chlSendTime>2018-10-10 22:10:10</chlSendTime>\n" +
-            "    <chlMsgId>2222222</chlMsgId>\n" +
-            "  </sysHeader>\n" +
-            "  <appHeader>\n" +
-            "    <reqSys>医疗云</reqSys>\n" +
-            "    <industryapp>010</industryapp>\n" +
-            "    <useType>002</useType>\n" +
-            "    <scene>100</scene>\n" +
-            "  </appHeader>\n" +
-            "  <busBody>\n" +
-            "    <validDate>5000</validDate>\n" +
-            "    <version>2.0.1</version>\n" +
-            "    <productNo>111000111</productNo>\n" +
-            "  </busBody>\n" +
-            "</requestVo>\n";
+            "    <appHeader>\n" +
+            "        <industryApp>010</industryApp>\n" +
+            "        <reqSys>医疗云</reqSys>\n" +
+            "        <scene>100</scene>\n" +
+            "        <useType>002</useType>\n" +
+            "    </appHeader>\n" +
+            "    <busBody>\n" +
+            "        <resultMap>\n" +
+            "            <productNo>111000111</productNo>\n" +
+            "            <validDate>5000</validDate>\n" +
+            "            <version>2.0.1</version>\n" +
+            "        </resultMap>\n" +
+            "    </busBody>\n" +
+            "    <sysHeader>\n" +
+            "        <chlMsgId>2222222</chlMsgId>\n" +
+            "        <chlSendTime>2018-10-10 22:10:10</chlSendTime>\n" +
+            "        <receiver>lisi</receiver>\n" +
+            "        <sendMsgId>11111</sendMsgId>\n" +
+            "        <sendTime>2018-10-10</sendTime>\n" +
+            "        <sender>zhangsan</sender>\n" +
+            "        <serviceCode>001</serviceCode>\n" +
+            "        <teller>zhangsan</teller>\n" +
+            "        <version>1.0.0</version>\n" +
+            "    </sysHeader>\n" +
+            "</requestVo>";
 
 
     @Test
@@ -100,7 +103,7 @@ public class XmlMsgTest {
 
         //应用头信息
         AppParamHeader appHeader = new AppParamHeader();
-        appHeader.setIndustryapp("010");
+        appHeader.setIndustryApp("010");
         appHeader.setReqSys("医疗云");
         appHeader.setScene("100");
         appHeader.setUseType("002");
@@ -108,9 +111,12 @@ public class XmlMsgTest {
 
         //业务体
         BusParamBody busBody = new BusParamBody();
-        busBody.setVersion("2.0.1");
-        busBody.setProductNo("111000111");
-        busBody.setValidDate("5000");
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("version", "1.0.0");
+        resultMap.put("productNo", "20");
+        resultMap.put("validDate", "5000");
+        busBody.setResultMap(resultMap);
+
         requestVo.setBusBody(busBody);
         return requestVo;
     }
@@ -134,13 +140,11 @@ public class XmlMsgTest {
     @Test
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void testXml2ObjUseParserFactory() throws Exception {
-        Map<String, Class> aliasMap = new HashMap<>();
-        aliasMap.put("requestVo", RequestVo.class);
-        aliasMap.put("sysHeader", SysParamHeader.class);
-        aliasMap.put("appHeader", AppParamHeader.class);
-        aliasMap.put("busBody", BusParamBody.class);
-        MsgParser<RequestVo> parser = new XMLMsgParser<RequestVo>(aliasMap);
+        MsgParser<RequestVo> parser = new XMLRequestVoParser();
         RequestVo requestVo = parser.parser(xml);
         System.out.println(requestVo);
+        System.out.println(requestVo.getBusBody().getResultMap().get("productNo"));
+        System.out.println(requestVo.getBusBody().getResultMap().get("version"));
+        System.out.println(requestVo.getBusBody().getResultMap().get("validDate"));
     }
 }

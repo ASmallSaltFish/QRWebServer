@@ -1,5 +1,6 @@
 package com.huateng.qrcode.netty;
 
+import com.huateng.qrcode.base.parser.impl.XMLRequestVoParser;
 import com.huateng.qrcode.common.enums.ServiceConfigEnums;
 import com.huateng.qrcode.base.parser.MsgParser;
 import com.huateng.qrcode.base.parser.impl.XMLMsgParser;
@@ -63,7 +64,7 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
             throw new RuntimeException("解析报文时没有获取到applicationContext对象！");
         }
 
-        MsgParser<RequestVo> parserManager = new XMLMsgParser<>();
+        MsgParser<RequestVo> parserManager = new XMLRequestVoParser();
         RequestVo requestVo = parserManager.parser(data);
         String serviceCode = requestVo.getSysHeader().getServiceCode();
         if (StringUtils.isBlank(serviceCode)) {
@@ -72,6 +73,10 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
 
         Class<?> serviceClass = ServiceConfigEnums.getByServiceCode(serviceCode);
         QrServerManager qrServerManager = (QrServerManager) applicationContext.getBean(serviceClass);
+        if(qrServerManager == null){
+            throw new RuntimeException("spring容器中获取服务类bean失败！");
+        }
+
         return qrServerManager.handler(requestVo);
     }
 

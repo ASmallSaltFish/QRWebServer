@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <requestVo>
     <appHeader>
-        <industryapp>010</industryapp>
+        <industryApp>010</industryApp>
         <reqSys>医疗云</reqSys>
         <scene>100</scene>
         <useType>002</useType>
     </appHeader>
     <busBody>
-        <map>
+        <resultMap>
             <productNo>111000111</productNo>
             <validDate>5000</validDate>
             <version>2.0.1</version>
-        </map>
+        </resultMap>
     </busBody>
     <sysHeader>
         <chlMsgId>2222222</chlMsgId>

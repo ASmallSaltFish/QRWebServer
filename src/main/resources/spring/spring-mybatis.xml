@@ -68,8 +68,8 @@
             ID_WORKER->`2`("全局唯一ID")
             UUID->`3`("全局唯一ID")
         -->
-        <!-- todo 确定主键生成策略 -->
-        <property name="idType" value="1"/>
+        <!-- 主键使用ID_WORKER生成 -->
+        <property name="idType" value="2"/>
     </bean>
 
 
