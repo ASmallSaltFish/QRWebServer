@@ -52,9 +52,9 @@ public class RequestVo {
     @Override
     public String toString() {
         return "RequestVo{" +
-                "sysHeader=" + sysHeader +
-                ", appHeader=" + appHeader +
-                ", busBody=" + busBody +
+                "sysHeader=" + sysHeader.toString() +
+                ", appHeader=" + appHeader.toString() +
+                ", busBody=" + busBody.toString() +
                 '}';
     }
 }

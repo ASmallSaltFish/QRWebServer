@@ -114,4 +114,20 @@ public class AppParamHeader {
     public void setScene(String scene) {
         this.scene = scene;
     }
+
+    @Override
+    public String toString() {
+        return "AppParamHeader{" +
+                "generationMode='" + generationMode + '\'' +
+                ", actionScope='" + actionScope + '\'' +
+                ", readMode='" + readMode + '\'' +
+                ", ewmVersion='" + ewmVersion + '\'' +
+                ", rspSys='" + rspSys + '\'' +
+                ", ewmMsgId='" + ewmMsgId + '\'' +
+                ", reqSys='" + reqSys + '\'' +
+                ", industryApp='" + industryApp + '\'' +
+                ", useType='" + useType + '\'' +
+                ", scene='" + scene + '\'' +
+                '}';
+    }
 }
