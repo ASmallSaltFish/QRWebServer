@@ -72,7 +72,7 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
 
         Class<?> serviceClass = ServiceConfigEnums.getByServiceCode(serviceCode);
         QrServerManager qrServerManager = (QrServerManager) applicationContext.getBean(serviceClass);
-        return qrServerManager.handler();
+        return qrServerManager.handler(requestVo);
     }
 
     @Override
