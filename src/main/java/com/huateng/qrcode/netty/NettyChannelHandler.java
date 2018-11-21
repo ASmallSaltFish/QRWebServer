@@ -1,6 +1,7 @@
 package com.huateng.qrcode.netty;
 
 import com.huateng.qrcode.base.parser.impl.XMLRequestVoParser;
+import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.common.enums.ServiceConfigEnums;
 import com.huateng.qrcode.base.parser.MsgParser;
 import com.huateng.qrcode.base.parser.impl.XMLMsgParser;
@@ -39,7 +40,7 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
             logger.info("接收到的报文信息：" + data);
 
             //解析报文信息，获取服务码，根据服务码处理对应业务
-            String responseData = processBusiness(data);
+            String responseData = processBusiness(data).toString();
 
             logger.info("报文解析完成，响应内容：" + responseData);
 
@@ -58,7 +59,7 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
 
 
     //解析报文，请求分发
-    private String processBusiness(String data) throws Exception {
+    private ResponseVo processBusiness(String data) throws Exception {
         ApplicationContext applicationContext = SpringContextUtil.getInstance().getApplicationContext();
         if (applicationContext == null) {
             throw new RuntimeException("解析报文时没有获取到applicationContext对象！");

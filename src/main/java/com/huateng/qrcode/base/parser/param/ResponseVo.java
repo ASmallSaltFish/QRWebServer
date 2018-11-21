@@ -43,9 +43,9 @@ public class ResponseVo {
     @Override
     public String toString() {
         return "ResponseVo{" +
-                "appRespHeader=" + appRespHeader +
-                ", sysRespHeader=" + sysRespHeader +
-                ", busRespBody=" + busRespBody +
+                "appRespHeader=" + appRespHeader.toString() +
+                ", sysRespHeader=" + sysRespHeader.toString() +
+                ", busRespBody=" + busRespBody.toString() +
                 '}';
     }
 }
