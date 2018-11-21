@@ -22,8 +22,8 @@ public class DistingQrGenerateTest {
 
     @Test
     public void testServiceProvider() throws Exception {
-        Class<?> serviceClass = ServiceConfigEnums.getByServiceCode("003");
-        QrServerManager qrServerManager = (QrServerManager) applicationContext.getBean(serviceClass);
+        Class<? extends QrServerManager> serviceClass = ServiceConfigEnums.getByServiceCode("003");
+        QrServerManager qrServerManager = applicationContext.getBean(serviceClass);
         RequestVo requestVo = new RequestVo();
         SysParamHeader sysParamHeader = new SysParamHeader();
         AppParamHeader appParamHeader = new AppParamHeader();

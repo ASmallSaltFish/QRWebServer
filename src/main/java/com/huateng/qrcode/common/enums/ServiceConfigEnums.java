@@ -12,14 +12,12 @@ import com.huateng.qrcode.qrserver.QrServerManager;
 public enum ServiceConfigEnums {
     //系统类二维码解析
     SYS_PARSER_QRCODE("001", SysQrParserManagerImpl.class),
-    //扫码类二维码解析
-    SCAN_PARSER_QRCODE("002", ScanQrParserManagerImpl.class),
     Disting_QRCODE("003", DistingQrGenerateImpl.class);
 
 
     private String serviceCode;
 
-    private Class clazz;
+    private Class<? extends QrServerManager> clazz;
 
     public String getServiceCode() {
         return serviceCode;
@@ -29,11 +27,11 @@ public enum ServiceConfigEnums {
         this.serviceCode = serviceCode;
     }
 
-    public Class getClazz() {
+    public Class<? extends QrServerManager> getClazz() {
         return clazz;
     }
 
-    public void setClazz(Class clazz) {
+    public void setClazz(Class<? extends QrServerManager> clazz) {
         this.clazz = clazz;
     }
 
@@ -42,7 +40,7 @@ public enum ServiceConfigEnums {
         this.clazz = clazz;
     }
 
-    public static Class getByServiceCode(String serviceCode) {
+    public static Class<? extends QrServerManager> getByServiceCode(String serviceCode) {
         for (ServiceConfigEnums enums : values()) {
             if (serviceCode.equals(enums.getServiceCode())) {
                 return enums.getClazz();

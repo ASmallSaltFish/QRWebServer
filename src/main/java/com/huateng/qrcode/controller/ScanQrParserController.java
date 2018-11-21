@@ -1,13 +1,21 @@
 package com.huateng.qrcode.controller;
 
+import com.huateng.qrcode.base.parser.param.ResponseVo;
+import com.huateng.qrcode.common.enums.ErrorCodeEnum;
+import com.huateng.qrcode.common.enums.ServiceConfigEnums;
+import com.huateng.qrcode.controller.base.BaseController;
+import com.huateng.qrcode.qrserver.QrServerManager;
+import com.huateng.qrcode.service.http.ScanQrParserService;
 import com.huateng.qrcode.utils.SpringContextUtil;
+import org.apache.commons.collections.MapUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,18 +23,42 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/scan")
-public class ScanQrParserController {
+public class ScanQrParserController extends BaseController {
 
-    private ApplicationContext ctx = SpringContextUtil.getInstance().getApplicationContext();
+    @Autowired
+    private ScanQrParserService scanQrParserService;
 
     @RequestMapping(value = "/handler")
     @ResponseBody
     public String handlerScanTask(HttpServletRequest request) {
+        System.out.println(scanQrParserService);
+        ResponseVo responseVo = new ResponseVo();
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (MapUtils.isEmpty(parameterMap)) {
+            logger.error("http请求参数paramMap为空!");
+            //返回处理失败
+            responseVo.getBusRespBody().setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            return renderJson(responseVo);
+        }
 
-        Map<String, String> paramMap = new HashMap<>();
-        String serviceCode = request.getParameter("serviceCode");
+        //校验http请求业务参数，将参数值封装为map集合
+        Map<String, String> paramMap = null;
+        try {
+            paramMap = checkAndGetParamMap(parameterMap);
+        } catch (Exception e) {
+            logger.error("http报文参数校验不通过", e.getMessage());
+            responseVo.getBusRespBody().setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            return renderJson(responseVo);
+        }
 
-        paramMap.put("serviceCode", serviceCode);
-        return null;
+        try {
+            responseVo = scanQrParserService.handler(paramMap);
+            //todo 确定返回结果的类型
+            return renderJson(responseVo);
+        } catch (Exception e) {
+            logger.error("业务类处理出现异常", e);
+            responseVo.getBusRespBody().setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            return renderJson(responseVo);
+        }
     }
 }

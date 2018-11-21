@@ -3,7 +3,7 @@ package com.huateng.test.mybatis;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.huateng.qrcode.common.mapper.OperationQrcodeMapper;
 import com.huateng.qrcode.common.model.OperationQrcode;
-import com.huateng.qrcode.service.OperationQrcodeService;
+import com.huateng.qrcode.service.form.OperationQrcodeService;
 import com.huateng.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

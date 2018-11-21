@@ -21,9 +21,9 @@ public class StringUtil {
      * 判断多个字符串参数是否为空，为空返回true，不为空返回false
      *
      * @param params 参数值
-     * @return 多个参数值包含空，则返回true，都不为空，返回true
+     * @return 有一个参数值包含空，则返回true，都不为空，返回true
      */
-    public static boolean isEmptyMultipleStr(String... params) {
+    public static boolean hasEmptyMultipleStr(String... params) {
         for (String param : params) {
             if (null == param || "".equals(param.trim()) || "null".equals(param.trim()) || param.trim().length() == 0) {
                 logger.debug("参数值" + param + "为空!");

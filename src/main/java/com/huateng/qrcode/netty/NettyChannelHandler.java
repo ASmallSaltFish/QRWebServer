@@ -1,12 +1,11 @@
 package com.huateng.qrcode.netty;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.huateng.qrcode.base.parser.MsgParser;
 import com.huateng.qrcode.base.parser.impl.XMLRequestVoParser;
+import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.common.enums.ServiceConfigEnums;
-import com.huateng.qrcode.base.parser.MsgParser;
-import com.huateng.qrcode.base.parser.impl.XMLMsgParser;
-import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.qrcode.utils.SpringContextUtil;
 import io.netty.buffer.ByteBuf;
@@ -15,7 +14,6 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.reflection.wrapper.ObjectWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;

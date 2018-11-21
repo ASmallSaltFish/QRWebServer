@@ -5,6 +5,7 @@ import com.huateng.qrcode.base.parser.param.base.BusParamBody;
 import com.huateng.qrcode.base.parser.param.base.SysParamHeader;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * 组装报文类，将系统头信息、应用头信息、业务头信息对象组合
@@ -13,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since 2018-11-14 19:29:50
  */
 @XmlRootElement
-public class RequestVo {
+public class RequestVo implements Serializable {
 
     //系统头信息
     private SysParamHeader sysHeader;
