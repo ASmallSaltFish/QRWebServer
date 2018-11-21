@@ -7,8 +7,8 @@ create table t_user(
   create_time TIMESTAMP default current timestamp
 );
 
-insert into t_user values('1111',0,'张三');
-insert into t_user values('2222',0,'李四');
+insert into t_user values('1111',0,'张三',current_date );
+insert into t_user values('2222',0,'李四',current_date);
 
 select * from t_user;
 

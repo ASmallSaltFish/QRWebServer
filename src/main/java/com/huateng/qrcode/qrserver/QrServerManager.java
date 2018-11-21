@@ -4,5 +4,5 @@ import com.huateng.qrcode.base.parser.param.RequestVo;
 
 public interface QrServerManager {
 
-    String handler(RequestVo requestVo);
+    String handler(RequestVo requestVo) throws Exception;
 }

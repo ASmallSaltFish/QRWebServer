@@ -1,8 +1,6 @@
 package com.huateng.qrcode.common.enums;
 
-import com.huateng.qrcode.qrserver.impl.DistingQrGenerateImpl;
-import com.huateng.qrcode.qrserver.impl.QrGenerateManager;
-import com.huateng.qrcode.qrserver.impl.QrParserManager;
+import com.huateng.qrcode.qrserver.impl.*;
 import com.huateng.qrcode.qrserver.QrServerManager;
 
 /**
@@ -12,9 +10,10 @@ import com.huateng.qrcode.qrserver.QrServerManager;
  * @since 2018-11-16 14:04:34
  */
 public enum ServiceConfigEnums {
-    //服务码对应处理类
-    GEN_QRCODE("001", QrGenerateManager.class),
-    PARSER_QRCODE("002", QrParserManager.class),
+    //系统类二维码解析
+    SYS_PARSER_QRCODE("001", SysQrParserManagerImpl.class),
+    //扫码类二维码解析
+    SCAN_PARSER_QRCODE("002", ScanQrParserManagerImpl.class),
     Disting_QRCODE("003", DistingQrGenerateImpl.class);
 
 

@@ -40,7 +40,7 @@ public class DistingQrGenerateImpl implements QrServerManager {
             String readmode = requestVo.getAppHeader().getReadMode();
             String rspsys = requestVo.getAppHeader().getRspSys();
             //获取业务数据
-            String resultMap = objectMapper.writeValueAsString(requestVo.getBusBody().getResultMap());
+            String paramMap = objectMapper.writeValueAsString(requestVo.getBusBody().getParamMap());
 
             //TODO 校验参数空
             //TODO 检查生成规则是否存在

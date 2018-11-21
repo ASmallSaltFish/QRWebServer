@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class JsonMsgTest {
 
-    private String json = "{\"sysHeader\":{\"serviceCode\":\"001\",\"version\":\"1.0.0\",\"sender\":\"zhangsan\",\"receiver\":\"lisi\",\"sendTime\":\"2018-10-10\",\"sendMsgId\":\"11111\",\"teller\":\"zhangsan\",\"chlSendTime\":\"2018-10-10 22:10:10\",\"chlMsgId\":\"2222222\"},\"appHeader\":{\"reqSys\":\"医疗云\",\"industryapp\":\"010\",\"useType\":\"002\",\"scene\":\"100\"},\"busBody\":{\"resultMap\":{\"validDate\":\"5000\",\"version\":\"1.0.0\",\"productNo\":\"20\"}}}}";
+    private String json = "{\"sysHeader\":{\"serviceCode\":\"001\",\"version\":\"1.0.0\",\"sender\":\"zhangsan\",\"receiver\":\"lisi\",\"sendTime\":\"2018-10-10\",\"sendMsgId\":\"11111\",\"teller\":\"zhangsan\",\"chlSendTime\":\"2018-10-10 22:10:10\",\"chlMsgId\":\"2222222\"},\"appHeader\":{\"generationMode\":null,\"actionScope\":null,\"readMode\":null,\"ewmVersion\":null,\"rspSys\":null,\"ewmMsgId\":null,\"reqSys\":\"医疗云\",\"industryApp\":\"010\",\"useType\":\"002\",\"scene\":\"100\"},\"busBody\":{\"qrCode\":\"1234567891234567891234567891234567\",\"paramMap\":{\"validDate\":\"5000\",\"version\":\"1.0.0\",\"productNo\":\"20\"}}}";
 
 
     @Test
@@ -45,11 +45,12 @@ public class JsonMsgTest {
 
         //业务体
         BusParamBody busBody = new BusParamBody();
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("version", "1.0.0");
-        resultMap.put("productNo", "20");
-        resultMap.put("validDate", "5000");
-        busBody.setResultMap(resultMap);
+        busBody.setQrCode("1234567891234567891234567891234567");
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("version", "1.0.0");
+        paramMap.put("productNo", "20");
+        paramMap.put("validDate", "5000");
+        busBody.setParamMap(paramMap);
 
         requestVo.setBusBody(busBody);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -66,10 +67,11 @@ public class JsonMsgTest {
         RequestVo requestVo = objectMapper.readValue(json, RequestVo.class);
         System.out.println("==>>requestVo=" + requestVo);
         BusParamBody busBody = requestVo.getBusBody();
-        Map<String, String> resultMap = busBody.getResultMap();
-        System.out.println(resultMap.get("version"));
-        System.out.println(resultMap.get("productNo"));
-        System.out.println(resultMap.get("validDate"));
+        busBody.setQrCode("1234567891234567891234567891234567");
+        Map<String, String> paramMap = busBody.getParamMap();
+        System.out.println(paramMap.get("version"));
+        System.out.println(paramMap.get("productNo"));
+        System.out.println(paramMap.get("validDate"));
     }
 
 

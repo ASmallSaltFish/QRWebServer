@@ -11,13 +11,20 @@
     "chlMsgId": "2222222"
   },
   "appHeader": {
+    "generationMode": null,
+    "actionScope": null,
+    "readMode": null,
+    "ewmVersion": null,
+    "rspSys": null,
+    "ewmMsgId": null,
     "reqSys": "医疗云",
-    "industryapp": "010",
+    "industryApp": "010",
     "useType": "002",
     "scene": "100"
   },
   "busBody": {
-    "resultMap": {
+    "qrCode": "1234567891234567891234567891234567",
+    "paramMap": {
       "validDate": "5000",
       "version": "1.0.0",
       "productNo": "20"

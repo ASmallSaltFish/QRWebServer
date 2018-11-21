@@ -29,11 +29,12 @@ public class XmlMsgTest {
             "        <useType>002</useType>\n" +
             "    </appHeader>\n" +
             "    <busBody>\n" +
-            "        <resultMap>\n" +
+            "        <qrCode>1234567891234567891234567891234567</qrCode>\n" +
+            "        <paramMap>\n" +
             "            <productNo>111000111</productNo>\n" +
             "            <validDate>5000</validDate>\n" +
             "            <version>2.0.1</version>\n" +
-            "        </resultMap>\n" +
+            "        </paramMap>\n" +
             "    </busBody>\n" +
             "    <sysHeader>\n" +
             "        <chlMsgId>2222222</chlMsgId>\n" +
@@ -111,11 +112,12 @@ public class XmlMsgTest {
 
         //业务体
         BusParamBody busBody = new BusParamBody();
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("version", "1.0.0");
-        resultMap.put("productNo", "20");
-        resultMap.put("validDate", "5000");
-        busBody.setResultMap(resultMap);
+        busBody.setQrCode("1234567891234567891234567891234567");
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("version", "1.0.0");
+        paramMap.put("productNo", "20");
+        paramMap.put("validDate", "5000");
+        busBody.setParamMap(paramMap);
 
         requestVo.setBusBody(busBody);
         return requestVo;
@@ -143,8 +145,8 @@ public class XmlMsgTest {
         MsgParser<RequestVo> parser = new XMLRequestVoParser();
         RequestVo requestVo = parser.parser(xml);
         System.out.println(requestVo);
-        System.out.println(requestVo.getBusBody().getResultMap().get("productNo"));
-        System.out.println(requestVo.getBusBody().getResultMap().get("version"));
-        System.out.println(requestVo.getBusBody().getResultMap().get("validDate"));
+        System.out.println(requestVo.getBusBody().getParamMap().get("productNo"));
+        System.out.println(requestVo.getBusBody().getParamMap().get("version"));
+        System.out.println(requestVo.getBusBody().getParamMap().get("validDate"));
     }
 }

@@ -14,9 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 具体解析xml报文类，将请求报文解析为RequestVo对象
+ */
 public class XMLRequestVoParser extends XMLMsgParser<RequestVo> {
 
     @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public RequestVo parser(String msg) throws Exception {
         SAXReader saxReader = new SAXReader();
         Document document = saxReader.read(new ByteArrayInputStream(msg.getBytes("UTF-8")));
@@ -52,6 +56,7 @@ public class XMLRequestVoParser extends XMLMsgParser<RequestVo> {
     }
 
     //解析封装应用头信息
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private void parserAndWrapData(Element element, AppParamHeader appParamHeader) throws Exception {
         List<Element> elements = element.elements();
         if (CollectionUtils.isEmpty(elements)) {
@@ -68,6 +73,7 @@ public class XMLRequestVoParser extends XMLMsgParser<RequestVo> {
     }
 
     //解析封装系统头信息
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private void parserAndWrapData(Element element, SysParamHeader sysParamHeader) throws Exception {
         List<Element> elements = element.elements();
         if (CollectionUtils.isEmpty(elements)) {
@@ -85,25 +91,34 @@ public class XMLRequestVoParser extends XMLMsgParser<RequestVo> {
 
 
     //解析封装业务体信息
-    private void parserAndWrapData(Element element, BusParamBody busParamBody) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void parserAndWrapData(Element element, BusParamBody busParamBody) throws Exception {
         List<Element> elements = element.elements();
         if (CollectionUtils.isEmpty(elements)) {
             throw new RuntimeException("解析报文失败，业务体参数不能为空！");
         }
 
         Class<? extends BusParamBody> clazz = busParamBody.getClass();
-        Element mapElement = elements.get(0);
-        List<Element> mapPropElements = mapElement.elements();
-        if (CollectionUtils.isEmpty(mapPropElements)) {
-            throw new RuntimeException("解析报文失败，业务体中map参数为空！");
-        }
+        for (Element elem : elements) {
+            String elemName = elem.getName();
+            String elemValue = elem.getStringValue();
+            //普通的属性，找到属性set方法，反射设置属性值
+            if (!"paramMap".equals(elemName)) {
+                clazz.getMethod(getSetMethodName(elemName), String.class).invoke(busParamBody, elemValue);
+            } else {
+                List<Element> mapPropElements = elem.elements();
+                if (CollectionUtils.isEmpty(mapPropElements)) {
+                    throw new RuntimeException("解析报文失败，业务体中map参数为空！");
+                }
 
-        Map<String, String> resultMap = new HashMap<>();
-        for (Element elem : mapPropElements) {
-            resultMap.put(elem.getName(), elem.getStringValue());
-        }
+                Map<String, String> paramMap = new HashMap<>();
+                for (Element mapkeyElem : mapPropElements) {
+                    paramMap.put(mapkeyElem.getName(), mapkeyElem.getStringValue());
+                }
 
-        busParamBody.setResultMap(resultMap);
+                busParamBody.setParamMap(paramMap);
+            }
+        }
     }
 
 

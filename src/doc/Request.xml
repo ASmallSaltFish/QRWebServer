@@ -7,11 +7,12 @@
         <useType>002</useType>
     </appHeader>
     <busBody>
-        <resultMap>
+        <qrCode>1234567891234567891234567891234567</qrCode>
+        <paramMap>
             <productNo>111000111</productNo>
             <validDate>5000</validDate>
             <version>2.0.1</version>
-        </resultMap>
+        </paramMap>
     </busBody>
     <sysHeader>
         <chlMsgId>2222222</chlMsgId>

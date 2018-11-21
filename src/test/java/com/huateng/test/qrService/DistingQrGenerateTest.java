@@ -6,8 +6,6 @@ import com.huateng.qrcode.base.parser.param.base.BusParamBody;
 import com.huateng.qrcode.base.parser.param.base.SysParamHeader;
 import com.huateng.qrcode.common.enums.ServiceConfigEnums;
 import com.huateng.qrcode.qrserver.QrServerManager;
-import com.huateng.qrcode.qrserver.impl.DistingQrGenerateImpl;
-import com.huateng.qrcode.utils.SpringContextUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
