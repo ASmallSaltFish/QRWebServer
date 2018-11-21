@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class ScanQrParserManagerImpl implements QrServerManager {
 
     @Override
-    public String handler(RequestVo requestVo) throws Exception {
+    public ResponseVo handler(RequestVo requestVo) throws Exception {
         //todo 检查二维码是否存在
 
         //todo 二维码状态、时效、黑名单设置
@@ -25,6 +25,6 @@ public class ScanQrParserManagerImpl implements QrServerManager {
         //todo 生成响应报文
         ResponseVo responseVo = new ResponseVo();
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(requestVo);
+        return null;
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component("sysQrParserManagerImpl")
 public class SysQrParserManagerImpl implements QrServerManager {
     @Override
-    public String handler(RequestVo requestVo) throws Exception {
+    public ResponseVo handler(RequestVo requestVo) throws Exception {
         // todo 报文参数校验 判空
 
         // todo 黑名单设置
@@ -30,6 +30,6 @@ public class SysQrParserManagerImpl implements QrServerManager {
         // todo 生成响应报文
         ResponseVo responseVo = new ResponseVo();
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(requestVo);
+        return null;
     }
 }
