@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.BlackListInfoMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.BlackListInfo">
+        <id column="BLANK_ID" property="blankId" jdbcType="VARCHAR"/>
+        <result column="BLANK_TYPE" property="blankType" jdbcType="VARCHAR"/>
+        <result column="BLANK_NO" property="blankNo" jdbcType="VARCHAR"/>
+        <result column="BLANK_DESC" property="blankDesc" jdbcType="VARCHAR"/>
+        <result column="IS_USE" property="isUse" jdbcType="VARCHAR"/>
+        <result column="EXPIRE_TIME" property="expireTime" jdbcType="VARCHAR"/>
+        <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
+        <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
+        <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
+        <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
+        <result column="MISC4" property="misc4" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    BLANK_ID, BLANK_TYPE, BLANK_NO, BLANK_DESC, IS_USE, EXPIRE_TIME, CRT_USER, CRT_TIME, 
+    UPDATE_USER, UPDATE_TIME, MISC1, MISC2, MISC3, MISC4
+  </sql>
+
+
+</mapper>

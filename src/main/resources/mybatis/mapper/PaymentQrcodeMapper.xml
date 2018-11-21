@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.PaymentQrcodeMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.PaymentQrcode">
+        <id column="QRCODE_ID" property="qrcodeId" jdbcType="VARCHAR"/>
+        <result column="TEMPLET_ID" property="templetId" jdbcType="VARCHAR"/>
+        <result column="CUSTOM_MOD_DATE" property="customModDate" jdbcType="VARCHAR"/>
+        <result column="CUSTOM_MOD_TIME" property="customModTime" jdbcType="VARCHAR"/>
+        <result column="EXPIRE_DATE_TIME" property="expireDateTime" jdbcType="VARCHAR"/>
+        <result column="PICTURE_ID" property="pictureId" jdbcType="VARCHAR"/>
+        <result column="EXPIRE_STATUS" property="expireStatus" jdbcType="VARCHAR"/>
+        <result column="BEFORE_TOKEN" property="beforeToken" jdbcType="VARCHAR"/>
+        <result column="TOKEN" property="token" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="QR_URL" property="qrUrl" jdbcType="VARCHAR"/>
+        <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
+        <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
+        <result column="UPD_DATE" property="updDate" jdbcType="VARCHAR"/>
+        <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
+        <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
+        <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
+        <result column="MISC4" property="misc4" jdbcType="VARCHAR"/>
+        <result column="DATA" property="data" jdbcType="CLOB"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    QRCODE_ID, TEMPLET_ID, CUSTOM_MOD_DATE, CUSTOM_MOD_TIME, EXPIRE_DATE_TIME, PICTURE_ID, 
+    EXPIRE_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, QR_URL, CRT_USER, UPDATE_USER, CRT_DATE, 
+    CRT_TIME, UPD_DATE, MISC1, MISC2, MISC3, MISC4, DATA
+  </sql>
+
+</mapper>

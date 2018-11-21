@@ -1,10 +1,6 @@
 package com.huateng.test.mybatis;
 
-import com.huateng.qrcode.common.model.User;
-import com.huateng.qrcode.service.UserService;
 import com.huateng.test.BaseTest;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -15,12 +11,4 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TestMyBatis extends BaseTest {
 
-    @Autowired
-    private UserService userService;
-
-    @Test
-    public void testFindUserByUserId() {
-        User user = userService.findUserByUserId("1111");
-        System.out.println("====>>>" + user);
-    }
 }

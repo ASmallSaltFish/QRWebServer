@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.QrModuleMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.QrModule">
+        <id column="QR_MOD_ID" property="qrModId" jdbcType="VARCHAR"/>
+        <result column="QR_MOD_CODE" property="qrModCode" jdbcType="VARCHAR"/>
+        <result column="QR_MOD_NAME" property="qrModName" jdbcType="VARCHAR"/>
+        <result column="QRCODE_VERSION" property="qrcodeVersion" jdbcType="VARCHAR"/>
+        <result column="ENCODE_MODE" property="encodeMode" jdbcType="VARCHAR"/>
+        <result column="GENERATION_MODE" property="generationMode" jdbcType="VARCHAR"/>
+        <result column="EXPIRE_TYPE" property="expireType" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_DATE" property="expiryDate" jdbcType="VARCHAR"/>
+        <result column="ACTION_SCOPE" property="actionScope" jdbcType="VARCHAR"/>
+        <result column="READ_MODE" property="readMode" jdbcType="VARCHAR"/>
+        <result column="RISK_LEVEL" property="riskLevel" jdbcType="VARCHAR"/>
+        <result column="BACK_CODE" property="backCode" jdbcType="VARCHAR"/>
+        <result column="ENTRY_FLAG" property="entryFlag" jdbcType="VARCHAR"/>
+        <result column="KEY_VERSION" property="keyVersion" jdbcType="VARCHAR"/>
+        <result column="REQ_SYS" property="reqSys" jdbcType="VARCHAR"/>
+        <result column="INDUSTRY_APP" property="industryApp" jdbcType="VARCHAR"/>
+        <result column="USE_TYPE" property="useType" jdbcType="VARCHAR"/>
+        <result column="USE_SCENE" property="useScene" jdbcType="VARCHAR"/>
+        <result column="CUS_MOD_STATUS" property="cusModStatus" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="QR_URL" property="qrUrl" jdbcType="VARCHAR"/>
+        <result column="LAST_UPD_OPER_ID" property="lastUpdOperId" jdbcType="VARCHAR"/>
+        <result column="LAST_UPD_TIME" property="lastUpdTime" jdbcType="VARCHAR"/>
+        <result column="CRT_OPER_ID" property="crtOperId" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
+        <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
+        <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
+        <result column="MISC4" property="misc4" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    QR_MOD_ID, QR_MOD_CODE, QR_MOD_NAME, QRCODE_VERSION, ENCODE_MODE, GENERATION_MODE, 
+    EXPIRE_TYPE, EXPIRY_DATE, ACTION_SCOPE, READ_MODE, RISK_LEVEL, BACK_CODE, ENTRY_FLAG, 
+    KEY_VERSION, REQ_SYS, INDUSTRY_APP, USE_TYPE, USE_SCENE, CUS_MOD_STATUS, ORG_ID, 
+    QR_URL, LAST_UPD_OPER_ID, LAST_UPD_TIME, CRT_OPER_ID, CREATE_TIME, MISC1, MISC2, 
+    MISC3, MISC4
+  </sql>
+</mapper>

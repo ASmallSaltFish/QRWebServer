@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.SysParamMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.SysParam">
+        <id column="PARAM_ID" property="paramId" jdbcType="VARCHAR"/>
+        <result column="PARAM_CODE" property="paramCode" jdbcType="VARCHAR"/>
+        <result column="PARAM_DESC" property="paramDesc" jdbcType="VARCHAR"/>
+        <result column="PARAM_VALUE" property="paramValue" jdbcType="VARCHAR"/>
+        <result column="TYPE_CODE" property="typeCode" jdbcType="VARCHAR"/>
+        <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR"/>
+        <result column="VALID_FLAG" property="validFlag" jdbcType="VARCHAR"/>
+        <result column="SORT_ORDER" property="sortOrder" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
+        <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
+        <result column="UPD_DATE" property="updDate" jdbcType="VARCHAR"/>
+        <result column="UPD_TIME" property="updTime" jdbcType="VARCHAR"/>
+        <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
+        <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
+        <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
+        <result column="MISC4" property="misc4" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    PARAM_ID, PARAM_CODE, PARAM_DESC, PARAM_VALUE, TYPE_CODE, TYPE_NAME, VALID_FLAG, 
+    SORT_ORDER, ORG_ID, CRT_USER, UPDATE_USER, CRT_DATE, CRT_TIME, UPD_DATE, UPD_TIME, 
+    MISC1, MISC2, MISC3, MISC4
+  </sql>
+</mapper>

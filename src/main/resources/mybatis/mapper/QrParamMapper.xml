@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.QrParamMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.QrParam">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="PARAM_CODE" property="paramCode" jdbcType="VARCHAR"/>
+        <result column="PARAM_NAME" property="paramName" jdbcType="VARCHAR"/>
+        <result column="PROP_CODE" property="propCode" jdbcType="VARCHAR"/>
+        <result column="PROP_NAME" property="propName" jdbcType="VARCHAR"/>
+        <result column="PARAM_DESC" property="paramDesc" jdbcType="VARCHAR"/>
+        <result column="FLAG_ENABLE" property="flagEnable" jdbcType="VARCHAR"/>
+        <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
+        <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
+        <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    ID, PARAM_CODE, PARAM_NAME, PROP_CODE, PROP_NAME, PARAM_DESC, FLAG_ENABLE, CRT_USER, 
+    CRT_DATE, CRT_TIME, UPDATE_USER, UPDATE_DATE, UPDATE_TIME
+  </sql>
+
+</mapper>

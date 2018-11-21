@@ -1,5 +1,6 @@
 package com.huateng.qrcode.netty;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huateng.qrcode.base.parser.impl.XMLRequestVoParser;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.common.enums.ServiceConfigEnums;
@@ -14,6 +15,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.reflection.wrapper.ObjectWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -40,8 +42,9 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
             logger.info("接收到的报文信息：" + data);
 
             //解析报文信息，获取服务码，根据服务码处理对应业务
-            String responseData = processBusiness(data).toString();
-
+            ResponseVo responseVo = processBusiness(data);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String responseData = objectMapper.writeValueAsString(responseVo);
             logger.info("报文解析完成，响应内容：" + responseData);
 
             ByteBufAllocator alloc = channel.alloc();
@@ -74,7 +77,7 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
 
         Class<?> serviceClass = ServiceConfigEnums.getByServiceCode(serviceCode);
         QrServerManager qrServerManager = (QrServerManager) applicationContext.getBean(serviceClass);
-        if(qrServerManager == null){
+        if (qrServerManager == null) {
             throw new RuntimeException("spring容器中获取服务类bean失败！");
         }
 

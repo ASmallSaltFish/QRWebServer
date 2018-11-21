@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.KeyListInfoMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.KeyListInfo">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="KEYT_METHOD" property="keytMethod" jdbcType="VARCHAR"/>
+        <result column="VERSION" property="version" jdbcType="VARCHAR"/>
+        <result column="KEYT" property="keyt" jdbcType="VARCHAR"/>
+        <result column="IS_IN_USE" property="isInUse" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
+        <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
+        <result column="UPD_DATE" property="updDate" jdbcType="VARCHAR"/>
+        <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
+        <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
+        <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
+        <result column="MISC4" property="misc4" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    ID, KEYT_METHOD, VERSION, KEYT, IS_IN_USE, ORG_ID, CRT_USER, UPDATE_USER, CRT_DATE, 
+    CRT_TIME, UPD_DATE, MISC1, MISC2, MISC3, MISC4
+  </sql>
+
+</mapper>

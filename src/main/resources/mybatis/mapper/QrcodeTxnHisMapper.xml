@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.QrcodeTxnHisMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.QrcodeTxnHis">
+        <id column="TXN_ID" property="txnId" jdbcType="VARCHAR"/>
+        <result column="ORG_TXN_ID" property="orgTxnId" jdbcType="VARCHAR"/>
+        <result column="QRCODE_ID" property="qrcodeId" jdbcType="VARCHAR"/>
+        <result column="CHANNEL_ID" property="channelId" jdbcType="VARCHAR"/>
+        <result column="CHANNEL_NO" property="channelNo" jdbcType="VARCHAR"/>
+        <result column="CHANNEL_DATE" property="channelDate" jdbcType="VARCHAR"/>
+        <result column="CHANNEL_TIME" property="channelTime" jdbcType="VARCHAR"/>
+        <result column="RECEIVE_DATE" property="receiveDate" jdbcType="VARCHAR"/>
+        <result column="RECEIVE_TIME" property="receiveTime" jdbcType="VARCHAR"/>
+        <result column="REQ_SYS_NO" property="reqSysNo" jdbcType="VARCHAR"/>
+        <result column="RESP_SYS_NO" property="respSysNo" jdbcType="VARCHAR"/>
+        <result column="APPLICATION" property="application" jdbcType="VARCHAR"/>
+        <result column="PURPOSE" property="purpose" jdbcType="VARCHAR"/>
+        <result column="SCENE" property="scene" jdbcType="VARCHAR"/>
+        <result column="TRANS_TYPE" property="transType" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+        <result column="RETURN_CODE" property="returnCode" jdbcType="VARCHAR"/>
+        <result column="RETURN_DESC" property="returnDesc" jdbcType="VARCHAR"/>
+        <result column="RETURN_DATE" property="returnDate" jdbcType="VARCHAR"/>
+        <result column="RETURN_TIME" property="returnTime" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
+        <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
+        <result column="UPD_DATE" property="updDate" jdbcType="VARCHAR"/>
+        <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
+        <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
+        <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
+        <result column="MISC4" property="misc4" jdbcType="VARCHAR"/>
+        <result column="REQUEST_DATA" property="requestData" jdbcType="CLOB"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    TXN_ID, ORG_TXN_ID, QRCODE_ID, CHANNEL_ID, CHANNEL_NO, CHANNEL_DATE, CHANNEL_TIME, 
+    RECEIVE_DATE, RECEIVE_TIME, REQ_SYS_NO, RESP_SYS_NO, APPLICATION, PURPOSE, SCENE, 
+    TRANS_TYPE, STATUS, REMARK, RETURN_CODE, RETURN_DESC, RETURN_DATE, RETURN_TIME, ORG_ID, 
+    CRT_USER, UPDATE_USER, CRT_DATE, CRT_TIME, UPD_DATE, MISC1, MISC2, MISC3, MISC4, REQUEST_DATA
+  </sql>
+</mapper>
