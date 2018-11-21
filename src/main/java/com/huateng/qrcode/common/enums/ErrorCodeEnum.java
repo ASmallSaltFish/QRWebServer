@@ -15,25 +15,25 @@ import java.util.Map;
  */
 public enum ErrorCodeEnum {
 
-    SUCCESS("000000","处理成功"),
-    FAIL("999999","处理失败");
+    SUCCESS("000000", "处理成功"),
+    FAIL("999999", "处理失败");
 
     private String code;
     private String desc;
 
-    public String getCode(){
+    public String getCode() {
         return this.code;
     }
 
-    public void setCode(String code){
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public String getDesc(){
+    public String getDesc() {
         return this.desc;
     }
 
-    public void setMessage(String desc){
+    public void setMessage(String desc) {
         this.desc = desc;
     }
 

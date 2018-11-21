@@ -15,6 +15,25 @@ public class ResponseVo {
 
     private BusRespBody busRespBody;
 
+    private String resultCode;
+
+    private String resultMsg;
+
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getResultMsg() {
+        return resultMsg;
+    }
+
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
+    }
 
     public AppRespHeader getAppRespHeader() {
         return appRespHeader;
@@ -43,9 +62,11 @@ public class ResponseVo {
     @Override
     public String toString() {
         return "ResponseVo{" +
-                "appRespHeader=" + appRespHeader.toString() +
-                ", sysRespHeader=" + sysRespHeader.toString() +
-                ", busRespBody=" + busRespBody.toString() +
+                "appRespHeader=" + (appRespHeader == null ? "null" : appRespHeader.toString()) +
+                ", sysRespHeader=" + (sysRespHeader == null ? "null" : sysRespHeader.toString()) +
+                ", busRespBody=" + (busRespBody == null ? "null" : busRespBody.toString()) +
+                ", resultCode='" + resultCode + '\'' +
+                ", resultMsg='" + resultMsg + '\'' +
                 '}';
     }
 }
