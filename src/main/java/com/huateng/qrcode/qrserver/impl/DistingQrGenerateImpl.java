@@ -7,12 +7,15 @@ import com.huateng.qrcode.qrserver.QrServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 识别类二维码生成服务
- *
- * @author xuzhangsheng
- * @since 2018-11-20
+ * @class: DistingQrGenerateImpl
+ * @title: 识别类二维码生成服务
+ * @desc:
+ * @author: xuzhangsheng
+ * @date: 2018年11月21日 下午14:16:53
+ * @since: 1.0.0
  */
 @Service(value = "DistingQrGenerateImpl")
 public class DistingQrGenerateImpl implements QrServerManager {
@@ -25,6 +28,7 @@ public class DistingQrGenerateImpl implements QrServerManager {
      * @param in
      * @return out
      */
+    @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
     @Override
     public ResponseVo handler(RequestVo in) {
 
