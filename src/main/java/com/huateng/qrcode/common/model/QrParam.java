@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *  二维码模版参数定义表
  * </p>
  *
  * @author auto generator

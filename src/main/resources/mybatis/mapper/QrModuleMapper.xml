@@ -8,7 +8,7 @@
         <result column="QRCODE_VERSION" property="qrcodeVersion" jdbcType="VARCHAR"/>
         <result column="ENCODE_MODE" property="encodeMode" jdbcType="VARCHAR"/>
         <result column="GENERATION_MODE" property="generationMode" jdbcType="VARCHAR"/>
-        <result column="EXPIRE_TYPE" property="expireType" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_TYPE" property="expireType" jdbcType="VARCHAR"/>
         <result column="EXPIRY_DATE" property="expiryDate" jdbcType="VARCHAR"/>
         <result column="ACTION_SCOPE" property="actionScope" jdbcType="VARCHAR"/>
         <result column="READ_MODE" property="readMode" jdbcType="VARCHAR"/>
@@ -35,7 +35,7 @@
 
     <sql id="Base_Column_List">
     QR_MOD_ID, QR_MOD_CODE, QR_MOD_NAME, QRCODE_VERSION, ENCODE_MODE, GENERATION_MODE, 
-    EXPIRE_TYPE, EXPIRY_DATE, ACTION_SCOPE, READ_MODE, RISK_LEVEL, BACK_CODE, ENTRY_FLAG, 
+    EXPIRY_TYPE, EXPIRY_DATE, ACTION_SCOPE, READ_MODE, RISK_LEVEL, BACK_CODE, ENTRY_FLAG,
     KEY_VERSION, REQ_SYS, INDUSTRY_APP, USE_TYPE, USE_SCENE, CUS_MOD_STATUS, ORG_ID, 
     QR_URL, LAST_UPD_OPER_ID, LAST_UPD_TIME, CRT_OPER_ID, CREATE_TIME, MISC1, MISC2, 
     MISC3, MISC4

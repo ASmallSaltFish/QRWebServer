@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *
+ *  排队类二维码表
  * </p>
  *
  * @author auto generator
@@ -32,10 +32,10 @@ public class QueueQrcode implements Serializable {
     private String customModTime;
     @TableField("DATA")
     private String data;
-    @TableField("EXPIRE_DATE_TIME")
-    private String expireDateTime;
-    @TableField("EXPIRE_STATUS")
-    private String expireStatus;
+    @TableField("EXPIRY_DATE_TIME")
+    private String expiryDateTime;
+    @TableField("EXPIRY_STATUS")
+    private String expiryStatus;
     @TableField("MISC1")
     private String misc1;
     @TableField("MISC2")
@@ -119,19 +119,19 @@ public class QueueQrcode implements Serializable {
     }
 
     public String getExpireDateTime() {
-        return expireDateTime;
+        return expiryDateTime;
     }
 
-    public void setExpireDateTime(String expireDateTime) {
-        this.expireDateTime = expireDateTime;
+    public void setExpireDateTime(String expiryDateTime) {
+        this.expiryDateTime = expiryDateTime;
     }
 
     public String getExpireStatus() {
-        return expireStatus;
+        return expiryStatus;
     }
 
-    public void setExpireStatus(String expireStatus) {
-        this.expireStatus = expireStatus;
+    public void setExpireStatus(String expiryStatus) {
+        this.expiryStatus = expiryStatus;
     }
 
     public String getMisc1() {
@@ -240,8 +240,8 @@ public class QueueQrcode implements Serializable {
                 ", customModDate=" + customModDate +
                 ", customModTime=" + customModTime +
                 ", data=" + data +
-                ", expireDateTime=" + expireDateTime +
-                ", expireStatus=" + expireStatus +
+                ", expiryDateTime=" + expiryDateTime +
+                ", expiryStatus=" + expiryStatus +
                 ", misc1=" + misc1 +
                 ", misc2=" + misc2 +
                 ", misc3=" + misc3 +

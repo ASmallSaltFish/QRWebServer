@@ -8,7 +8,7 @@ import java.sql.Clob;
 
 /**
  * <p>
- * 
+ *  二维码交易流水表
  * </p>
  *
  * @author auto generator

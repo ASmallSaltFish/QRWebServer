@@ -6,9 +6,9 @@
         <result column="TEMPLET_ID" property="templetId" jdbcType="VARCHAR"/>
         <result column="CUSTOM_MOD_DATE" property="customModDate" jdbcType="VARCHAR"/>
         <result column="CUSTOM_MOD_TIME" property="customModTime" jdbcType="VARCHAR"/>
-        <result column="EXPIRE_DATE_TIME" property="expireDateTime" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_DATE_TIME" property="expireDateTime" jdbcType="VARCHAR"/>
         <result column="PICTURE_ID" property="pictureId" jdbcType="VARCHAR"/>
-        <result column="EXPIRE_STATUS" property="expireStatus" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_STATUS" property="expireStatus" jdbcType="VARCHAR"/>
         <result column="BEFORE_TOKEN" property="beforeToken" jdbcType="VARCHAR"/>
         <result column="TOKEN" property="token" jdbcType="VARCHAR"/>
         <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
@@ -26,8 +26,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        QRCODE_ID, TEMPLET_ID, CUSTOM_MOD_DATE, CUSTOM_MOD_TIME, EXPIRE_DATE_TIME, PICTURE_ID,
-        EXPIRE_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, QR_URL, CRT_USER, UPDATE_USER, CRT_DATE,
+        QRCODE_ID, TEMPLET_ID, CUSTOM_MOD_DATE, CUSTOM_MOD_TIME, EXPIRY_DATE_TIME, PICTURE_ID,
+        EXPIRY_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, QR_URL, CRT_USER, UPDATE_USER, CRT_DATE,
         CRT_TIME, UPD_DATE, MISC1, MISC2, MISC3, MISC4, 'DATA'
     </sql>
 

@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *    系统参数表
  * </p>
  *
  * @author auto generator

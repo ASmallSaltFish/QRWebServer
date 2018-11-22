@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *  黑名单表
  * </p>
  *
  * @author auto generator
@@ -30,8 +30,8 @@ public class BlackListInfo implements Serializable {
     private String crtTime;
     @TableField("CRT_USER")
     private String crtUser;
-    @TableField("EXPIRE_TIME")
-    private String expireTime;
+    @TableField("EXPIRY_TIME")
+    private String expiryTime;
     @TableField("IS_USE")
     private String isUse;
     @TableField("MISC1")
@@ -97,11 +97,11 @@ public class BlackListInfo implements Serializable {
     }
 
     public String getExpireTime() {
-        return expireTime;
+        return expiryTime;
     }
 
-    public void setExpireTime(String expireTime) {
-        this.expireTime = expireTime;
+    public void setExpireTime(String expiryTime) {
+        this.expiryTime = expiryTime;
     }
 
     public String getIsUse() {
@@ -169,7 +169,7 @@ public class BlackListInfo implements Serializable {
         ", blankType=" + blankType +
         ", crtTime=" + crtTime +
         ", crtUser=" + crtUser +
-        ", expireTime=" + expireTime +
+        ", expiryTime=" + expiryTime +
         ", isUse=" + isUse +
         ", misc1=" + misc1 +
         ", misc2=" + misc2 +

@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 密钥管理表
  * </p>
  *
  * @author auto generator

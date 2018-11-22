@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *  二维码模块表
  * </p>
  *
  * @author auto generator
@@ -32,8 +32,8 @@ public class QrModule implements Serializable {
     private String encodeMode;
     @TableField("ENTRY_FLAG")
     private String entryFlag;
-    @TableField("EXPIRE_TYPE")
-    private String expireType;
+    @TableField("EXPIRY_TYPE")
+    private String expiryType;
     @TableField("EXPIRY_DATE")
     private String expiryDate;
     @TableField("GENERATION_MODE")
@@ -135,11 +135,11 @@ public class QrModule implements Serializable {
     }
 
     public String getExpireType() {
-        return expireType;
+        return expiryType;
     }
 
-    public void setExpireType(String expireType) {
-        this.expireType = expireType;
+    public void setExpireType(String expiryType) {
+        this.expiryType = expiryType;
     }
 
     public String getExpiryDate() {
@@ -320,7 +320,7 @@ public class QrModule implements Serializable {
         ", cusModStatus=" + cusModStatus +
         ", encodeMode=" + encodeMode +
         ", entryFlag=" + entryFlag +
-        ", expireType=" + expireType +
+        ", expiryType=" + expiryType +
         ", expiryDate=" + expiryDate +
         ", generationMode=" + generationMode +
         ", industryApp=" + industryApp +
