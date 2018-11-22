@@ -1,4 +1,4 @@
-package com.huateng.qrcode.service.http;
+package com.huateng.qrcode.service.httpserver;
 
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 

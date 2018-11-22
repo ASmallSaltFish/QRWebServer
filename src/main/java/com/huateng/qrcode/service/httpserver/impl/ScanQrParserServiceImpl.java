@@ -1,8 +1,8 @@
-package com.huateng.qrcode.service.http.impl;
+package com.huateng.qrcode.service.httpserver.impl;
 
 
 import com.huateng.qrcode.base.parser.param.ResponseVo;
-import com.huateng.qrcode.service.http.ScanQrParserService;
+import com.huateng.qrcode.service.httpserver.ScanQrParserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
