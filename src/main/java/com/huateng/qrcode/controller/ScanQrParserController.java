@@ -1,6 +1,7 @@
 package com.huateng.qrcode.controller;
 
 import com.huateng.qrcode.base.parser.param.ResponseVo;
+import com.huateng.qrcode.base.parser.param.base.BusRespBody;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.controller.base.BaseController;
 import com.huateng.qrcode.service.httpserver.ScanQrParserService;
@@ -32,7 +33,10 @@ public class ScanQrParserController extends BaseController {
         if (MapUtils.isEmpty(parameterMap)) {
             logger.error("http请求参数paramMap为空!");
             //返回处理失败
-            responseVo.getBusRespBody().setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            BusRespBody busRespBody = responseVo.getBusRespBody();
+            busRespBody.setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            busRespBody.setProcessStatus(ErrorCodeEnum.FAIL.name());
+            busRespBody.setMsg("http请求参数为空！");
             return renderJson(responseVo);
         }
 
@@ -42,7 +46,10 @@ public class ScanQrParserController extends BaseController {
             paramMap = checkAndGetParamMap(parameterMap);
         } catch (Exception e) {
             logger.error("http报文参数校验不通过", e.getMessage());
-            responseVo.getBusRespBody().setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            BusRespBody busRespBody = responseVo.getBusRespBody();
+            busRespBody.setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            busRespBody.setProcessStatus(ErrorCodeEnum.FAIL.name());
+            busRespBody.setMsg("http报文参数校验不通过！");
             return renderJson(responseVo);
         }
 

@@ -2,6 +2,7 @@ package com.huateng.qrcode.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class DateUtil {
@@ -26,6 +27,17 @@ public class DateUtil {
         return dateTimeStr.substring(0, 8);
     }
 
+    /**
+     * 获取日期YYMMdd格式
+     */
+    public static String getYYMMDD() {
+        LocalDate toDay = LocalDate.now();
+        String year = String.valueOf(toDay.getYear()).substring(2);
+        String month = String.valueOf(toDay.getMonth().getValue());
+        String day = String.valueOf(toDay.getDayOfMonth());
+        return year + month + day;
+    }
+
 
     /**
      * 获取当前日期和时间（yyyyMMddHHmmss格式）
@@ -41,6 +53,21 @@ public class DateUtil {
     public static String getCurrentDateTimeStr(String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(new Date());
+    }
+
+    /**
+     * 根据时间字符串，解析为date对象（yyyyMMddHHmmss格式）
+     */
+    public static Date parserToDate(String dateTimeStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        Date date = null;
+        try {
+            date = sdf.parse(dateTimeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
     }
 }
 

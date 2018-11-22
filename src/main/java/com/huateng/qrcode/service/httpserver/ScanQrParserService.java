@@ -15,5 +15,5 @@ public interface ScanQrParserService {
      * @param paraMap http请求参数
      * @return 返回响应对象
      */
-    ResponseVo handler(Map<String, String> paraMap);
+    ResponseVo handler(Map<String, String> paraMap) throws Exception;
 }

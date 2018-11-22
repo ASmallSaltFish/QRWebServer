@@ -10,6 +10,12 @@ public class BusRespBody {
     //处理结果码
     private String processCode;
 
+    //状态
+    private String processStatus;
+
+    //信息
+    private String msg;
+
     private Map<String, String> resultMap;
 
 
@@ -29,10 +35,29 @@ public class BusRespBody {
         return processCode;
     }
 
+    public String getProcessStatus() {
+        return processStatus;
+    }
+
+    public void setProcessStatus(String processStatus) {
+        this.processStatus = processStatus;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     @Override
     public String toString() {
         return "BusRespBody{" +
-                "resultMap=" + resultMap +
+                "processCode='" + processCode + '\'' +
+                ", processStatus='" + processStatus + '\'' +
+                ", msg='" + msg + '\'' +
+                ", resultMap=" + resultMap +
                 '}';
     }
 }
