@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huateng.qrcode.common.mapper.SeqInfoMapper">
+    <resultMap id="BaseResultMap" type="com.huateng.qrcode.common.model.SeqInfo">
+        <result column="SEQ_KEY" property="seqKey" jdbcType="VARCHAR"/>
+        <result column="SYS_ID" property="sysId" jdbcType="VARCHAR"/>
+        <result column="UP_LIMIT" property="upLimit" jdbcType="DECIMAL"/>
+        <result column="DOWN_LIMIT" property="downLimit" jdbcType="DECIMAL"/>
+        <result column="MAX_VALUE" property="maxValue" jdbcType="DECIMAL"/>
+        <result column="INIT_VALUE" property="initValue" jdbcType="DECIMAL"/>
+        <result column="RULE_DEF" property="ruleDef" jdbcType="VARCHAR"/>
+        <result column="INC_RULE_VALUE" property="incRuleValue" jdbcType="DECIMAL"/>
+        <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
+        <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
+        <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
+        <result column="MISC4" property="misc4" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

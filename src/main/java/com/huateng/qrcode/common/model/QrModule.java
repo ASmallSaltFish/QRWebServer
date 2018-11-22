@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *  二维码模块表
+ * 二维码模块表
  * </p>
  *
  * @author auto generator
@@ -18,65 +18,115 @@ public class QrModule implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableField("ACTION_SCOPE")
-    private String actionScope;
-    @TableField("BACK_CODE")
-    private String backCode;
-    @TableField("CREATE_TIME")
-    private String createTime;
-    @TableField("CRT_OPER_ID")
-    private String crtOperId;
-    @TableField("CUS_MOD_STATUS")
-    private String cusModStatus;
-    @TableField("ENCODE_MODE")
-    private String encodeMode;
-    @TableField("ENTRY_FLAG")
-    private String entryFlag;
-    @TableField("EXPIRY_TYPE")
-    private String expiryType;
-    @TableField("EXPIRY_DATE")
-    private String expiryDate;
-    @TableField("GENERATION_MODE")
-    private String generationMode;
-    @TableField("INDUSTRY_APP")
-    private String industryApp;
-    @TableField("KEY_VERSION")
-    private String keyVersion;
-    @TableField("LAST_UPD_OPER_ID")
-    private String lastUpdOperId;
-    @TableField("LAST_UPD_TIME")
-    private String lastUpdTime;
-    @TableField("MISC1")
-    private String misc1;
-    @TableField("MISC2")
-    private String misc2;
-    @TableField("MISC3")
-    private String misc3;
-    @TableField("MISC4")
-    private String misc4;
-    @TableField("ORG_ID")
-    private String orgId;
-    @TableField("QRCODE_VERSION")
-    private String qrcodeVersion;
-    @TableField("QR_MOD_CODE")
-    private String qrModCode;
+    //主键
     @TableField("QR_MOD_ID")
     private String qrModId;
-    @TableField("QR_MOD_NAME")
-    private String qrModName;
-    @TableField("QR_URL")
-    private String qrUrl;
+
+    //二维码模版编码：二维码版本+二维码生成方式+时效+类别域+保留位+请求系统+行业类型+用途+使用场景（15位）
+    @TableField("QR_MOD_CODE")
+    private String qrModCode;
+
+    //二维码版本编号
+    @TableField("QRCODE_VERSION")
+    private String qrcodeVersion;
+
+    //编码原理（1-QR Code，。。。）
+    @TableField("ENCODE_MODE")
+    private String encodeMode;
+
+    //二维码生成方式（1-在线实时生成，2-在线定时生成，3-离线定时生成，4-离线定时生成）
+    @TableField("GENERATION_MODE")
+    private String generationMode;
+
+    //时效（1-动态二维码，2-静态二维码）
+    @TableField("EXPIRY_DATE")
+    private String expiryDate;
+
+    //类别域（1-开放式条码资金类，2-开放式条码非资金类，3-系统内条码资金类，4-系统内条码非资金类，5-公共条码资金类，6-公共条码非资金类）
+    @TableField("ACTION_SCOPE")
+    private String actionScope;
+
+    //读取方式（1-主读，2-被读，3-主被读）
     @TableField("READ_MODE")
     private String readMode;
-    @TableField("REQ_SYS")
-    private String reqSys;
+
+    //风险等级（1-低，2-中低，3-中，4-中高，5-高）
     @TableField("RISK_LEVEL")
     private String riskLevel;
-    @TableField("USE_SCENE")
-    private String useScene;
+
+    //保留位（0-默认）
+    @TableField("BACK_CODE")
+    private String backCode;
+
+    //加密标识（1-不加密(默认)）
+    @TableField("ENTRY_FLAG")
+    private String entryFlag;
+
+    //密钥版本（0-默认）
+    @TableField("KEY_VERSION")
+    private String keyVersion;
+
+    //请求系统（4位）
+    @TableField("REQ_SYS")
+    private String reqSys;
+
+    //行业类型（3位）
+    @TableField("INDUSTRY_APP")
+    private String industryApp;
+
+    //用途（1位）（1-识别类，2-展示类，3-支付类，4-运营类，5-排队类）
     @TableField("USE_TYPE")
     private String useType;
 
+    //使用场景（2位）
+    @TableField("USE_SCENE")
+    private String useScene;
+
+    /************************/
+
+    @TableField("ORG_ID")
+    private String orgId;
+
+    //二维码模板名称
+    @TableField("QR_MOD_NAME")
+    private String qrModName;
+
+    @TableField("QR_URL")
+    private String qrUrl;
+
+    //模板状态
+    @TableField("CUS_MOD_STATUS")
+    private String cusModStatus;
+
+    //时效类型（1-动态二维码，2-静态二维码）
+    @TableField("EXPIRY_TYPE")
+    private String expiryType;
+
+
+
+    @TableField("CREATE_TIME")
+    private String createTime;
+
+    @TableField("CRT_OPER_ID")
+    private String crtOperId;
+
+    @TableField("LAST_UPD_OPER_ID")
+    private String lastUpdOperId;
+
+    @TableField("LAST_UPD_TIME")
+    private String lastUpdTime;
+
+    @TableField("MISC1")
+    private String misc1;
+
+    @TableField("MISC2")
+    private String misc2;
+
+    @TableField("MISC3")
+    private String misc3;
+
+    @TableField("MISC4")
+    private String misc4;
 
     public String getActionScope() {
         return actionScope;
@@ -313,35 +363,35 @@ public class QrModule implements Serializable {
     @Override
     public String toString() {
         return "QrModule{" +
-        "actionScope=" + actionScope +
-        ", backCode=" + backCode +
-        ", createTime=" + createTime +
-        ", crtOperId=" + crtOperId +
-        ", cusModStatus=" + cusModStatus +
-        ", encodeMode=" + encodeMode +
-        ", entryFlag=" + entryFlag +
-        ", expiryType=" + expiryType +
-        ", expiryDate=" + expiryDate +
-        ", generationMode=" + generationMode +
-        ", industryApp=" + industryApp +
-        ", keyVersion=" + keyVersion +
-        ", lastUpdOperId=" + lastUpdOperId +
-        ", lastUpdTime=" + lastUpdTime +
-        ", misc1=" + misc1 +
-        ", misc2=" + misc2 +
-        ", misc3=" + misc3 +
-        ", misc4=" + misc4 +
-        ", orgId=" + orgId +
-        ", qrcodeVersion=" + qrcodeVersion +
-        ", qrModCode=" + qrModCode +
-        ", qrModId=" + qrModId +
-        ", qrModName=" + qrModName +
-        ", qrUrl=" + qrUrl +
-        ", readMode=" + readMode +
-        ", reqSys=" + reqSys +
-        ", riskLevel=" + riskLevel +
-        ", useScene=" + useScene +
-        ", useType=" + useType +
-        "}";
+                "actionScope=" + actionScope +
+                ", backCode=" + backCode +
+                ", createTime=" + createTime +
+                ", crtOperId=" + crtOperId +
+                ", cusModStatus=" + cusModStatus +
+                ", encodeMode=" + encodeMode +
+                ", entryFlag=" + entryFlag +
+                ", expiryType=" + expiryType +
+                ", expiryDate=" + expiryDate +
+                ", generationMode=" + generationMode +
+                ", industryApp=" + industryApp +
+                ", keyVersion=" + keyVersion +
+                ", lastUpdOperId=" + lastUpdOperId +
+                ", lastUpdTime=" + lastUpdTime +
+                ", misc1=" + misc1 +
+                ", misc2=" + misc2 +
+                ", misc3=" + misc3 +
+                ", misc4=" + misc4 +
+                ", orgId=" + orgId +
+                ", qrcodeVersion=" + qrcodeVersion +
+                ", qrModCode=" + qrModCode +
+                ", qrModId=" + qrModId +
+                ", qrModName=" + qrModName +
+                ", qrUrl=" + qrUrl +
+                ", readMode=" + readMode +
+                ", reqSys=" + reqSys +
+                ", riskLevel=" + riskLevel +
+                ", useScene=" + useScene +
+                ", useType=" + useType +
+                "}";
     }
 }

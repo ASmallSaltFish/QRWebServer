@@ -2,19 +2,14 @@ package com.huateng.qrcode.controller;
 
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
-import com.huateng.qrcode.common.enums.ServiceConfigEnums;
 import com.huateng.qrcode.controller.base.BaseController;
-import com.huateng.qrcode.qrserver.QrServerManager;
-import com.huateng.qrcode.service.http.ScanQrParserService;
-import com.huateng.qrcode.utils.SpringContextUtil;
+import com.huateng.qrcode.service.httpserver.ScanQrParserService;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
