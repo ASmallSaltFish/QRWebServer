@@ -2,16 +2,15 @@ package com.huateng.test.testQrParser;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
-import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
 import com.huateng.qrcode.common.model.IdentityQrcode;
 import com.huateng.qrcode.common.model.QrModule;
 import com.huateng.qrcode.service.form.IdentityQrcodeService;
+import com.huateng.qrcode.service.form.PaymentQrcodeService;
 import com.huateng.qrcode.service.form.QrModuleService;
 import com.huateng.qrcode.utils.DateUtil;
 import com.huateng.test.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import sun.tools.java.Identifier;
 
 /**
  * 测试二维码解析
@@ -23,6 +22,9 @@ public class Test extends BaseTest {
 
     @Autowired
     private IdentityQrcodeService identityQrcodeService;
+
+    @Autowired
+    private PaymentQrcodeService paymentQrcodeService;
 
     /**
      * 测试生成二维码模版数据
@@ -94,6 +96,7 @@ public class Test extends BaseTest {
         identityQrcodeService.insert(identityQrcode);
         System.out.println("---->>>识别类二维码生成成功！");
     }
+
 
     @org.junit.Test
     public void test() {

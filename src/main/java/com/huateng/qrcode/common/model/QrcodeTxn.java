@@ -8,7 +8,7 @@ import java.sql.Clob;
 
 /**
  * <p>
- *  二维码交易流水表
+ * 二维码交易流水表
  * </p>
  *
  * @author auto generator
@@ -19,71 +19,124 @@ public class QrcodeTxn implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableField("APPLICATION")
-    private String application;
-    @TableField("CHANNEL_DATE")
-    private String channelDate;
-    @TableField("CHANNEL_ID")
-    private String channelId;
-    @TableField("CHANNEL_NO")
-    private String channelNo;
-    @TableField("CHANNEL_TIME")
-    private String channelTime;
-    @TableField("CRT_DATE")
-    private String crtDate;
-    @TableField("CRT_TIME")
-    private String crtTime;
-    @TableField("CRT_USER")
-    private String crtUser;
-    @TableField("MISC1")
-    private String misc1;
-    @TableField("MISC2")
-    private String misc2;
-    @TableField("MISC3")
-    private String misc3;
-    @TableField("MISC4")
-    private String misc4;
-    @TableField("ORG_ID")
-    private String orgId;
-    @TableField("ORG_TXN_ID")
-    private String orgTxnId;
-    @TableField("PURPOSE")
-    private String purpose;
-    @TableField("QRCODE_ID")
-    private String qrcodeId;
-    @TableField("RECEIVE_DATE")
-    private String receiveDate;
-    @TableField("RECEIVE_TIME")
-    private String receiveTime;
-    @TableField("REMARK")
-    private String remark;
-    @TableField("REQUEST_DATA")
-    private String requestData;
-    @TableField("REQ_SYS_NO")
-    private String reqSysNo;
-    @TableField("RESP_SYS_NO")
-    private String respSysNo;
-    @TableField("RETURN_CODE")
-    private String returnCode;
-    @TableField("RETURN_DATE")
-    private String returnDate;
-    @TableField("RETURN_DESC")
-    private String returnDesc;
-    @TableField("RETURN_TIME")
-    private String returnTime;
-    @TableField("SCENE")
-    private String scene;
-    @TableField("STATUS")
-    private String status;
-    @TableField("TRANS_TYPE")
-    private String transType;
+    //主键
     @TableField("TXN_ID")
     private String txnId;
+
+    //原交易流水号
+    @TableField("ORG_TXN_ID")
+    private String orgTxnId;
+
+    //二维码编号
+    @TableField("QRCODE_ID")
+    private String qrcodeId;
+
+    //渠道号
+    @TableField("CHANNEL_ID")
+    private String channelId;
+
+    //渠道流水号
+    @TableField("CHANNEL_NO")
+    private String channelNo;
+
+    //渠道交易日期
+    @TableField("CHANNEL_DATE")
+    private String channelDate;
+
+    //渠道交易时间
+    @TableField("CHANNEL_TIME")
+    private String channelTime;
+
+    //请求系统
+    @TableField("REQ_SYS_NO")
+    private String reqSysNo;
+
+    //应答系统
+    @TableField("RESP_SYS_NO")
+    private String respSysNo;
+
+    //行内应用
+    @TableField("APPLICATION")
+    private String application;
+
+    //用途
+    @TableField("PURPOSE")
+    private String purpose;
+
+    //场景
+    @TableField("SCENE")
+    private String scene;
+
+    //请求报文
+    @TableField("REQUEST_DATA")
+    private String requestData;
+
+    //交易类型
+    @TableField("TRANS_TYPE")
+    private String transType;
+
+    //接收日期
+    @TableField("RECEIVE_DATE")
+    private String receiveDate;
+
+    //接收时间
+    @TableField("RECEIVE_TIME")
+    private String receiveTime;
+
+    //交易状态
+    @TableField("STATUS")
+    private String status;
+
+    //备注
+    @TableField("REMARK")
+    private String remark;
+
+    //返回码
+    @TableField("RETURN_CODE")
+    private String returnCode;
+
+    //返回日期
+    @TableField("RETURN_DATE")
+    private String returnDate;
+
+    //返回描述
+    @TableField("RETURN_DESC")
+    private String returnDesc;
+
+    //返回时间
+    @TableField("RETURN_TIME")
+    private String returnTime;
+
+    //机构编号
+    @TableField("ORG_ID")
+    private String orgId;
+
     @TableField("UPDATE_USER")
     private String updateUser;
+
     @TableField("UPD_DATE")
     private String updDate;
 
+    @TableField("CRT_DATE")
+    private String crtDate;
+
+    @TableField("CRT_TIME")
+    private String crtTime;
+
+    @TableField("CRT_USER")
+    private String crtUser;
+
+    @TableField("MISC1")
+    private String misc1;
+
+    @TableField("MISC2")
+    private String misc2;
+
+    @TableField("MISC3")
+    private String misc3;
+
+    @TableField("MISC4")
+    private String misc4;
 
     public String getApplication() {
         return application;
@@ -344,38 +397,38 @@ public class QrcodeTxn implements Serializable {
     @Override
     public String toString() {
         return "QrcodeTxn{" +
-        "application=" + application +
-        ", channelDate=" + channelDate +
-        ", channelId=" + channelId +
-        ", channelNo=" + channelNo +
-        ", channelTime=" + channelTime +
-        ", crtDate=" + crtDate +
-        ", crtTime=" + crtTime +
-        ", crtUser=" + crtUser +
-        ", misc1=" + misc1 +
-        ", misc2=" + misc2 +
-        ", misc3=" + misc3 +
-        ", misc4=" + misc4 +
-        ", orgId=" + orgId +
-        ", orgTxnId=" + orgTxnId +
-        ", purpose=" + purpose +
-        ", qrcodeId=" + qrcodeId +
-        ", receiveDate=" + receiveDate +
-        ", receiveTime=" + receiveTime +
-        ", remark=" + remark +
-        ", requestData=" + requestData +
-        ", reqSysNo=" + reqSysNo +
-        ", respSysNo=" + respSysNo +
-        ", returnCode=" + returnCode +
-        ", returnDate=" + returnDate +
-        ", returnDesc=" + returnDesc +
-        ", returnTime=" + returnTime +
-        ", scene=" + scene +
-        ", status=" + status +
-        ", transType=" + transType +
-        ", txnId=" + txnId +
-        ", updateUser=" + updateUser +
-        ", updDate=" + updDate +
-        "}";
+                "application=" + application +
+                ", channelDate=" + channelDate +
+                ", channelId=" + channelId +
+                ", channelNo=" + channelNo +
+                ", channelTime=" + channelTime +
+                ", crtDate=" + crtDate +
+                ", crtTime=" + crtTime +
+                ", crtUser=" + crtUser +
+                ", misc1=" + misc1 +
+                ", misc2=" + misc2 +
+                ", misc3=" + misc3 +
+                ", misc4=" + misc4 +
+                ", orgId=" + orgId +
+                ", orgTxnId=" + orgTxnId +
+                ", purpose=" + purpose +
+                ", qrcodeId=" + qrcodeId +
+                ", receiveDate=" + receiveDate +
+                ", receiveTime=" + receiveTime +
+                ", remark=" + remark +
+                ", requestData=" + requestData +
+                ", reqSysNo=" + reqSysNo +
+                ", respSysNo=" + respSysNo +
+                ", returnCode=" + returnCode +
+                ", returnDate=" + returnDate +
+                ", returnDesc=" + returnDesc +
+                ", returnTime=" + returnTime +
+                ", scene=" + scene +
+                ", status=" + status +
+                ", transType=" + transType +
+                ", txnId=" + txnId +
+                ", updateUser=" + updateUser +
+                ", updDate=" + updDate +
+                "}";
     }
 }

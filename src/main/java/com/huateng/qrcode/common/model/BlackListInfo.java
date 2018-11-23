@@ -96,11 +96,11 @@ public class BlackListInfo implements Serializable {
         this.crtUser = crtUser;
     }
 
-    public String getExpireTime() {
+    public String getExpiryTime() {
         return expiryTime;
     }
 
-    public void setExpireTime(String expiryTime) {
+    public void setExpiryTime(String expiryTime) {
         this.expiryTime = expiryTime;
     }
 
