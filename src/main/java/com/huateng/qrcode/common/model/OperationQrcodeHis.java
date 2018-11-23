@@ -119,19 +119,19 @@ public class OperationQrcodeHis implements Serializable {
         this.data = data;
     }
 
-    public String getExpireDateTime() {
+    public String getExpiryDateTime() {
         return expiryDateTime;
     }
 
-    public void setExpireDateTime(String expiryDateTime) {
+    public void setExpiryDateTime(String expiryDateTime) {
         this.expiryDateTime = expiryDateTime;
     }
 
-    public String getExpireStatus() {
+    public String getExpiryStatus() {
         return expiryStatus;
     }
 
-    public void setExpireStatus(String expiryStatus) {
+    public void setExpiryStatus(String expiryStatus) {
         this.expiryStatus = expiryStatus;
     }
 

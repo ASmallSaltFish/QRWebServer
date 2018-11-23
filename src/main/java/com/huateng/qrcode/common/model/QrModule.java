@@ -184,11 +184,11 @@ public class QrModule implements Serializable {
         this.entryFlag = entryFlag;
     }
 
-    public String getExpireType() {
+    public String getExpiryType() {
         return expiryType;
     }
 
-    public void setExpireType(String expiryType) {
+    public void setExpiryType(String expiryType) {
         this.expiryType = expiryType;
     }
 
