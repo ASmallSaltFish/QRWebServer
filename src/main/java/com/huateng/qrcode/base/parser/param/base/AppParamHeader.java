@@ -35,6 +35,9 @@ public class AppParamHeader {
     //二维码场景
     private String scene;
 
+    //时效
+    private String prescription;
+
     public String getGenerationMode() {
         return generationMode;
     }
@@ -115,6 +118,14 @@ public class AppParamHeader {
         this.scene = scene;
     }
 
+    public String getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
+    }
+
     @Override
     public String toString() {
         return "AppParamHeader{" +
@@ -128,6 +139,7 @@ public class AppParamHeader {
                 ", industryApp='" + industryApp + '\'' +
                 ", useType='" + useType + '\'' +
                 ", scene='" + scene + '\'' +
+                ", prescription='" + prescription + '\'' +
                 '}';
     }
 }
