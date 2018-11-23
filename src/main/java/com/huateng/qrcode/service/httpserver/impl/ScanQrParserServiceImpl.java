@@ -10,6 +10,7 @@ import com.huateng.qrcode.common.model.IdentityQrcode;
 import com.huateng.qrcode.service.form.IdentityQrcodeService;
 import com.huateng.qrcode.service.httpserver.ScanQrParserService;
 import com.huateng.qrcode.utils.DateUtil;
+import com.huateng.qrcode.utils.QrUtil;
 import com.huateng.qrcode.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -40,14 +41,7 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
         //27-33 7位token值
         String token = qrCode.substring(26, 33);
         //校验位
-        String flag = qrCode.substring(33);
-        //todo 校验位算法，确定校验位
-        if (!"1".equals(flag)) {
-            logger.error("校验位校验不通过！");
-            throw new RuntimeException("二维码不合法，校验错误！");
-        }
-
-        //todo 黑名单校验
+        String checkFlag = qrCode.substring(33);
 
         //todo 可以根据配置，更好的实现根据类别域确定类别域方式
         if ("1".equals(actionScope)) {
@@ -58,6 +52,21 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
                 logger.error("根据token查询，没有获取到二维码信息！");
                 throw new RuntimeException("二维码信息不存在！");
             }
+
+            //token前值
+            String beforeToken = identityQrcode.getBeforeToken();
+            //除校验位外，二维码码串实际明文
+            String qrCodeFromDB = identityQrcode.getQrcodeId().substring(0, 26) + beforeToken;
+            //获取二维码校验位
+            String actualCheckFlag = QrUtil.getCheckFlag(StringUtil.toBinaryString(qrCodeFromDB));
+
+            //检验位校验
+            if (!actualCheckFlag.equals(checkFlag)) {
+                logger.error("校验位校验不通过！");
+                throw new RuntimeException("二维码不合法，校验错误！");
+            }
+
+            //todo 黑名单校验
 
             //二维码是否失效
             String expiryStatus = identityQrcode.getExpiryStatus();
@@ -72,10 +81,11 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
                 throw new RuntimeException("二维码已失效！");
             }
 
-            BusRespBody busRespBody = responseVo.getBusRespBody();
+            BusRespBody busRespBody = new BusRespBody();
             busRespBody.setProcessCode(ErrorCodeEnum.SUCCESS.getCode());
             busRespBody.setProcessStatus(ErrorCodeEnum.SUCCESS.name());
             busRespBody.setMsg(ErrorCodeEnum.SUCCESS.getDesc());
+            responseVo.setBusRespBody(busRespBody);
         }
 
         return responseVo;

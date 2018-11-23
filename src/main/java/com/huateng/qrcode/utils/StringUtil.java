@@ -66,4 +66,18 @@ public class StringUtil {
     public static String null2String(String str) {
         return str == null ? "" : str;
     }
+
+
+    /**
+     * 将字符串转化为二进制字符串
+     */
+    public static String toBinaryString(String str) {
+        char[] chars = str.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < chars.length; i++) {
+            sb.append(Integer.toBinaryString(chars[i]));
+        }
+
+        return sb.toString();
+    }
 }

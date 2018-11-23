@@ -29,14 +29,15 @@ public class ScanQrParserController extends BaseController {
     public String handlerScanTask(HttpServletRequest request) {
         System.out.println(scanQrParserService);
         ResponseVo responseVo = new ResponseVo();
+        BusRespBody busRespBody = new BusRespBody();
         Map<String, String[]> parameterMap = request.getParameterMap();
         if (MapUtils.isEmpty(parameterMap)) {
             logger.error("http请求参数paramMap为空!");
             //返回处理失败
-            BusRespBody busRespBody = responseVo.getBusRespBody();
             busRespBody.setProcessCode(ErrorCodeEnum.FAIL.getCode());
             busRespBody.setProcessStatus(ErrorCodeEnum.FAIL.name());
             busRespBody.setMsg("http请求参数为空！");
+            responseVo.setBusRespBody(busRespBody);
             return renderJson(responseVo);
         }
 
@@ -46,10 +47,10 @@ public class ScanQrParserController extends BaseController {
             paramMap = checkAndGetParamMap(parameterMap);
         } catch (Exception e) {
             logger.error("http报文参数校验不通过", e.getMessage());
-            BusRespBody busRespBody = responseVo.getBusRespBody();
             busRespBody.setProcessCode(ErrorCodeEnum.FAIL.getCode());
             busRespBody.setProcessStatus(ErrorCodeEnum.FAIL.name());
             busRespBody.setMsg("http报文参数校验不通过！");
+            responseVo.setBusRespBody(busRespBody);
             return renderJson(responseVo);
         }
 
@@ -59,7 +60,10 @@ public class ScanQrParserController extends BaseController {
             return renderJson(responseVo);
         } catch (Exception e) {
             logger.error("业务类处理出现异常", e);
-            responseVo.getBusRespBody().setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            busRespBody.setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            busRespBody.setProcessStatus(ErrorCodeEnum.FAIL.name());
+            busRespBody.setMsg(e.getMessage());
+            responseVo.setBusRespBody(busRespBody);
             return renderJson(responseVo);
         }
     }

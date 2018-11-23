@@ -101,5 +101,6 @@ public class Test extends BaseTest {
         System.out.println("--->>>actionScope=" + qrCode.substring(17, 18));
         System.out.println("--->>>token=" + qrCode.substring(26, 33));
         System.out.println("--->>>flag=" + qrCode.substring(33));
+        System.out.println("--->>>qrcodeFromDb=" + qrCode.substring(0,26));
     }
 }
