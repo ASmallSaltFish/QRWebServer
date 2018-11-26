@@ -27,7 +27,7 @@ public class SeqGeneratorUtil {
     }
 
     public synchronized String getSequenceNo(String seqKey) {
-        LinkedList<String> sequenceNos = seqKeyAndSeqNosMap.get(Constants.SEQ_KEY);
+        LinkedList<String> sequenceNos = seqKeyAndSeqNosMap.get(seqKey);
         if (CollectionUtils.isEmpty(sequenceNos)) {
             ApplicationContext ctx = SpringContextUtil.getInstance().getApplicationContext();
             SeqGeneratorService seqGeneratorService = (SeqGeneratorService) ctx.getBean("seqGeneratorService");
