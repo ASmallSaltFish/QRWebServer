@@ -1,5 +1,6 @@
 package com.huateng.qrcode.controller;
 
+import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.utils.SeqGeneratorUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ public class TestController {
     @RequestMapping(value = "/test")
     public String test() {
 
-        return SeqGeneratorUtil.getInstance().getSequenceNo();
+        return SeqGeneratorUtil.getInstance().getSequenceNo(Constants.SEQ_KEY);
     }
 
 
@@ -28,7 +29,7 @@ public class TestController {
         System.out.println("==========>>>>>>");
         for (int i = 0; i < 100; i++) {
             executorService.execute(() -> {
-                String sequenceNo = SeqGeneratorUtil.getInstance().getSequenceNo();
+                String sequenceNo = SeqGeneratorUtil.getInstance().getSequenceNo(Constants.SEQ_KEY);
                 System.out.println("==========>>>>>>" + sequenceNo);
             });
         }

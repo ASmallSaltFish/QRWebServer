@@ -13,18 +13,53 @@ import com.huateng.qrcode.service.form.QrModuleService;
 import com.huateng.qrcode.service.form.SeqInfoService;
 import com.huateng.qrcode.utils.DateUtil;
 import com.huateng.qrcode.utils.SeqGeneratorUtil;
+import com.huateng.qrcode.utils.http.UpopHttpClient;
 import com.huateng.test.BaseTest;
+import io.netty.util.CharsetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 测试二维码解析
  */
 public class Test extends BaseTest {
+
+    private String data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<requestVo>\n" +
+            "    <appHeader>\n" +
+            "        <industryApp>010</industryApp>\n" +
+            "        <reqSys>医疗云</reqSys>\n" +
+            "        <scene>100</scene>\n" +
+            "        <useType>002</useType>\n" +
+            "    </appHeader>\n" +
+            "    <busBody>\n" +
+            "        <qrCode>1111112010888801110318112276543210</qrCode>\n" +
+            "        <paramMap>\n" +
+            "            <productNo>111000111</productNo>\n" +
+            "            <validDate>5000</validDate>\n" +
+            "            <version>2.0.1</version>\n" +
+            "        </paramMap>\n" +
+            "    </busBody>\n" +
+            "    <sysHeader>\n" +
+            "        <chlMsgId>2222222</chlMsgId>\n" +
+            "        <chlSendTime>2018-10-10 22:10:10</chlSendTime>\n" +
+            "        <receiver>lisi</receiver>\n" +
+            "        <sendMsgId>11111</sendMsgId>\n" +
+            "        <sendTime>2018-10-10</sendTime>\n" +
+            "        <sender>zhangsan</sender>\n" +
+            "        <serviceCode>001</serviceCode>\n" +
+            "        <teller>zhangsan</teller>\n" +
+            "        <version>1.0.0</version>\n" +
+            "    </sysHeader>\n" +
+            "</requestVo>";
 
     @Autowired
     private QrModuleService qrModuleService;
@@ -115,7 +150,6 @@ public class Test extends BaseTest {
         SeqInfo seqInfo = new SeqInfo();
         //序列的联合主键
         seqInfo.setSeqKey(Constants.SEQ_KEY);
-        seqInfo.setSysId(Constants.SYS_ID);
         //序列初始值
         seqInfo.setInitValue(new BigDecimal(0));
         //序列最大值
@@ -155,9 +189,58 @@ public class Test extends BaseTest {
      */
     @org.junit.Test
     public void testSeqGenerate() {
-        for (int i = 0; i < 1000; i++) {
-            String sequenceNo = SeqGeneratorUtil.getInstance().getSequenceNo();
+        for (int i = 0; i < 100; i++) {
+            String sequenceNo = SeqGeneratorUtil.getInstance().getSequenceNo(Constants.SEQ_KEY);
             System.out.println("===>>>" + sequenceNo);
         }
+    }
+
+
+    @org.junit.Test
+    public void testIsSingleInstance() {
+        SeqGeneratorUtil instance = SeqGeneratorUtil.getInstance();
+        SeqGeneratorUtil instance2 = SeqGeneratorUtil.getInstance();
+        System.out.println("=====>>>>>是否是单例：" + (instance == instance2));
+    }
+
+
+    /**
+     * 扫码类二维码解析：http://127.0.0.1:8082/qrcode/scan/handler.do?qrCode=1111112010888801110318112212345671
+     */
+    @org.junit.Test
+    public void testParserForScan() throws Exception {
+        String requestUrl = "http://127.0.0.1:8082/qrcode/scan/handler.do";
+        UpopHttpClient httpClient = new UpopHttpClient(requestUrl, 10000, 10000);
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("qrCode", "1111112010888801110318112276543211");
+        int responseCode = httpClient.send(paramMap, "utf-8");
+        System.out.println("==>>responseCode=" + responseCode);
+        String result = httpClient.getResult();
+        System.out.println("result=" + result);
+    }
+
+    /**
+     * 系统类二维码解析：http://127.0.0.1:8082
+     */
+    @org.junit.Test
+    public void testParserForSystem() throws IOException {
+        Socket socket = new Socket("127.0.0.1", 8888);
+        OutputStream outputStream = socket.getOutputStream();
+        PrintWriter pw = new PrintWriter(outputStream);
+        pw.write(data);
+        pw.flush();
+
+        //读取字节流
+        InputStream inputStream = socket.getInputStream();
+        byte[] buff = new byte[1024];
+        int len = 0;
+        while (-1 != (len = (inputStream.read(buff)))) {
+            System.out.println(new String(buff, 0, len, CharsetUtil.UTF_8));
+        }
+
+        inputStream.close();
+        pw.close();
+        outputStream.close();
+        socket.close();
     }
 }

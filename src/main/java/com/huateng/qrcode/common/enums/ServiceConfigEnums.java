@@ -12,7 +12,7 @@ import com.huateng.qrcode.qrserver.QrServerManager;
 public enum ServiceConfigEnums {
     //系统类二维码解析
     SYS_PARSER_QRCODE("001", SysQrParserManagerImpl.class),
-    Disting_QRCODE("003", DistingQrGenerateImpl.class);
+    DISTING_QRCODE("003", RegisterQrGenerateImpl.class);
 
 
     private String serviceCode;

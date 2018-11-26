@@ -6,11 +6,11 @@ import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.controller.base.BaseController;
 import com.huateng.qrcode.service.httpserver.ScanQrParserService;
 import org.apache.commons.collections.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -21,10 +21,10 @@ import java.util.Map;
 @RequestMapping(value = "/scan")
 public class ScanQrParserController extends BaseController {
 
-    @Autowired
+    @Resource
     private ScanQrParserService scanQrParserService;
 
-    @RequestMapping(value = "/handler")
+    @RequestMapping(value = "/handler", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String handlerScanTask(HttpServletRequest request) {
         System.out.println(scanQrParserService);
@@ -57,6 +57,7 @@ public class ScanQrParserController extends BaseController {
         try {
             responseVo = scanQrParserService.handler(paramMap);
             //todo 确定返回结果的类型
+            logger.info("返回报文信息：" + renderJson(responseVo));
             return renderJson(responseVo);
         } catch (Exception e) {
             logger.error("业务类处理出现异常", e);
@@ -64,6 +65,7 @@ public class ScanQrParserController extends BaseController {
             busRespBody.setProcessStatus(ErrorCodeEnum.FAIL.name());
             busRespBody.setMsg(e.getMessage());
             responseVo.setBusRespBody(busRespBody);
+            logger.info("返回报文信息：" + renderJson(responseVo));
             return renderJson(responseVo);
         }
     }

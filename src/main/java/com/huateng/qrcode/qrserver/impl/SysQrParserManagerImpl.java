@@ -6,6 +6,7 @@ import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.base.parser.param.base.BusParamBody;
 import com.huateng.qrcode.base.parser.param.base.BusRespBody;
+import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.common.enums.QrCodeTxnStatusMenu;
 import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
@@ -77,8 +78,7 @@ public class SysQrParserManagerImpl implements QrServerManager {
 
         //todo 黑名单校验
 
-        //todo 可以根据配置，更好的实现根据类别域确定类别域方式
-        if ("1".equals(actionScope)) {
+        if (Constants.IDENTIFY_ACTION_ACOPE.equals(actionScope)) {
             EntityWrapper<IdentityQrcode> entityWrapper = new EntityWrapper<>();
             entityWrapper.where("token={0}", token);
             IdentityQrcode identityQrcode = identityQrcodeService.selectOne(entityWrapper);

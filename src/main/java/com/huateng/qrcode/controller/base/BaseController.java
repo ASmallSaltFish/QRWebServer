@@ -1,5 +1,6 @@
 package com.huateng.qrcode.controller.base;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
@@ -57,14 +58,8 @@ public class BaseController {
      * 返回json格式字符串
      */
     protected String renderJson(ResponseVo responseVo) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(responseVo);
-        } catch (JsonProcessingException e) {
-            logger.error("将responseVo对象转化为json字符串时出现异常", e);
-        }
 
-        return null;
+        return JSON.toJSONString(responseVo);
     }
 
 }

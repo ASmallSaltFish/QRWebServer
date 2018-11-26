@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.base.parser.param.base.BusRespBody;
+import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.common.enums.QrCodeTxnStatusMenu;
 import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
@@ -23,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -57,8 +57,7 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
 
         //todo 黑名单校验
 
-        //todo 可以根据配置，更好的实现根据类别域确定类别域方式
-        if ("1".equals(actionScope)) {
+        if (Constants.PAYMENT_ACTION_ACOPE.equals(actionScope)) {
             EntityWrapper<PaymentQrcode> entityWrapper = new EntityWrapper<>();
             entityWrapper.where("token={0}", token);
             PaymentQrcode paymentQrcode = paymentQrcodeService.selectOne(entityWrapper);
@@ -93,7 +92,7 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
                 throw new RuntimeException("二维码时效校验错误！");
             }
 
-            if (QrExpiryStatusEnum.INVALID.getCode().equals(expiryStatus) || isQrExpire(expiryDateTime)) {
+            if (QrExpiryStatusEnum.INVALID.getCode().equals(expiryStatus) || QrUtil.isQrExpire(expiryDateTime)) {
                 logger.error("二位码已失效！");
                 throw new RuntimeException("二维码已失效！");
             }
@@ -113,9 +112,10 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
             logger.debug("开始插入二维码流水表记录");
             qrcodeTxnService.insert(qrcodeTxn);
             logger.debug("二维码流水表记录插入成功");
-
+        } else {
+            logger.error("无法识别的用途场景二维码！");
+            throw new RuntimeException("无法识别的用途场景二维码！");
         }
-
 
         //返回响应报文对象
         BusRespBody busRespBody = new BusRespBody();
@@ -124,11 +124,5 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
         busRespBody.setMsg(ErrorCodeEnum.SUCCESS.getDesc());
         responseVo.setBusRespBody(busRespBody);
         return responseVo;
-    }
-
-    //判断二维码是否失效
-    private boolean isQrExpire(String expiryDateTime) {
-        Date expireDate = DateUtil.parserToDate(expiryDateTime);
-        return new Date().after(expireDate);
     }
 }

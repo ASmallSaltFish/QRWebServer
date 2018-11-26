@@ -1,10 +1,13 @@
 package com.huateng.qrcode.netty;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huateng.qrcode.base.parser.MsgParser;
 import com.huateng.qrcode.base.parser.impl.XMLRequestVoParser;
 import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
+import com.huateng.qrcode.base.parser.param.base.BusRespBody;
+import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.common.enums.ServiceConfigEnums;
 import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.qrcode.utils.SpringContextUtil;
@@ -30,10 +33,11 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        String responseData = "";
+        Channel channel = ctx.channel();
         try {
             logger.info("开始接受报文。。");
 
-            Channel channel = ctx.channel();
             ByteBuf byteBuf = (ByteBuf) msg;
             String data = byteBuf.toString(CharsetUtil.UTF_8);
 
@@ -42,20 +46,27 @@ public class NettyChannelHandler extends ChannelInboundHandlerAdapter {
             //解析报文信息，获取服务码，根据服务码处理对应业务
             ResponseVo responseVo = processBusiness(data);
             ObjectMapper objectMapper = new ObjectMapper();
-            String responseData = objectMapper.writeValueAsString(responseVo);
+            responseData = objectMapper.writeValueAsString(responseVo);
             logger.info("报文解析完成，响应内容：" + responseData);
-
-            ByteBufAllocator alloc = channel.alloc();
-            ByteBuf buffer = alloc.buffer();
-            buffer.writeBytes(responseData.getBytes(CharsetUtil.UTF_8));
-            ctx.writeAndFlush(buffer);
 
             logger.info("报文响应结束。。");
             logger.info("报文处理结束。。");
         } catch (Exception e) {
             logger.error("socket解析报文出现异常", e);
-            e.printStackTrace();
+            //todo 根据错误异常，捕获并返回响应
+            ResponseVo responseVo = new ResponseVo();
+            BusRespBody busRespBody = new BusRespBody();
+            busRespBody.setProcessCode(ErrorCodeEnum.FAIL.getCode());
+            busRespBody.setProcessStatus(ErrorCodeEnum.FAIL.name());
+            busRespBody.setMsg(ErrorCodeEnum.FAIL.getDesc());
+            responseVo.setBusRespBody(busRespBody);
+            responseData = JSON.toJSONString(responseVo);
         }
+
+        ByteBufAllocator alloc = channel.alloc();
+        ByteBuf buffer = alloc.buffer();
+        buffer.writeBytes(responseData.getBytes(CharsetUtil.UTF_8));
+        ctx.writeAndFlush(buffer);
     }
 
 

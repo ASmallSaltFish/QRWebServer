@@ -146,8 +146,7 @@ public class UpopHttpClient {
      *
      * @param encoding 编码
      */
-    private HttpURLConnection createConnection(String encoding)
-            throws ProtocolException {
+    private HttpURLConnection createConnection(String encoding) throws ProtocolException {
         logger.info("服务器连接开始...");
         logger.info("服务器请求方式 [ POST ],编码 [ " + encoding + " ]");
         HttpURLConnection httpURLConnection = null;
