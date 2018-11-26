@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @class: DistingQrGenerateImpl
+ * @class: DisplayQrGenerateImpl
  * @title: 识别类二维码生成服务
  * @desc:
  * @author: xuzhangsheng
  * @date: 2018年11月21日 下午14:16:53
  * @since: 1.0.0
  */
-@Service(value = "DistingQrGenerateImpl")
-public class DistingQrGenerateImpl implements QrServerManager {
+@Service(value = "DisplayQrGenerateImpl")
+public class DisplayQrGenerateImpl implements QrServerManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(DistingQrGenerateImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DisplayQrGenerateImpl.class);
 
     @Autowired
     private TokenService tokenService;
@@ -101,13 +101,20 @@ public class DistingQrGenerateImpl implements QrServerManager {
                     + reserve + reqSys + industryApp + useType + scene;
 
             // 检查生成规则是否存在(拼成ID查询)
-            QrModule qrModule = QrModuleService.selectById(templet);
+            /*QrModule qrModule = QrModuleService.selectById(templet);
             if (qrModule == null) {
                 logger.error("生成规则不存在！");
                 out.setResultCode(ErrorCodeEnum.E200000.getCode());
                 out.setResultMsg(ErrorCodeEnum.E200000.getDesc());
                 return out;
-            }
+            }*/
+            QrModule qrModule = new QrModule();
+            qrModule.setEncodeMode("1");
+            qrModule.setReadMode("2");
+            qrModule.setRiskLevel("3");
+            qrModule.setEntryFlag("4");
+            qrModule.setKeyVersion("5");
+            qrModule.setExpiryDate("10");
             //编码原理
             String encodeMode = qrModule.getEncodeMode();
             //读取方式
@@ -134,13 +141,15 @@ public class DistingQrGenerateImpl implements QrServerManager {
                     + readMode + riskLevel + reserve + entryFlag + keyVersion + reqSys
                     + industryApp + useType + scene + currentDate + seq;
 
+
             // 生成校验位(待定33位)
             String ewmDataBinaryString = StringUtil.toBinaryString(ewmData);
             String checkBit = QrUtil.getCheckFlag(ewmDataBinaryString);
 
-            // 将数据token化（场景、行业应用、序列号、校验位）
+            // 获取13位Token数据
             String token = tokenService.getToken();
 
+            // 将数据token化（场景、行业应用、序列号、校验位）
             //token行业应用
             String industryAppToken = token.substring(0, 3);
             //token场景
@@ -152,7 +161,7 @@ public class DistingQrGenerateImpl implements QrServerManager {
 
             //二维码明文 = 二维码明文 + 校验位
             ewmData = ewmData + checkBit;
-
+            System.out.println("明文:" + ewmData);
             /**
              * 二维码密文 = 二维码版本号 + 编码方式 + 生成方式 + 时效 + 类别域 + 读取方式 + 风险等级 + 保留位
              *         + 加密标识 + 密钥版本 + 请求系统 + Token行业应用 + 用途 + Token场景 + 当前日期 + Token序列号
@@ -161,13 +170,17 @@ public class DistingQrGenerateImpl implements QrServerManager {
             ewmDataCipher = ewmVersion + encodeMode + generationMode + prescription + actionScope
                     + readMode + riskLevel + reserve + entryFlag + keyVersion + reqSys
                     + industryAppToken + useType + sceneToken + currentDate + seqToken + checkBitToken;
-
+            System.out.println("密文:" + ewmDataCipher);
+            logger.info("mingwen:"+ewmData, ewmData);
+            logger.info("miwen:"+ewmDataCipher, ewmDataCipher);
             //TODO 根据风险等级调用加密算法（暂无）
             //TODO 动静态码的时效配制
             //TODO 将二维码信息和业务数据入库
             //TODO 添加交易流水
             //TODO 生成二维码图片（查看包是否支持多种形式二维码）
             logger.info("识别类二维码生成服务结束，出参：" + out.toString());
+            out.setResultCode(ErrorCodeEnum.SUCCESS.getCode());
+            out.setResultMsg(ErrorCodeEnum.SUCCESS.getDesc());
         } catch (Exception e) {
             //TODO 添加交易流水
             logger.info("识别类二维码生成失败");
