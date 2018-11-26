@@ -31,6 +31,7 @@ public class MovePositionServiceImpl implements MovePositionService{
         logger.info("移位算法开始，入参：" + ewmData);
         char[] ewmDataChar = ewmData.toCharArray();
         char[] encryptionData = forMovePosition(ewmDataChar, n, "encryption");
+        logger.info("移位算法结束，出参：" + String.valueOf(encryptionData));
         return String.valueOf(encryptionData);
     }
 
@@ -43,9 +44,10 @@ public class MovePositionServiceImpl implements MovePositionService{
      * @throws QrcException
      */
     public String decryptMovePosition(String ewaDataCipher, int n) throws QrcException{
-        logger.info("移位算法开始，入参：" + ewaDataCipher);
+        logger.info("移位算法解密开始，入参：" + ewaDataCipher);
         char[] ewaDataCipherChar = ewaDataCipher.toCharArray();
         char[] decryptData = forMovePosition(ewaDataCipherChar, n, "decrypt");
+        logger.info("移位算法解密结束，出参：" + String.valueOf(decryptData));
         return String.valueOf(decryptData);
     }
 

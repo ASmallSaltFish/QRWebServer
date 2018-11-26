@@ -31,7 +31,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String getToken() throws QrcException {
         //TODO 获取序列
-        String svSeq = "000000001";
+        String svSeq = "00000001";
         // 生成随机数
         String fvRandom = getFixLenthString(5);
         // 移位
