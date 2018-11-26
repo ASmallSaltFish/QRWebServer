@@ -1,6 +1,7 @@
 package com.huateng.qrcode.common.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class QrModule implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //主键
+    @TableId("QR_MOD_ID")
     @TableField("QR_MOD_ID")
     private String qrModId;
 

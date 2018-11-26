@@ -15,6 +15,7 @@ public class IdWorkerTest {
         for (int i = 0; i < count; i++) {
             executorService.execute(new IdWorkerTest().new Task());
         }
+
         executorService.shutdown();
         while (!executorService.isTerminated()) {
             try {

@@ -2,15 +2,24 @@ package com.huateng.test.testQrParser;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
+import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
 import com.huateng.qrcode.common.model.IdentityQrcode;
 import com.huateng.qrcode.common.model.QrModule;
+import com.huateng.qrcode.common.model.SeqInfo;
 import com.huateng.qrcode.service.form.IdentityQrcodeService;
 import com.huateng.qrcode.service.form.PaymentQrcodeService;
 import com.huateng.qrcode.service.form.QrModuleService;
+import com.huateng.qrcode.service.form.SeqInfoService;
 import com.huateng.qrcode.utils.DateUtil;
+import com.huateng.qrcode.utils.SeqGeneratorUtil;
 import com.huateng.test.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 测试二维码解析
@@ -25,6 +34,9 @@ public class Test extends BaseTest {
 
     @Autowired
     private PaymentQrcodeService paymentQrcodeService;
+
+    @Autowired
+    private SeqInfoService seqInfoService;
 
     /**
      * 测试生成二维码模版数据
@@ -99,11 +111,53 @@ public class Test extends BaseTest {
 
 
     @org.junit.Test
+    public void testSaveSeqInfo() {
+        SeqInfo seqInfo = new SeqInfo();
+        //序列的联合主键
+        seqInfo.setSeqKey(Constants.SEQ_KEY);
+        seqInfo.setSysId(Constants.SYS_ID);
+        //序列初始值
+        seqInfo.setInitValue(new BigDecimal(0));
+        //序列最大值
+        seqInfo.setMaxValue(new BigDecimal(0));
+        //序列每次增长值
+        seqInfo.setIncRuleValue(new BigDecimal(10));
+        //序列的下限
+        seqInfo.setDownLimit(new BigDecimal(0));
+        //序列的上限
+        seqInfo.setUpLimit(new BigDecimal(100));
+        //定义成成7位的序列
+        seqInfo.setRuleDef("7");
+        seqInfoService.insert(seqInfo);
+        System.out.println("--->>>新增序列规则成功！");
+    }
+
+
+    @org.junit.Test
     public void test() {
         String qrCode = "1111112010888801110318112212345671";
         System.out.println("--->>>actionScope=" + qrCode.substring(17, 18));
         System.out.println("--->>>token=" + qrCode.substring(26, 33));
         System.out.println("--->>>flag=" + qrCode.substring(33));
-        System.out.println("--->>>qrcodeFromDb=" + qrCode.substring(0,26));
+        System.out.println("--->>>qrcodeFromDb=" + qrCode.substring(0, 26));
+    }
+
+
+    @org.junit.Test
+    public void testSelectById() {
+        QrModule qrModule = qrModuleService.selectById("1065513003460046849");
+        System.out.println(qrModule);
+    }
+
+
+    /**
+     * 测试生成序列
+     */
+    @org.junit.Test
+    public void testSeqGenerate() {
+        for (int i = 0; i < 1000; i++) {
+            String sequenceNo = SeqGeneratorUtil.getInstance().getSequenceNo();
+            System.out.println("===>>>" + sequenceNo);
+        }
     }
 }

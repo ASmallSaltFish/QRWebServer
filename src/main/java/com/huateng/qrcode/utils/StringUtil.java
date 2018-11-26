@@ -4,6 +4,7 @@ import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -80,4 +81,25 @@ public class StringUtil {
 
         return sb.toString();
     }
+
+    /**
+     * 将BigDecimal补全位数，生成number位字符串
+     */
+    public static String transToSeqNo(BigDecimal seqNo, int number) {
+        StringBuilder sb = new StringBuilder(seqNo.toString());
+        int addNum = number - sb.length();
+        while (addNum > 0) {
+            sb.insert(0, "0");
+            addNum--;
+        }
+
+        return sb.toString();
+    }
+
+
+//    public static void main(String[] args) {
+//        BigDecimal bigDecimal = new BigDecimal(1);
+//        System.out.println(bigDecimal.toString());
+//        System.out.println(transToSeqNo(new BigDecimal(11), 7));
+//    }
 }
