@@ -26,7 +26,7 @@ public class SeqGeneratorUtil {
         private static final SeqGeneratorUtil instance = new SeqGeneratorUtil();
     }
 
-    public synchronized String getSequenceNo() {
+    public synchronized String getSequenceNo(String seqKey) {
         LinkedList<String> sequenceNos = seqKeyAndSeqNosMap.get(Constants.SEQ_KEY);
         if (CollectionUtils.isEmpty(sequenceNos)) {
             ApplicationContext ctx = SpringContextUtil.getInstance().getApplicationContext();
@@ -35,8 +35,8 @@ public class SeqGeneratorUtil {
                 throw new RuntimeException("序列生成服务类实例加载失败！");
             }
 
-            sequenceNos = seqGeneratorService.generateSeqNos(Constants.SEQ_KEY);
-            seqKeyAndSeqNosMap.put(Constants.SEQ_KEY, sequenceNos);
+            sequenceNos = seqGeneratorService.generateSeqNos(seqKey);
+            seqKeyAndSeqNosMap.put(seqKey, sequenceNos);
         }
 
         return sequenceNos.remove();
