@@ -3,6 +3,7 @@ package com.huateng.qrcode.qrserver.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
+import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.common.model.QrModule;
 import com.huateng.qrcode.qrserver.QrServerManager;
@@ -10,6 +11,7 @@ import com.huateng.qrcode.service.algorithm.TokenService;
 import com.huateng.qrcode.service.form.QrModuleService;
 import com.huateng.qrcode.utils.DateUtil;
 import com.huateng.qrcode.utils.QrUtil;
+import com.huateng.qrcode.utils.SeqGeneratorUtil;
 import com.huateng.qrcode.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,7 +133,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             //TODO 请求者合法性查检(黑名单) 应用场景查检以及验证是否有效
 
             //TODO 生成序列号（待添加）
-            String seq = "0000001";
+            String seq = SeqGeneratorUtil.getInstance().getSequenceNo(Constants.SEQ_KEY);
 
             /**
              * 二维码明文 = 二维码版本号 + 编码方式 + 生成方式 + 时效 + 类别域 + 读取方式 + 风险等级 + 保留位

@@ -1,13 +1,18 @@
 package com.huateng.qrcode.utils;
 
+import com.huateng.qrcode.common.constants.Constants;
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
 
     private static String DEFAULT_DATE_FORMAT = "yyyyMMddHHmmss";
+
 
 
     /**
@@ -68,6 +73,42 @@ public class DateUtil {
         }
 
         return date;
+    }
+
+    /**
+     * 日期相加减秒数
+     *
+     * @param date   如果为Null，则为当前时间
+     * @param second 加减秒数
+     * @return
+     * @throws ParseException
+     */
+    public static Date secondAdd(Date date, int second) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        if (date == null) {
+            date = new Date();
+        }
+        date = sdf.parse(sdf.format(date));
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.SECOND, second);
+        return cal.getTime();
+    }
+
+    /**
+     * 时间格式化成字符串
+     *
+     * @param date    Date
+     * @param pattern StrUtils.DATE_TIME_PATTERN || StrUtils.DATE_PATTERN， 如果为空，则为yyyy-MM-dd
+     * @return
+     * @throws ParseException
+     */
+    public static String dateFormat(Date date, String pattern) throws ParseException {
+        if (StringUtils.isBlank(pattern)) {
+            pattern = Constants.DATE_PATTERN_DEFAULT;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
     }
 }
 
