@@ -65,11 +65,11 @@ public class DisplayQrGenerateImpl implements QrServerManager {
         //二维码密文
         String ewmDataCipher = null;
         //获取当前日期（yyyyMMdd格式）
-        String currentDate = DateUtil.getCurrentDateStr();
+        String currentDate = DateUtil.formatCurrentDate();
         //获取当前日期（yyMMdd格式）
         String ewmCurrentDate = currentDate.substring(2);
         //获取当前日期和时间（yyyyMMddHHmmss格式）
-        String currentTime = DateUtil.getCurrentDateTimeStr();
+        String currentTime = DateUtil.formatCurrentDateTime();
         try {
             //获取系统层数据
 

@@ -13,6 +13,7 @@ import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
 import com.huateng.qrcode.common.model.IdentityQrcode;
 import com.huateng.qrcode.common.model.QrcodeTxn;
 import com.huateng.qrcode.qrserver.QrServerManager;
+import com.huateng.qrcode.service.form.BlackListInfoService;
 import com.huateng.qrcode.service.form.IdentityQrcodeService;
 import com.huateng.qrcode.service.form.QrcodeTxnService;
 import com.huateng.qrcode.utils.DateUtil;
@@ -25,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -40,6 +42,9 @@ public class SysQrParserManagerImpl implements QrServerManager {
 
     @Autowired
     private QrcodeTxnService qrcodeTxnService;
+
+    @Autowired
+    private BlackListInfoService blackListInfoService;
 
     @Override
     public ResponseVo handler(RequestVo requestVo) throws Exception {
@@ -65,42 +70,55 @@ public class SysQrParserManagerImpl implements QrServerManager {
             throw new RuntimeException("报文参数校验错误！");
         }
 
-        //行业应用
-        String industryApp = qrCode.substring(14, 17);
+        //请求系统
+        String reqSys = qrCode.substring(10, 14);
+        logger.debug("请求系统参数，第11~14位：reqSys=" + reqSys);
+        //token（13位）
+        String token = qrCode.substring(14, 17) + qrCode.substring(18, 20) + qrCode.substring(26);
         //用途 第18位，确认二维码类型
         String actionScope = qrCode.substring(17, 18);
-        //场景
-        String scene = qrCode.substring(18, 20);
-        //27-33 7位token值
-        String token = qrCode.substring(26, 33);
-        //校验位
-        String checkFlag = qrCode.substring(33);
+        logger.debug("用途参数，第18位：actionScope=" + actionScope);
 
-        //todo 黑名单校验
+        //黑名单校验，校验请求系统
+        boolean isValidSys = blackListInfoService.validInBlackListInfo(reqSys, Constants.BLACK_TYPE_SYS);
+        if (isValidSys) {
+            logger.error("当前请求系统已经加入黑名单！");
+            throw new RuntimeException("当前请求系统已经加入黑名单！");
+        }
 
         if (Constants.IDENTIFY_ACTION_ACOPE.equals(actionScope)) {
-            EntityWrapper<IdentityQrcode> entityWrapper = new EntityWrapper<>();
-            entityWrapper.where("token={0}", token);
-            IdentityQrcode identityQrcode = identityQrcodeService.selectOne(entityWrapper);
+            IdentityQrcode identityQrcode = identityQrcodeService.findByToken(token);
             if (identityQrcode == null) {
                 logger.error("根据token查询，没有获取到二维码信息！");
                 throw new RuntimeException("二维码信息不存在！");
             }
 
-            //token前值
-            String beforeToken = identityQrcode.getBeforeToken();
             //二维码串码
             String qrcodeId = identityQrcode.getQrcodeId();
-            //除校验位外，二维码码串实际明文
-            String qrCodeStr = qrcodeId.substring(0, 26) + beforeToken;
-            //获取二维码校验位
-            String actualCheckFlag = QrUtil.getCheckFlag(StringUtil.toBinaryString(qrCodeStr));
-            //完整的二维码明文
-            String actualQrCode = qrCodeStr + actualCheckFlag;
-            //检验位校验
-            if (!actualCheckFlag.equals(checkFlag)) {
-                logger.error("校验位校验不通过！");
-                throw new RuntimeException("二维码不合法，校验错误！");
+            //二维码模版
+            String templateId = identityQrcode.getTempletId();
+            //行业应用
+            String industryApp = qrcodeId.substring(14, 17);
+            logger.debug("行业应用参数，第15~17位：industryApp=" + industryApp);
+            //场景
+            String scene = qrcodeId.substring(18, 20);
+            logger.debug("场景参数，第19~20位：scene=" + scene);
+            //二维码校验位
+            String checkFlag = qrcodeId.substring(33);
+            logger.debug("场景参数，第33位：checkFlag=" + checkFlag);
+
+            //黑名单校验，校验二维码模板是否加入黑名单
+            boolean isValidByModule = blackListInfoService.validInBlackListInfo(templateId, Constants.BLACK_TYPE_MODULE);
+            if (isValidByModule) {
+                logger.error("当前二维码生成模版已经加入黑名单！");
+                throw new RuntimeException("当前二维码生成模版已经加入黑名单！");
+            }
+
+            //黑名单校验，校验二维码是是否加入黑名单
+            boolean isValidByQrCode = blackListInfoService.validInBlackListInfo(qrcodeId, Constants.BLACK_TYPE_QRCODE);
+            if (isValidByQrCode) {
+                logger.error("当前二维码已经加入黑名单！");
+                throw new RuntimeException("当前二维码已经加入黑名单！");
             }
 
             //二维码是否失效
@@ -124,8 +142,8 @@ public class SysQrParserManagerImpl implements QrServerManager {
             qrcodeTxn.setScene(scene);
             qrcodeTxn.setReceiveDate(paramMap.get("receiveDate"));
             qrcodeTxn.setReceiveTime(paramMap.get("receiveTime"));
-            qrcodeTxn.setCrtDate(DateUtil.getCurrentDateStr());
-            qrcodeTxn.setCrtTime(DateUtil.getCurrentTimeStr());
+            qrcodeTxn.setCrtDate(DateUtil.formatCurrentDate());
+            qrcodeTxn.setCrtTime(DateUtil.formatCurrentTime());
             qrcodeTxn.setRemark("二维码解析成功！");
             qrcodeTxn.setStatus(QrCodeTxnStatusMenu.VALID.getCode());
             logger.debug("开始插入二维码流水表记录");

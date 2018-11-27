@@ -4,10 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
+import com.huateng.qrcode.common.constants.Constants;
 import com.sun.javafx.binding.StringFormatter;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +29,7 @@ public class BaseController {
      * http请求参数校验，可以根据具体业务，子类自己实现个性化校验
      */
     protected Map<String, String> checkAndGetParamMap(Map<String, String[]> parameterMap) {
-        //todo 根据实际业务，校验http请求参数
-        if (parameterMap.get("qrCode") == null) {
+        if (parameterMap.get(Constants.REQ_PARAM_QR_CODE) == null) {
             logger.error("http请求报文参数qrCode不能为空！");
             throw new RuntimeException("http报文请求参数qrCode不能为空！");
         }
@@ -51,6 +53,25 @@ public class BaseController {
         }
 
         return paramMap;
+    }
+
+    /**
+     * 根据http请求头中user-agent参数，判断请求来源app
+     *
+     * @param request  HttpServletRequest对象
+     * @param paramMap 参数集合
+     */
+    protected void setUserAgent(HttpServletRequest request, Map<String, String> paramMap) {
+        String userAgent = request.getHeader("user-agent");
+        if (StringUtils.isBlank(userAgent)) {
+            return;
+        }
+
+        if (userAgent.contains("AlipayClient")) {
+            paramMap.put(Constants.HTTP_REQ_SYS, Constants.HTTP_REQ_SYS_ALIPAY);
+        } else if (userAgent.contains("MicroMessenger")) {
+            paramMap.put(Constants.HTTP_REQ_SYS, Constants.HTTP_REQ_SYS_WX);
+        }
     }
 
 

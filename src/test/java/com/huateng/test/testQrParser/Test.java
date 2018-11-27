@@ -3,14 +3,10 @@ package com.huateng.test.testQrParser;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.huateng.qrcode.common.constants.Constants;
+import com.huateng.qrcode.common.enums.BlackInfoUseEnum;
 import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
-import com.huateng.qrcode.common.model.IdentityQrcode;
-import com.huateng.qrcode.common.model.QrModule;
-import com.huateng.qrcode.common.model.SeqInfo;
-import com.huateng.qrcode.service.form.IdentityQrcodeService;
-import com.huateng.qrcode.service.form.PaymentQrcodeService;
-import com.huateng.qrcode.service.form.QrModuleService;
-import com.huateng.qrcode.service.form.SeqInfoService;
+import com.huateng.qrcode.common.model.*;
+import com.huateng.qrcode.service.form.*;
 import com.huateng.qrcode.utils.DateUtil;
 import com.huateng.qrcode.utils.SeqGeneratorUtil;
 import com.huateng.qrcode.utils.http.UpopHttpClient;
@@ -18,6 +14,7 @@ import com.huateng.test.BaseTest;
 import io.netty.util.CharsetUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -73,6 +70,12 @@ public class Test extends BaseTest {
     @Autowired
     private SeqInfoService seqInfoService;
 
+    @Resource
+    private BlackListInfoService blackListInfoService;
+
+    @Resource
+    private DisplayQrcodeService displayQrcodeService;
+
     /**
      * 测试生成二维码模版数据
      */
@@ -101,7 +104,7 @@ public class Test extends BaseTest {
 
         qrModule.setQrModCode("11111120108888011103");
 
-        qrModule.setCreateTime(DateUtil.getCurrentDateTimeStr());
+        qrModule.setCreateTime(DateUtil.formatCurrentDateTime());
         qrModuleService.insert(qrModule);
     }
 
@@ -131,14 +134,14 @@ public class Test extends BaseTest {
         identityQrcode.setExpiryStatus(QrExpiryStatusEnum.VALID.getCode());
 
         identityQrcode.setData("测试数据");
-        identityQrcode.setCustomModTime(DateUtil.getCurrentTimeStr());
+        identityQrcode.setCustomModTime(DateUtil.formatCurrentTime());
         identityQrcode.setQrUrl("http://www.baidu.com");
 
         //二维码主键=模版编码(20) + 产生日期（6位）+ Token令牌(7) +  校验位(1) = 34
         String qrCodeId = qrModule.getQrModCode() + identityQrcode.getCustomModDate() + identityQrcode.getBeforeToken() + "1";
         identityQrcode.setQrcodeId(qrCodeId);
 
-        identityQrcode.setCrtDate(DateUtil.getCurrentDateStr());
+        identityQrcode.setCrtDate(DateUtil.formatCurrentDate());
 
         identityQrcodeService.insert(identityQrcode);
         System.out.println("---->>>识别类二维码生成成功！");
@@ -177,6 +180,28 @@ public class Test extends BaseTest {
     }
 
 
+    /**
+     * 插入黑名单表（系统级别）
+     */
+    @org.junit.Test
+    public void testSaveBlackListInfo() {
+        BlackListInfo blackInfo = new BlackListInfo();
+        blackInfo.setBlackId(IdWorker.getIdStr());
+        //请求系统
+        blackInfo.setBlackNo("8888");
+        //黑名单类型
+        blackInfo.setBlackType(Constants.BLACK_TYPE_SYS);
+        //是否有效
+        blackInfo.setIsUse(BlackInfoUseEnum.VALID.getCode());
+        //设置有效期
+        blackInfo.setExpiryTime("20181130120000");
+        blackInfo.setBlackDesc("将请求系统8888加入到黑名单");
+        blackInfo.setCrtTime(DateUtil.formatCurrentDateTime());
+        boolean inserted = blackListInfoService.insert(blackInfo);
+        System.out.println("====>>>>" + (inserted ? "插入黑名单数据成功" : "插入黑名单数据失败！"));
+    }
+
+
     @org.junit.Test
     public void testSelectById() {
         QrModule qrModule = qrModuleService.selectById("1065513003460046849");
@@ -205,7 +230,7 @@ public class Test extends BaseTest {
 
 
     /**
-     * 扫码类二维码解析：http://127.0.0.1:8082/qrcode/scan/handler.do?qrCode=1111112010888801110318112212345671
+     * 扫码类二维码解析：http://127.0.0.1:8082/qrcode/scan/handler.do?qrCode=1111123045000100212618112703100618
      */
     @org.junit.Test
     public void testParserForScan() throws Exception {
@@ -220,7 +245,7 @@ public class Test extends BaseTest {
     }
 
     /**
-     * 系统类二维码解析：http://127.0.0.1:8082
+     * 系统类二维码解析：http://127.0.0.1:8088
      */
     @org.junit.Test
     public void testParserForSystem() throws IOException {
@@ -242,5 +267,14 @@ public class Test extends BaseTest {
         pw.close();
         outputStream.close();
         socket.close();
+    }
+
+    @org.junit.Test
+    public void test2() {
+        EntityWrapper<DisplayQrcode> entityWrapper = new EntityWrapper<>();
+        entityWrapper.where("QRCODE_ID={0}", "1111123045000100110118112700011210");
+        DisplayQrcode displayQrcode = displayQrcodeService.selectOne(entityWrapper);
+        String data = displayQrcode.getData();
+        System.out.println(displayQrcode.getData());
     }
 }

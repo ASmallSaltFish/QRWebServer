@@ -1,5 +1,6 @@
 package com.huateng.qrcode.utils;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -16,8 +17,8 @@ public class QrUtil {
      * @param expiryDateTime 时间格式字符串
      * @return 失效返回true，否则返回false
      */
-    public static boolean isQrExpire(String expiryDateTime) {
-        Date expireDate = DateUtil.parserToDate(expiryDateTime);
+    public static boolean isQrExpire(String expiryDateTime) throws ParseException {
+        Date expireDate = DateUtil.parserDate(expiryDateTime);
         return new Date().after(expireDate);
     }
 

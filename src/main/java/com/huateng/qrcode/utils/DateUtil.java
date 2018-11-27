@@ -5,21 +5,24 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
 
-    private static String DEFAULT_DATE_FORMAT = "yyyyMMddHHmmss";
-
-
+    /**
+     * 获取当前日期和时间（yyyyMMddHHmmss格式）
+     */
+    public static String formatCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_TIME_PATTERN_DEFAULT);
+        return sdf.format(new Date());
+    }
 
     /**
      * 获取当前时间（HHmmSS格式）
      */
-    public static String getCurrentTimeStr() {
-        String dateTimeStr = getCurrentDateTimeStr();
+    public static String formatCurrentTime() {
+        String dateTimeStr = formatCurrentDateTime();
         return dateTimeStr.substring(8);
     }
 
@@ -27,52 +30,80 @@ public class DateUtil {
     /**
      * 获取当前日期（yyyyMMdd格式）
      */
-    public static String getCurrentDateStr() {
-        String dateTimeStr = getCurrentDateTimeStr();
+    public static String formatCurrentDate() {
+        String dateTimeStr = formatCurrentDateTime();
         return dateTimeStr.substring(0, 8);
     }
+
 
     /**
      * 获取日期YYMMdd格式
      */
     public static String getYYMMDD() {
-        LocalDate toDay = LocalDate.now();
-        String year = String.valueOf(toDay.getYear()).substring(2);
-        String month = String.valueOf(toDay.getMonth().getValue());
-        String day = String.valueOf(toDay.getDayOfMonth());
-        return year + month + day;
+        String currentDateStr = formatCurrentDate();
+        return currentDateStr.substring(2);
     }
 
 
     /**
-     * 获取当前日期和时间（yyyyMMddHHmmss格式）
+     * 将yyyyMMddHHmmss格式字符串转换为Date对象
+     *
+     * @param dateTime 时间格式字符串
+     * @return 返回Date对象
      */
-    public static String getCurrentDateTimeStr() {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-        return sdf.format(new Date());
+    public static Date parserDate(String dateTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_TIME_PATTERN_DEFAULT);
+        return sdf.parse(dateTime);
     }
 
     /**
-     * 根据格式，格式化当前时间，返回对应格式的时间字符串
+     * 指定时间字符串格式匹配，将时间字符串转化为Date对象
+     *
+     * @param dateTime   时间字符串
+     * @param format 字符串转换格式
+     * @return 返回Date对象
      */
-    public static String getCurrentDateTimeStr(String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(new Date());
-    }
-
-    /**
-     * 根据时间字符串，解析为date对象（yyyyMMddHHmmss格式）
-     */
-    public static Date parserToDate(String dateTimeStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-        Date date = null;
-        try {
-            date = sdf.parse(dateTimeStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public static Date parserDate(String dateTime, String format) throws ParseException {
+        if (StringUtils.isBlank(format)) {
+            format = Constants.DATE_TIME_PATTERN_DEFAULT;
         }
 
-        return date;
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.parse(dateTime);
+    }
+
+
+    /**
+     * 将指定date对象，转换为yyyyMMddHHmmss格式时间字符串
+     *
+     * @param date Date对象
+     * @return 返回yyyyMMddHhmmss格式字符串
+     */
+    public static String formatDateTime(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_TIME_PATTERN_DEFAULT);
+        return sdf.format(date);
+    }
+
+    /**
+     * 将指定Date对象，装换为yyyyMMdd格式日期字符串
+     *
+     * @param date Date对象
+     * @return 返回yyyyMMdd日期字符串
+     */
+    public static String formatDate(Date date) {
+        String dateTime = formatDateTime(date);
+        return dateTime.substring(0, 8);
+    }
+
+    /**
+     * 将指定Date对象，装换为HHmmss格式时间字符串
+     *
+     * @param date Date对象
+     * @return 返回HHmmss时间字符串
+     */
+    public static String formatTime(Date date) {
+        String dateTime = formatDateTime(date);
+        return dateTime.substring(8, 14);
     }
 
     /**
@@ -84,10 +115,11 @@ public class DateUtil {
      * @throws ParseException
      */
     public static Date secondAdd(Date date, int second) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_TIME_PATTERN_DEFAULT);
         if (date == null) {
             date = new Date();
         }
+
         date = sdf.parse(sdf.format(date));
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -107,6 +139,7 @@ public class DateUtil {
         if (StringUtils.isBlank(pattern)) {
             pattern = Constants.DATE_PATTERN_DEFAULT;
         }
+
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
     }

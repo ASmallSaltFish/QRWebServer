@@ -1,6 +1,7 @@
 package com.huateng.qrcode.common.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
@@ -19,6 +20,16 @@ public class SeqInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId("SEQ_KEY")
+    @TableField("SEQ_KEY")
+    private String seqKey;
+
+    @TableField("SYS_ID")
+    private String sysId;
+
+    @TableField("UP_LIMIT")
+    private BigDecimal upLimit;
+
     @TableField("DOWN_LIMIT")
     private BigDecimal downLimit;
 
@@ -33,15 +44,6 @@ public class SeqInfo implements Serializable {
 
     @TableField("RULE_DEF")
     private String ruleDef;
-
-    @TableField("SEQ_KEY")
-    private String seqKey;
-
-    @TableField("SYS_ID")
-    private String sysId;
-
-    @TableField("UP_LIMIT")
-    private BigDecimal upLimit;
 
     @TableField("MISC1")
     private String misc1;

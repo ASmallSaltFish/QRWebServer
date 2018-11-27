@@ -2,9 +2,11 @@ package com.huateng.qrcode.controller;
 
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.base.parser.param.base.BusRespBody;
+import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.controller.base.BaseController;
 import com.huateng.qrcode.service.httpserver.ScanQrParserService;
+import com.huateng.qrcode.utils.DateUtil;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -27,7 +30,9 @@ public class ScanQrParserController extends BaseController {
     @RequestMapping(value = "/handler", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String handlerScanTask(HttpServletRequest request) {
-        System.out.println(scanQrParserService);
+        logger.info("接收到http扫码请求开始。。。");
+        Date date = new Date();
+
         ResponseVo responseVo = new ResponseVo();
         BusRespBody busRespBody = new BusRespBody();
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -45,6 +50,11 @@ public class ScanQrParserController extends BaseController {
         Map<String, String> paramMap = null;
         try {
             paramMap = checkAndGetParamMap(parameterMap);
+            //存储接收请求的日期和时间
+            paramMap.put(Constants.RECEIVE_DATE, DateUtil.formatDate(date));
+            paramMap.put(Constants.RECEIVE_TIME, DateUtil.formatTime(date));
+            //设置请求客户端参数（微信、支付宝）
+            setUserAgent(request, paramMap);
         } catch (Exception e) {
             logger.error("http报文参数校验不通过", e.getMessage());
             busRespBody.setProcessCode(ErrorCodeEnum.FAIL.getCode());
@@ -55,8 +65,8 @@ public class ScanQrParserController extends BaseController {
         }
 
         try {
+            //实际解析服务接口
             responseVo = scanQrParserService.handler(paramMap);
-            //todo 确定返回结果的类型
             logger.info("返回报文信息：" + renderJson(responseVo));
             return renderJson(responseVo);
         } catch (Exception e) {

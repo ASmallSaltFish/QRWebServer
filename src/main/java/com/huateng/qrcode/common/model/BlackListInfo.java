@@ -1,13 +1,14 @@
 package com.huateng.qrcode.common.model;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
 
 /**
  * <p>
- *  黑名单表
+ * 黑名单表
  * </p>
  *
  * @author auto generator
@@ -18,66 +19,89 @@ public class BlackListInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableField("BLANK_DESC")
-    private String blankDesc;
-    @TableField("BLANK_ID")
-    private String blankId;
-    @TableField("BLANK_NO")
-    private String blankNo;
-    @TableField("BLANK_TYPE")
-    private String blankType;
-    @TableField("CRT_TIME")
-    private String crtTime;
-    @TableField("CRT_USER")
-    private String crtUser;
-    @TableField("EXPIRY_TIME")
-    private String expiryTime;
+    //主键
+    @TableId("BLACK_ID")
+    @TableField("BLACK_ID")
+    private String blackId;
+
+    //黑名单描述
+    @TableField("BLACK_DESC")
+    private String blackDesc;
+
+    //关联编号
+    @TableField("BLACK_NO")
+    private String blackNo;
+
+    //黑名单类型（SYS-系统黑名单, QRCODE-二维码黑名单，MODULE-模板黑名单
+    @TableField("BLACK_TYPE")
+    private String blackType;
+
+    //是否可用
     @TableField("IS_USE")
     private String isUse;
-    @TableField("MISC1")
-    private String misc1;
-    @TableField("MISC2")
-    private String misc2;
-    @TableField("MISC3")
-    private String misc3;
-    @TableField("MISC4")
-    private String misc4;
+
+    //失效时间
+    @TableField("EXPIRY_TIME")
+    private String expiryTime;
+
+    //创建时间
+    @TableField("CRT_TIME")
+    private String crtTime;
+
+    //创建人
+    @TableField("CRT_USER")
+    private String crtUser;
+
+    //更新时间
     @TableField("UPDATE_TIME")
     private String updateTime;
+
+    //更新人员
     @TableField("UPDATE_USER")
     private String updateUser;
 
+    @TableField("MISC1")
+    private String misc1;
 
-    public String getBlankDesc() {
-        return blankDesc;
+    @TableField("MISC2")
+    private String misc2;
+
+    @TableField("MISC3")
+    private String misc3;
+
+    @TableField("MISC4")
+    private String misc4;
+
+    public String getBlackId() {
+        return blackId;
     }
 
-    public void setBlankDesc(String blankDesc) {
-        this.blankDesc = blankDesc;
+    public void setBlackId(String blackId) {
+        this.blackId = blackId;
     }
 
-    public String getBlankId() {
-        return blankId;
+    public String getBlackDesc() {
+        return blackDesc;
     }
 
-    public void setBlankId(String blankId) {
-        this.blankId = blankId;
+    public void setBlackDesc(String blackDesc) {
+        this.blackDesc = blackDesc;
     }
 
-    public String getBlankNo() {
-        return blankNo;
+    public String getBlackNo() {
+        return blackNo;
     }
 
-    public void setBlankNo(String blankNo) {
-        this.blankNo = blankNo;
+    public void setBlackNo(String blackNo) {
+        this.blackNo = blackNo;
     }
 
-    public String getBlankType() {
-        return blankType;
+    public String getBlackType() {
+        return blackType;
     }
 
-    public void setBlankType(String blankType) {
-        this.blankType = blankType;
+    public void setBlackType(String blackType) {
+        this.blackType = blackType;
     }
 
     public String getCrtTime() {
@@ -162,21 +186,21 @@ public class BlackListInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "BlackList{" +
-        "blankDesc=" + blankDesc +
-        ", blankId=" + blankId +
-        ", blankNo=" + blankNo +
-        ", blankType=" + blankType +
-        ", crtTime=" + crtTime +
-        ", crtUser=" + crtUser +
-        ", expiryTime=" + expiryTime +
-        ", isUse=" + isUse +
-        ", misc1=" + misc1 +
-        ", misc2=" + misc2 +
-        ", misc3=" + misc3 +
-        ", misc4=" + misc4 +
-        ", updateTime=" + updateTime +
-        ", updateUser=" + updateUser +
-        "}";
+        return "BlackListInfo{" +
+                "blackId='" + blackId + '\'' +
+                ", blackDesc='" + blackDesc + '\'' +
+                ", blackNo='" + blackNo + '\'' +
+                ", blackType='" + blackType + '\'' +
+                ", isUse='" + isUse + '\'' +
+                ", expiryTime='" + expiryTime + '\'' +
+                ", crtTime='" + crtTime + '\'' +
+                ", crtUser='" + crtUser + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", updateUser='" + updateUser + '\'' +
+                ", misc1='" + misc1 + '\'' +
+                ", misc2='" + misc2 + '\'' +
+                ", misc3='" + misc3 + '\'' +
+                ", misc4='" + misc4 + '\'' +
+                '}';
     }
 }
