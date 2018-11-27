@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @since: 1.0.0
  */
 @Service(value = "MovePositionServiceImpl")
-public class MovePositionServiceImpl implements MovePositionService{
+public class MovePositionServiceImpl implements MovePositionService {
 
     private static final Logger logger = LoggerFactory.getLogger(MovePositionServiceImpl.class);
 
@@ -31,8 +31,9 @@ public class MovePositionServiceImpl implements MovePositionService{
         logger.info("移位算法开始，入参：" + ewmData);
         char[] ewmDataChar = ewmData.toCharArray();
         char[] encryptionData = forMovePosition(ewmDataChar, n, "encryption");
-        logger.info("移位算法结束，出参：" + String.valueOf(encryptionData));
-        return String.valueOf(encryptionData);
+        String ewmStringData = String.valueOf(encryptionData);
+        logger.info("移位算法结束，出参：" + ewmStringData);
+        return ewmStringData;
     }
 
     /**
@@ -43,7 +44,7 @@ public class MovePositionServiceImpl implements MovePositionService{
      * @return
      * @throws QrcException
      */
-    public String decryptMovePosition(String ewaDataCipher, int n) throws QrcException{
+    public String decryptMovePosition(String ewaDataCipher, int n) throws QrcException {
         logger.info("移位算法解密开始，入参：" + ewaDataCipher);
         char[] ewaDataCipherChar = ewaDataCipher.toCharArray();
         char[] decryptData = forMovePosition(ewaDataCipherChar, n, "decrypt");
@@ -51,7 +52,7 @@ public class MovePositionServiceImpl implements MovePositionService{
         return String.valueOf(decryptData);
     }
 
-    public char[] forMovePosition(char[] ewmData, int n, String flag) throws QrcException{
+    public char[] forMovePosition(char[] ewmData, int n, String flag) throws QrcException {
 
         int len, d, m, tempint;
         char[] datach, tempchar;
@@ -71,6 +72,8 @@ public class MovePositionServiceImpl implements MovePositionService{
             for (int j = 0; j < n; j++) {
                 if (i * n + j < ewmData.length) {
                     tempchar[i + m * j] = ewmData[i * n + j];
+                } else {
+                    tempchar[i + m * j] = ' ';
                 }
             }
         }

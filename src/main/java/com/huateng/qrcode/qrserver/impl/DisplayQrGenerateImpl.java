@@ -158,7 +158,8 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             String seqToken = token.substring(5, 12);
             //token校验位
             String checkBitToken = token.substring(12, 13);
-
+            System.out.println("industryAppToken:" + industryAppToken + ",sceneToken:" + sceneToken
+                    + ",seqToken:" + seqToken + ",checkBitToken:" + checkBitToken);
             //二维码明文 = 二维码明文 + 校验位
             ewmData = ewmData + checkBit;
             System.out.println("明文:" + ewmData);
@@ -171,8 +172,8 @@ public class DisplayQrGenerateImpl implements QrServerManager {
                     + readMode + riskLevel + reserve + entryFlag + keyVersion + reqSys
                     + industryAppToken + useType + sceneToken + currentDate + seqToken + checkBitToken;
             System.out.println("密文:" + ewmDataCipher);
-            logger.info("mingwen:"+ewmData, ewmData);
-            logger.info("miwen:"+ewmDataCipher, ewmDataCipher);
+            logger.info("mingwen:" + ewmData);
+            logger.info("miwen:" + ewmDataCipher);
             //TODO 根据风险等级调用加密算法（暂无）
             //TODO 动静态码的时效配制
             //TODO 将二维码信息和业务数据入库
@@ -184,6 +185,8 @@ public class DisplayQrGenerateImpl implements QrServerManager {
         } catch (Exception e) {
             //TODO 添加交易流水
             logger.info("识别类二维码生成失败");
+            out.setResultCode(ErrorCodeEnum.FAIL.getCode());
+            out.setResultMsg(ErrorCodeEnum.FAIL.getDesc());
             e.printStackTrace();
         }
         return out;
