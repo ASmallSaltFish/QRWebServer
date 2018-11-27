@@ -84,12 +84,4 @@ public class MovePositionServiceImpl implements MovePositionService {
         return datach;
     }
 
-    public static void main(String[] args) {
-        try {
-            //String min = movePosition("1a34567890123", 3);
-            //decryptMovePosition(min, 3);
-        } catch (Exception e) {
-
-        }
-    }
 }

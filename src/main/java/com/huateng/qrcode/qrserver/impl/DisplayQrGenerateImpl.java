@@ -5,9 +5,12 @@ import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
+import com.huateng.qrcode.common.enums.ExpiryStatusEnum;
+import com.huateng.qrcode.common.model.DisplayQrcode;
 import com.huateng.qrcode.common.model.QrModule;
 import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.qrcode.service.algorithm.TokenService;
+import com.huateng.qrcode.service.form.DisplayQrcodeService;
 import com.huateng.qrcode.service.form.QrModuleService;
 import com.huateng.qrcode.utils.DateUtil;
 import com.huateng.qrcode.utils.QrUtil;
@@ -36,7 +39,10 @@ public class DisplayQrGenerateImpl implements QrServerManager {
     private TokenService tokenService;
 
     @Autowired
-    private QrModuleService QrModuleService;
+    private QrModuleService qrModuleService;
+
+    @Autowired
+    private DisplayQrcodeService displayQrcodeService;
 
     /**
      * 生成识别类二维码
@@ -52,14 +58,16 @@ public class DisplayQrGenerateImpl implements QrServerManager {
         ResponseVo out = new ResponseVo();
         //定义参数
         ObjectMapper objectMapper = new ObjectMapper();
-        //TODO 常量 保留位
-        String reserve = "0";
+        //保留位
+        String reserve = Constants.RESERVE;
         //二维码明文
         String ewmData = null;
         //二维码密文
         String ewmDataCipher = null;
+        //获取当前日期（yyyyMMdd格式）
+        String currentDate = DateUtil.getCurrentDateStr();
         //获取当前日期（yyMMdd格式）
-        String currentDate = DateUtil.getCurrentDateStr().substring(2);
+        String ewmCurrentDate = currentDate.substring(2);
         //获取当前日期和时间（yyyyMMddHHmmss格式）
         String currentTime = DateUtil.getCurrentDateTimeStr();
         try {
@@ -103,7 +111,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
                     + reserve + reqSys + industryApp + useType + scene;
 
             // 检查生成规则是否存在(拼成ID查询)
-            /*QrModule qrModule = QrModuleService.selectById(templet);
+            /*QrModule qrModule = qrModuleService.selectById(templet);
             if (qrModule == null) {
                 logger.error("生成规则不存在！");
                 out.setResultCode(ErrorCodeEnum.E200000.getCode());
@@ -127,12 +135,15 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             String entryFlag = qrModule.getEntryFlag();
             //密钥版本
             String keyVersion = qrModule.getKeyVersion();
-            //有效期
+            //失效时间（单位秒）
             String expiryDate = qrModule.getExpiryDate();
+            //有效时间
+            String effectiveTime =  DateUtil.dateFormat(
+                    DateUtil.secondAdd(null,Integer.valueOf(expiryDate)),Constants.DATE_TIME_PATTERN_DEFAULT);
 
             //TODO 请求者合法性查检(黑名单) 应用场景查检以及验证是否有效
 
-            //TODO 生成序列号（待添加）
+            // 生成序列号
             String seq = SeqGeneratorUtil.getInstance().getSequenceNo(Constants.SEQ_KEY);
 
             /**
@@ -141,7 +152,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
              */
             ewmData = ewmVersion + encodeMode + generationMode + prescription + actionScope
                     + readMode + riskLevel + reserve + entryFlag + keyVersion + reqSys
-                    + industryApp + useType + scene + currentDate + seq;
+                    + industryApp + useType + scene + ewmCurrentDate + seq;
 
 
             // 生成校验位(待定33位)
@@ -150,6 +161,8 @@ public class DisplayQrGenerateImpl implements QrServerManager {
 
             // 获取13位Token数据
             String token = tokenService.getToken();
+            //需要Token字段 行业 + 场景 + 序列号 + 校验位
+            String beforeToken = industryApp + scene + seq + checkBit;
 
             // 将数据token化（场景、行业应用、序列号、校验位）
             //token行业应用
@@ -172,13 +185,37 @@ public class DisplayQrGenerateImpl implements QrServerManager {
              */
             ewmDataCipher = ewmVersion + encodeMode + generationMode + prescription + actionScope
                     + readMode + riskLevel + reserve + entryFlag + keyVersion + reqSys
-                    + industryAppToken + useType + sceneToken + currentDate + seqToken + checkBitToken;
+                    + industryAppToken + useType + sceneToken + ewmCurrentDate + seqToken + checkBitToken;
             System.out.println("密文:" + ewmDataCipher);
             logger.info("mingwen:" + ewmData);
             logger.info("miwen:" + ewmDataCipher);
             //TODO 根据风险等级调用加密算法（暂无）
             //TODO 动静态码的时效配制
             //TODO 将二维码信息和业务数据入库
+            DisplayQrcode displayQrcode = new DisplayQrcode();
+            displayQrcode.setQrcodeId(ewmData);
+            displayQrcode.setTempletId(qrModule.getQrModId());
+            displayQrcode.setCustomModDate(currentDate);
+            displayQrcode.setCustomModTime(currentTime.substring(8));
+            displayQrcode.setToken(token);
+            displayQrcode.setBeforeToken(beforeToken);
+            displayQrcode.setExpiryDateTime(effectiveTime);
+            displayQrcode.setExpiryStatus(ExpiryStatusEnum.EFFECTIVE.getCode());
+            //
+            displayQrcode.setPictureId("");
+            displayQrcode.setCrtDate(currentDate);
+            displayQrcode.setCrtTime(currentTime.substring(8));
+            //
+            displayQrcode.setCrtUser("");
+            displayQrcode.setData(paramMap);
+            //
+            displayQrcode.setOrgId("");
+            //
+            displayQrcode.setQrUrl("");
+            //
+            displayQrcode.setUpdateUser("");
+            displayQrcode.setUpdDate(currentDate);
+            displayQrcodeService.insert(displayQrcode);
             //TODO 添加交易流水
             //TODO 生成二维码图片（查看包是否支持多种形式二维码）
             logger.info("识别类二维码生成服务结束，出参：" + out.toString());

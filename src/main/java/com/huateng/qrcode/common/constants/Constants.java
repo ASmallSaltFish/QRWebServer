@@ -33,4 +33,8 @@ public class Constants {
     //斜杆日期
     public static final String DATE_PATTERN_DIAGONAL = "yyyy/MM/dd";
 
+    /************其他常量***************/
+    //保留位默认值
+    public static final String RESERVE = "0";
+
 }
