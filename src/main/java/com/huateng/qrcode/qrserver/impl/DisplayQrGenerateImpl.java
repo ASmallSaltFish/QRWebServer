@@ -138,8 +138,8 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             //失效时间（单位秒）
             String expiryDate = qrModule.getExpiryDate();
             //有效时间
-            String effectiveTime =  DateUtil.dateFormat(
-                    DateUtil.secondAdd(null,Integer.valueOf(expiryDate)),Constants.DATE_TIME_PATTERN_DEFAULT);
+            String effectiveTime = DateUtil.dateFormat(
+                    DateUtil.secondAdd(null, Integer.valueOf(expiryDate)), Constants.DATE_TIME_PATTERN_DEFAULT);
 
             //TODO 请求者合法性查检(黑名单) 应用场景查检以及验证是否有效
 

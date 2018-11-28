@@ -8,6 +8,7 @@ import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.common.enums.QrCodeTxnStatusMenu;
 import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
+import com.huateng.qrcode.common.enums.UseTypeEnum;
 import com.huateng.qrcode.common.model.DisplayQrcode;
 import com.huateng.qrcode.common.model.QrcodeTxn;
 import com.huateng.qrcode.service.form.BlackListInfoService;
@@ -73,7 +74,7 @@ public class ScanQrParserServiceImpl implements ScanQrParserService {
             throw new RuntimeException("当前请求系统已经加入黑名单！");
         }
 
-        if (Constants.IDENTIFY_ACTION_ACOPE.equals(actionScope)) {
+        if (UseTypeEnum.USE_TYPE_IDENTITY.getCode().equals(actionScope)) {
             DisplayQrcode displayQrcode = displayQrcodeService.findByToken(token);
             if (displayQrcode == null) {
                 logger.error("根据token查询，没有获取到二维码信息！");
