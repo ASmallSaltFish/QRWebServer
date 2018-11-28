@@ -5,11 +5,11 @@ import com.huateng.qrcode.common.model.IdentityQrcode;
 
 /**
  * <p>
- * 服务类
+ * 识别类二维码服务类
  * </p>
  *
- * @author auto generator
- * @since 2018-11-21
+ * @author qinyupeng
+ * @since 2018-11-28 10:21:10
  */
 public interface IdentityQrcodeService extends IService<IdentityQrcode> {
 
@@ -20,4 +20,12 @@ public interface IdentityQrcodeService extends IService<IdentityQrcode> {
      * @return 返回二维码实体对象
      */
     IdentityQrcode findByToken(String token);
+
+    /**
+     * 根据主键更新实体对象信息
+     *
+     * @param entity 二维码实体对象
+     * @return 更新成功返回true，更新失败返回false
+     */
+    boolean update(IdentityQrcode entity);
 }

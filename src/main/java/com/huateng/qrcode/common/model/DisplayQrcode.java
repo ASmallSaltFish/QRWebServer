@@ -83,9 +83,13 @@ public class DisplayQrcode implements Serializable {
     @TableField("UPDATE_USER")
     private String updateUser;
 
-    //更新日期
+    //更新日期（8位）
     @TableField("UPD_DATE")
     private String updDate;
+
+    //更新时间（6位）
+    @TableField("UPD_TIME")
+    private String updTime;
 
     //备注字段1
     @TableField("MISC1")
@@ -102,6 +106,7 @@ public class DisplayQrcode implements Serializable {
     //备注字段4
     @TableField("MISC4")
     private String misc4;
+
 
     public String getBeforeToken() {
         return beforeToken;
@@ -271,30 +276,39 @@ public class DisplayQrcode implements Serializable {
         this.updDate = updDate;
     }
 
+    public String getUpdTime() {
+        return updTime;
+    }
+
+    public void setUpdTime(String updTime) {
+        this.updTime = updTime;
+    }
+
     @Override
     public String toString() {
-        return "DisplayQrcode{" +
-                "beforeToken=" + beforeToken +
-                ", crtDate=" + crtDate +
-                ", crtTime=" + crtTime +
-                ", crtUser=" + crtUser +
-                ", customModDate=" + customModDate +
-                ", customModTime=" + customModTime +
-                ", data=" + data +
-                ", expiryDateTime=" + expiryDateTime +
-                ", expiryStatus=" + expiryStatus +
-                ", misc1=" + misc1 +
-                ", misc2=" + misc2 +
-                ", misc3=" + misc3 +
-                ", misc4=" + misc4 +
-                ", orgId=" + orgId +
-                ", pictureId=" + pictureId +
-                ", qrcodeId=" + qrcodeId +
-                ", qrUrl=" + qrUrl +
-                ", templetId=" + templetId +
-                ", token=" + token +
-                ", updateUser=" + updateUser +
-                ", updDate=" + updDate +
-                "}";
+        return "IdentityQrcode{" +
+                "qrcodeId='" + qrcodeId + '\'' +
+                ", templetId='" + templetId + '\'' +
+                ", customModDate='" + customModDate + '\'' +
+                ", customModTime='" + customModTime + '\'' +
+                ", token='" + token + '\'' +
+                ", beforeToken='" + beforeToken + '\'' +
+                ", expiryDateTime='" + expiryDateTime + '\'' +
+                ", expiryStatus='" + expiryStatus + '\'' +
+                ", pictureId='" + pictureId + '\'' +
+                ", crtDate='" + crtDate + '\'' +
+                ", crtTime='" + crtTime + '\'' +
+                ", crtUser='" + crtUser + '\'' +
+                ", data='" + data + '\'' +
+                ", orgId='" + orgId + '\'' +
+                ", qrUrl='" + qrUrl + '\'' +
+                ", updateUser='" + updateUser + '\'' +
+                ", updDate='" + updDate + '\'' +
+                ", updTime='" + updTime + '\'' +
+                ", misc1='" + misc1 + '\'' +
+                ", misc2='" + misc2 + '\'' +
+                ", misc3='" + misc3 + '\'' +
+                ", misc4='" + misc4 + '\'' +
+                '}';
     }
 }

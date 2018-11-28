@@ -19,48 +19,93 @@ public class PaymentQrcodeHis implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableField("BEFORE_TOKEN")
-    private String beforeToken;
-    @TableField("CRT_DATE")
-    private String crtDate;
-    @TableField("CRT_TIME")
-    private String crtTime;
-    @TableField("CRT_USER")
-    private String crtUser;
-    @TableField("CUSTOM_MOD_DATE")
-    private String customModDate;
-    @TableField("CUSTOM_MOD_TIME")
-    private String customModTime;
-    @TableField("DATA")
-    private String data;
-    @TableField("EXPIRY_DATE_TIME")
-    private String expiryDateTime;
-    @TableField("EXPIRY_STATUS")
-    private String expiryStatus;
-    @TableField("MISC1")
-    private String misc1;
-    @TableField("MISC2")
-    private String misc2;
-    @TableField("MISC3")
-    private String misc3;
-    @TableField("MISC4")
-    private String misc4;
-    @TableField("ORG_ID")
-    private String orgId;
-    @TableField("PICTURE_ID")
-    private String pictureId;
+    //二维码明文
     @TableField("QRCODE_ID")
     private String qrcodeId;
-    @TableField("QR_URL")
-    private String qrUrl;
+
+    //二维码关联模板id
     @TableField("TEMPLET_ID")
     private String templetId;
+
+    //生成日期
+    @TableField("CUSTOM_MOD_DATE")
+    private String customModDate;
+
+    //生成时间
+    @TableField("CUSTOM_MOD_TIME")
+    private String customModTime;
+
+    //token后的值
     @TableField("TOKEN")
     private String token;
+
+    //token前值
+    @TableField("BEFORE_TOKEN")
+    private String beforeToken;
+
+    //失效时间
+    @TableField("EXPIRY_DATE_TIME")
+    private String expiryDateTime;
+
+    //失效状态（1-有效，2-失效）
+    @TableField("EXPIRY_STATUS")
+    private String expiryStatus;
+
+    //图片编号
+    @TableField("PICTURE_ID")
+    private String pictureId;
+
+    //创建日期
+    @TableField("CRT_DATE")
+    private String crtDate;
+
+    //创建时间
+    @TableField("CRT_TIME")
+    private String crtTime;
+
+    //创建人员
+    @TableField("CRT_USER")
+    private String crtUser;
+
+    //业务数据
+    @TableField("DATA")
+    private String data;
+
+    //机构编号
+    @TableField("ORG_ID")
+    private String orgId;
+
+    //二维码跳转url
+    @TableField("QR_URL")
+    private String qrUrl;
+
+    //更新人员
     @TableField("UPDATE_USER")
     private String updateUser;
+
+    //更新日期（8位）
     @TableField("UPD_DATE")
     private String updDate;
+
+    //更新时间（6位）
+    @TableField("UPD_TIME")
+    private String updTime;
+
+    //备注字段1
+    @TableField("MISC1")
+    private String misc1;
+
+    //备注字段2
+    @TableField("MISC2")
+    private String misc2;
+
+    //备注字段3
+    @TableField("MISC3")
+    private String misc3;
+
+    //备注字段4
+    @TableField("MISC4")
+    private String misc4;
 
 
     public String getBeforeToken() {
@@ -231,30 +276,39 @@ public class PaymentQrcodeHis implements Serializable {
         this.updDate = updDate;
     }
 
+    public String getUpdTime() {
+        return updTime;
+    }
+
+    public void setUpdTime(String updTime) {
+        this.updTime = updTime;
+    }
+
     @Override
     public String toString() {
-        return "PaymentQrcodeHis{" +
-        "beforeToken=" + beforeToken +
-        ", crtDate=" + crtDate +
-        ", crtTime=" + crtTime +
-        ", crtUser=" + crtUser +
-        ", customModDate=" + customModDate +
-        ", customModTime=" + customModTime +
-        ", data=" + data +
-        ", expiryDateTime=" + expiryDateTime +
-        ", expiryStatus=" + expiryStatus +
-        ", misc1=" + misc1 +
-        ", misc2=" + misc2 +
-        ", misc3=" + misc3 +
-        ", misc4=" + misc4 +
-        ", orgId=" + orgId +
-        ", pictureId=" + pictureId +
-        ", qrcodeId=" + qrcodeId +
-        ", qrUrl=" + qrUrl +
-        ", templetId=" + templetId +
-        ", token=" + token +
-        ", updateUser=" + updateUser +
-        ", updDate=" + updDate +
-        "}";
+        return "IdentityQrcode{" +
+                "qrcodeId='" + qrcodeId + '\'' +
+                ", templetId='" + templetId + '\'' +
+                ", customModDate='" + customModDate + '\'' +
+                ", customModTime='" + customModTime + '\'' +
+                ", token='" + token + '\'' +
+                ", beforeToken='" + beforeToken + '\'' +
+                ", expiryDateTime='" + expiryDateTime + '\'' +
+                ", expiryStatus='" + expiryStatus + '\'' +
+                ", pictureId='" + pictureId + '\'' +
+                ", crtDate='" + crtDate + '\'' +
+                ", crtTime='" + crtTime + '\'' +
+                ", crtUser='" + crtUser + '\'' +
+                ", data='" + data + '\'' +
+                ", orgId='" + orgId + '\'' +
+                ", qrUrl='" + qrUrl + '\'' +
+                ", updateUser='" + updateUser + '\'' +
+                ", updDate='" + updDate + '\'' +
+                ", updTime='" + updTime + '\'' +
+                ", misc1='" + misc1 + '\'' +
+                ", misc2='" + misc2 + '\'' +
+                ", misc3='" + misc3 + '\'' +
+                ", misc4='" + misc4 + '\'' +
+                '}';
     }
 }

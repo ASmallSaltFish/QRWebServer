@@ -29,6 +29,7 @@
         <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
         <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
         <result column="UPD_DATE" property="updDate" jdbcType="VARCHAR"/>
+        <result column="UPD_TIME" property="updTime" jdbcType="VARCHAR"/>
         <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
         <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
         <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
@@ -40,6 +41,6 @@
     TXN_ID, ORG_TXN_ID, QRCODE_ID, CHANNEL_ID, CHANNEL_NO, CHANNEL_DATE, CHANNEL_TIME, 
     RECEIVE_DATE, RECEIVE_TIME, REQ_SYS_NO, RESP_SYS_NO, APPLICATION, PURPOSE, SCENE, 
     TRANS_TYPE, STATUS, REMARK, RETURN_CODE, RETURN_DESC, RETURN_DATE, RETURN_TIME, ORG_ID, 
-    CRT_USER, UPDATE_USER, CRT_DATE, CRT_TIME, UPD_DATE, MISC1, MISC2, MISC3, MISC4, REQUEST_DATA
+    CRT_USER, UPDATE_USER, CRT_DATE, CRT_TIME, UPD_DATE, UPD_TIME, MISC1, MISC2, MISC3, MISC4, REQUEST_DATA
   </sql>
 </mapper>

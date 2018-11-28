@@ -6,10 +6,7 @@ import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.base.parser.param.base.BusParamBody;
 import com.huateng.qrcode.base.parser.param.base.BusRespBody;
 import com.huateng.qrcode.common.constants.Constants;
-import com.huateng.qrcode.common.enums.ErrorCodeEnum;
-import com.huateng.qrcode.common.enums.QrCodeTxnStatusMenu;
-import com.huateng.qrcode.common.enums.QrExpiryStatusEnum;
-import com.huateng.qrcode.common.enums.UseTypeEnum;
+import com.huateng.qrcode.common.enums.*;
 import com.huateng.qrcode.common.model.IdentityQrcode;
 import com.huateng.qrcode.common.model.QrcodeTxn;
 import com.huateng.qrcode.qrserver.QrServerManager;
@@ -48,8 +45,6 @@ public class SysQrParserManagerImpl implements QrServerManager {
     public ResponseVo handler(RequestVo requestVo) throws Exception {
         ResponseVo responseVo = new ResponseVo();
         BusParamBody busBody = requestVo.getBusBody();
-        //二维码流水
-        QrcodeTxn qrcodeTxn = new QrcodeTxn();
         if (busBody == null) {
             logger.error("请求报文业务体对象为空！");
             throw new RuntimeException("报文参数校验错误！");
@@ -133,6 +128,7 @@ public class SysQrParserManagerImpl implements QrServerManager {
             }
 
             //检验通过，二维码流水入库
+            QrcodeTxn qrcodeTxn = new QrcodeTxn();
             qrcodeTxn.setTxnId(IdWorker.getIdStr());
             qrcodeTxn.setQrcodeId(qrcodeId);
             qrcodeTxn.setApplication(industryApp);
@@ -148,7 +144,6 @@ public class SysQrParserManagerImpl implements QrServerManager {
             qrcodeTxnService.insert(qrcodeTxn);
             logger.debug("二维码流水表记录插入成功");
         }
-
 
         BusRespBody busRespBody = new BusRespBody();
         busRespBody.setProcessCode(ErrorCodeEnum.SUCCESS.getCode());

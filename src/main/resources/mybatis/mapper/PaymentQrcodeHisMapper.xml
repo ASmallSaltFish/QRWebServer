@@ -18,6 +18,7 @@
         <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
         <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
         <result column="UPD_DATE" property="updDate" jdbcType="VARCHAR"/>
+        <result column="UPD_TIME" property="updTime" jdbcType="VARCHAR"/>
         <result column="MISC1" property="misc1" jdbcType="VARCHAR"/>
         <result column="MISC2" property="misc2" jdbcType="VARCHAR"/>
         <result column="MISC3" property="misc3" jdbcType="VARCHAR"/>
@@ -29,7 +30,7 @@
     <sql id="Base_Column_List">
     QRCODE_ID, TEMPLET_ID, CUSTOM_MOD_DATE, CUSTOM_MOD_TIME, EXPIRY_DATE_TIME, PICTURE_ID,
     EXPIRY_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, QR_URL, CRT_USER, UPDATE_USER, CRT_DATE,
-    CRT_TIME, UPD_DATE, MISC1, MISC2, MISC3, MISC4, DATA
+    CRT_TIME, UPD_DATE, UPD_TIME, MISC1, MISC2, MISC3, MISC4, DATA
   </sql>
 
 </mapper>
