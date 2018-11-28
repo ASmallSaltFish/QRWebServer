@@ -8,7 +8,7 @@ import java.sql.Clob;
 
 /**
  * <p>
- *  运营类二维码历史表
+ * 运营类二维码历史表
  * </p>
  *
  * @author auto generator
@@ -78,6 +78,10 @@ public class OperationQrcodeHis implements Serializable {
     //二维码跳转url
     @TableField("QR_URL")
     private String qrUrl;
+
+    //二维码使用次数
+    @TableField("TIMES_FLAG")
+    private String timesFlag;
 
     //更新人员
     @TableField("UPDATE_USER")
@@ -284,9 +288,17 @@ public class OperationQrcodeHis implements Serializable {
         this.updTime = updTime;
     }
 
+    public String getTimesFlag() {
+        return timesFlag;
+    }
+
+    public void setTimesFlag(String timesFlag) {
+        this.timesFlag = timesFlag;
+    }
+
     @Override
     public String toString() {
-        return "IdentityQrcode{" +
+        return "OperationQrcodeHis{" +
                 "qrcodeId='" + qrcodeId + '\'' +
                 ", templetId='" + templetId + '\'' +
                 ", customModDate='" + customModDate + '\'' +
@@ -302,6 +314,7 @@ public class OperationQrcodeHis implements Serializable {
                 ", data='" + data + '\'' +
                 ", orgId='" + orgId + '\'' +
                 ", qrUrl='" + qrUrl + '\'' +
+                ", timesFlag='" + timesFlag + '\'' +
                 ", updateUser='" + updateUser + '\'' +
                 ", updDate='" + updDate + '\'' +
                 ", updTime='" + updTime + '\'' +

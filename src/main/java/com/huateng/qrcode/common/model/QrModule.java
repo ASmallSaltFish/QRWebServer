@@ -84,8 +84,7 @@ public class QrModule implements Serializable {
     @TableField("USE_SCENE")
     private String useScene;
 
-    /************************/
-
+    //机构号
     @TableField("ORG_ID")
     private String orgId;
 
@@ -96,6 +95,10 @@ public class QrModule implements Serializable {
     @TableField("QR_URL")
     private String qrUrl;
 
+    //二维码可用次数标识（1 标识只能用一次，99表示有效期内，能用多次）
+    @TableField("TimesFlag")
+    private String timesFlag;
+
     //模板状态
     @TableField("CUS_MOD_STATUS")
     private String cusModStatus;
@@ -103,8 +106,6 @@ public class QrModule implements Serializable {
     //时效类型（1-动态二维码，2-静态二维码）
     @TableField("EXPIRY_TYPE")
     private String expiryType;
-
-
 
     @TableField("CREATE_TIME")
     private String createTime;
@@ -362,38 +363,47 @@ public class QrModule implements Serializable {
         this.useType = useType;
     }
 
+    public String getTimesFlag() {
+        return timesFlag;
+    }
+
+    public void setTimesFlag(String timesFlag) {
+        this.timesFlag = timesFlag;
+    }
+
     @Override
     public String toString() {
         return "QrModule{" +
-                "actionScope=" + actionScope +
-                ", backCode=" + backCode +
-                ", createTime=" + createTime +
-                ", crtOperId=" + crtOperId +
-                ", cusModStatus=" + cusModStatus +
-                ", encodeMode=" + encodeMode +
-                ", entryFlag=" + entryFlag +
-                ", expiryType=" + expiryType +
-                ", expiryDate=" + expiryDate +
-                ", generationMode=" + generationMode +
-                ", industryApp=" + industryApp +
-                ", keyVersion=" + keyVersion +
-                ", lastUpdOperId=" + lastUpdOperId +
-                ", lastUpdTime=" + lastUpdTime +
-                ", misc1=" + misc1 +
-                ", misc2=" + misc2 +
-                ", misc3=" + misc3 +
-                ", misc4=" + misc4 +
-                ", orgId=" + orgId +
-                ", qrcodeVersion=" + qrcodeVersion +
-                ", qrModCode=" + qrModCode +
-                ", qrModId=" + qrModId +
-                ", qrModName=" + qrModName +
-                ", qrUrl=" + qrUrl +
-                ", readMode=" + readMode +
-                ", reqSys=" + reqSys +
-                ", riskLevel=" + riskLevel +
-                ", useScene=" + useScene +
-                ", useType=" + useType +
-                "}";
+                "qrModId='" + qrModId + '\'' +
+                ", qrModCode='" + qrModCode + '\'' +
+                ", qrcodeVersion='" + qrcodeVersion + '\'' +
+                ", encodeMode='" + encodeMode + '\'' +
+                ", generationMode='" + generationMode + '\'' +
+                ", expiryDate='" + expiryDate + '\'' +
+                ", actionScope='" + actionScope + '\'' +
+                ", readMode='" + readMode + '\'' +
+                ", riskLevel='" + riskLevel + '\'' +
+                ", backCode='" + backCode + '\'' +
+                ", entryFlag='" + entryFlag + '\'' +
+                ", keyVersion='" + keyVersion + '\'' +
+                ", reqSys='" + reqSys + '\'' +
+                ", industryApp='" + industryApp + '\'' +
+                ", useType='" + useType + '\'' +
+                ", useScene='" + useScene + '\'' +
+                ", orgId='" + orgId + '\'' +
+                ", qrModName='" + qrModName + '\'' +
+                ", qrUrl='" + qrUrl + '\'' +
+                ", timesFlag='" + timesFlag + '\'' +
+                ", cusModStatus='" + cusModStatus + '\'' +
+                ", expiryType='" + expiryType + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", crtOperId='" + crtOperId + '\'' +
+                ", lastUpdOperId='" + lastUpdOperId + '\'' +
+                ", lastUpdTime='" + lastUpdTime + '\'' +
+                ", misc1='" + misc1 + '\'' +
+                ", misc2='" + misc2 + '\'' +
+                ", misc3='" + misc3 + '\'' +
+                ", misc4='" + misc4 + '\'' +
+                '}';
     }
 }

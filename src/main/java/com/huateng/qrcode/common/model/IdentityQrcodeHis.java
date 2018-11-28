@@ -8,7 +8,7 @@ import java.sql.Clob;
 
 /**
  * <p>
- *  识别类二维码历史表
+ * 识别类二维码历史表
  * </p>
  *
  * @author auto generator
@@ -78,6 +78,22 @@ public class IdentityQrcodeHis implements Serializable {
     //二维码跳转url
     @TableField("QR_URL")
     private String qrUrl;
+
+    //次数标识
+    @TableField("TIMES_FLAG")
+    private String timesFlag;
+
+    //用户id
+    @TableField("USER_ID")
+    private String userId;
+
+    //姓名
+    @TableField("NAME")
+    private String name;
+
+    //身份证
+    @TableField("IDENTIFY")
+    private String identity;
 
     //更新人员
     @TableField("UPDATE_USER")
@@ -284,9 +300,41 @@ public class IdentityQrcodeHis implements Serializable {
         this.updTime = updTime;
     }
 
+    public String getTimesFlag() {
+        return timesFlag;
+    }
+
+    public void setTimesFlag(String timesFlag) {
+        this.timesFlag = timesFlag;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
+
     @Override
     public String toString() {
-        return "IdentityQrcode{" +
+        return "IdentityQrcodeHis{" +
                 "qrcodeId='" + qrcodeId + '\'' +
                 ", templetId='" + templetId + '\'' +
                 ", customModDate='" + customModDate + '\'' +
@@ -302,6 +350,10 @@ public class IdentityQrcodeHis implements Serializable {
                 ", data='" + data + '\'' +
                 ", orgId='" + orgId + '\'' +
                 ", qrUrl='" + qrUrl + '\'' +
+                ", timesFlag='" + timesFlag + '\'' +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", identity='" + identity + '\'' +
                 ", updateUser='" + updateUser + '\'' +
                 ", updDate='" + updDate + '\'' +
                 ", updTime='" + updTime + '\'' +

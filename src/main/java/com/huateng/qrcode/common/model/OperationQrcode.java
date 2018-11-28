@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
-import java.sql.Clob;
 
 /**
  * <p>
@@ -78,6 +77,10 @@ public class OperationQrcode implements Serializable {
     //二维码跳转url
     @TableField("QR_URL")
     private String qrUrl;
+
+    //二维码使用次数
+    @TableField("TIMES_FLAG")
+    private String timesFlag;
 
     //更新人员
     @TableField("UPDATE_USER")
@@ -284,9 +287,17 @@ public class OperationQrcode implements Serializable {
         this.updTime = updTime;
     }
 
+    public String getTimesFlag() {
+        return timesFlag;
+    }
+
+    public void setTimesFlag(String timesFlag) {
+        this.timesFlag = timesFlag;
+    }
+
     @Override
     public String toString() {
-        return "IdentityQrcode{" +
+        return "OperationQrcode{" +
                 "qrcodeId='" + qrcodeId + '\'' +
                 ", templetId='" + templetId + '\'' +
                 ", customModDate='" + customModDate + '\'' +
@@ -302,6 +313,7 @@ public class OperationQrcode implements Serializable {
                 ", data='" + data + '\'' +
                 ", orgId='" + orgId + '\'' +
                 ", qrUrl='" + qrUrl + '\'' +
+                ", timesFlag='" + timesFlag + '\'' +
                 ", updateUser='" + updateUser + '\'' +
                 ", updDate='" + updDate + '\'' +
                 ", updTime='" + updTime + '\'' +

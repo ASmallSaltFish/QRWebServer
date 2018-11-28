@@ -8,7 +8,7 @@ import java.sql.Clob;
 
 /**
  * <p>
- *  支付类二维码历史表
+ * 支付类二维码历史表
  * </p>
  *
  * @author auto generator
@@ -74,6 +74,30 @@ public class PaymentQrcodeHis implements Serializable {
     //机构编号
     @TableField("ORG_ID")
     private String orgId;
+
+    //业务流水号
+    @TableField("BIZ_ID")
+    private String bizId;
+
+    //用户id
+    @TableField("USER_ID")
+    private String userId;
+
+    //用户真实姓名
+    @TableField("USER_NAME")
+    private String userName;
+
+    //商户号
+    @TableField("MERCH_ID")
+    private String merchId;
+
+    //产品编号
+    @TableField("PRO_NO")
+    private String proNo;
+
+    //次数标识
+    @TableField("TIMES_FLAG")
+    private String timesFlag;
 
     //二维码跳转url
     @TableField("QR_URL")
@@ -284,9 +308,57 @@ public class PaymentQrcodeHis implements Serializable {
         this.updTime = updTime;
     }
 
+    public String getBizId() {
+        return bizId;
+    }
+
+    public void setBizId(String bizId) {
+        this.bizId = bizId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getMerchId() {
+        return merchId;
+    }
+
+    public void setMerchId(String merchId) {
+        this.merchId = merchId;
+    }
+
+    public String getProNo() {
+        return proNo;
+    }
+
+    public void setProNo(String proNo) {
+        this.proNo = proNo;
+    }
+
+    public String getTimesFlag() {
+        return timesFlag;
+    }
+
+    public void setTimesFlag(String timesFlag) {
+        this.timesFlag = timesFlag;
+    }
+
     @Override
     public String toString() {
-        return "IdentityQrcode{" +
+        return "PaymentQrcodeHis{" +
                 "qrcodeId='" + qrcodeId + '\'' +
                 ", templetId='" + templetId + '\'' +
                 ", customModDate='" + customModDate + '\'' +
@@ -301,6 +373,12 @@ public class PaymentQrcodeHis implements Serializable {
                 ", crtUser='" + crtUser + '\'' +
                 ", data='" + data + '\'' +
                 ", orgId='" + orgId + '\'' +
+                ", bizId='" + bizId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", merchId='" + merchId + '\'' +
+                ", proNo='" + proNo + '\'' +
+                ", timesFlag='" + timesFlag + '\'' +
                 ", qrUrl='" + qrUrl + '\'' +
                 ", updateUser='" + updateUser + '\'' +
                 ", updDate='" + updDate + '\'' +

@@ -13,6 +13,10 @@
         <result column="TOKEN" property="token" jdbcType="VARCHAR"/>
         <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
         <result column="QR_URL" property="qrUrl" jdbcType="VARCHAR"/>
+        <result column="TIMES_FLAG" property="timesFlag" jdbcType="VARCHAR"/>
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR"/>
+        <result column="IDENTITY" property="identity" jdbcType="VARCHAR"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
         <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
         <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
         <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
@@ -28,7 +32,7 @@
 
     <sql id="Base_Column_List">
     QRCODE_ID, TEMPLET_ID, CUSTOM_MOD_DATE, CUSTOM_MOD_TIME, EXPIRY_DATE_TIME, PICTURE_ID,
-    EXPIRY_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, QR_URL, CRT_USER, UPDATE_USER, CRT_DATE,
+    EXPIRY_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, QR_URL, TIMES_FLAG, USER_ID, IDENTITY, NAME, CRT_USER, UPDATE_USER, CRT_DATE,
     CRT_TIME, UPD_DATE, UPD_TIME, MISC1, MISC2, MISC3, MISC4, DATA
   </sql>
 

@@ -12,7 +12,13 @@
         <result column="BEFORE_TOKEN" property="beforeToken" jdbcType="VARCHAR"/>
         <result column="TOKEN" property="token" jdbcType="VARCHAR"/>
         <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="BIZ_ID" property="bizId" jdbcType="VARCHAR"/>
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR"/>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+        <result column="MERCH_ID" property="merchId" jdbcType="VARCHAR"/>
+        <result column="PRO_NO" property="proNo" jdbcType="VARCHAR"/>
         <result column="QR_URL" property="qrUrl" jdbcType="VARCHAR"/>
+        <result column="TIMES_FLAG" property="timesFlag" jdbcType="VARCHAR"/>
         <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
         <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
         <result column="CRT_DATE" property="crtDate" jdbcType="VARCHAR"/>
@@ -28,8 +34,9 @@
 
     <sql id="Base_Column_List">
     QRCODE_ID, TEMPLET_ID, CUSTOM_MOD_DATE, CUSTOM_MOD_TIME, EXPIRY_DATE_TIME, PICTURE_ID,
-    EXPIRY_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, QR_URL, CRT_USER, UPDATE_USER, CRT_DATE,
-    CRT_TIME, UPD_DATE, UPD_TIME, MISC1, MISC2, MISC3, MISC4, DATA
+    EXPIRY_STATUS, BEFORE_TOKEN, TOKEN, ORG_ID, BIZ_ID, USER_ID, USER_NAME, MERCH_ID, PRO_NO,
+    TIMES_FLAG, QR_URL, CRT_USER, UPDATE_USER, CRT_DATE, CRT_TIME, UPD_DATE, UPD_TIME,
+    MISC1, MISC2, MISC3, MISC4, DATA
   </sql>
 
 </mapper>

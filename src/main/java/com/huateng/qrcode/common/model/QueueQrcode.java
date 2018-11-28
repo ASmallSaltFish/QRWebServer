@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *  排队类二维码表
+ * 排队类二维码表
  * </p>
  *
  * @author auto generator
@@ -77,6 +77,10 @@ public class QueueQrcode implements Serializable {
     //二维码跳转url
     @TableField("QR_URL")
     private String qrUrl;
+
+    //次数标识
+    @TableField("TIMES_FLAG")
+    private String timesFlag;
 
     //更新人员
     @TableField("UPDATE_USER")
@@ -283,9 +287,17 @@ public class QueueQrcode implements Serializable {
         this.updTime = updTime;
     }
 
+    public String getTimesFlag() {
+        return timesFlag;
+    }
+
+    public void setTimesFlag(String timesFlag) {
+        this.timesFlag = timesFlag;
+    }
+
     @Override
     public String toString() {
-        return "IdentityQrcode{" +
+        return "QueueQrcode{" +
                 "qrcodeId='" + qrcodeId + '\'' +
                 ", templetId='" + templetId + '\'' +
                 ", customModDate='" + customModDate + '\'' +
@@ -301,6 +313,7 @@ public class QueueQrcode implements Serializable {
                 ", data='" + data + '\'' +
                 ", orgId='" + orgId + '\'' +
                 ", qrUrl='" + qrUrl + '\'' +
+                ", timesFlag='" + timesFlag + '\'' +
                 ", updateUser='" + updateUser + '\'' +
                 ", updDate='" + updDate + '\'' +
                 ", updTime='" + updTime + '\'' +
