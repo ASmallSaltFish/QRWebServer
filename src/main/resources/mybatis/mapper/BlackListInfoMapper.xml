@@ -7,7 +7,7 @@
         <result column="BLANK_NO" property="blankNo" jdbcType="VARCHAR"/>
         <result column="BLANK_DESC" property="blankDesc" jdbcType="VARCHAR"/>
         <result column="IS_USE" property="isUse" jdbcType="VARCHAR"/>
-        <result column="EXPIRY_TIME" property="expireTime" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_TIME" property="expiryTime" jdbcType="VARCHAR"/>
         <result column="CRT_USER" property="crtUser" jdbcType="VARCHAR"/>
         <result column="CRT_TIME" property="crtTime" jdbcType="VARCHAR"/>
         <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>

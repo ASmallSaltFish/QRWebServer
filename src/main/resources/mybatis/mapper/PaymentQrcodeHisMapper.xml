@@ -6,9 +6,9 @@
         <result column="TEMPLET_ID" property="templetId" jdbcType="VARCHAR"/>
         <result column="CUSTOM_MOD_DATE" property="customModDate" jdbcType="VARCHAR"/>
         <result column="CUSTOM_MOD_TIME" property="customModTime" jdbcType="VARCHAR"/>
-        <result column="EXPIRY_DATE_TIME" property="expireDateTime" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_DATE_TIME" property="expiryDateTime" jdbcType="VARCHAR"/>
         <result column="PICTURE_ID" property="pictureId" jdbcType="VARCHAR"/>
-        <result column="EXPIRY_STATUS" property="expireStatus" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_STATUS" property="expiryStatus" jdbcType="VARCHAR"/>
         <result column="BEFORE_TOKEN" property="beforeToken" jdbcType="VARCHAR"/>
         <result column="TOKEN" property="token" jdbcType="VARCHAR"/>
         <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>

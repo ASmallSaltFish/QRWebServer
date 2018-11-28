@@ -1,6 +1,5 @@
 package com.huateng.qrcode.qrserver.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
@@ -18,7 +17,6 @@ import com.huateng.qrcode.service.form.IdentityQrcodeService;
 import com.huateng.qrcode.service.form.QrcodeTxnService;
 import com.huateng.qrcode.utils.DateUtil;
 import com.huateng.qrcode.utils.QrUtil;
-import com.huateng.qrcode.utils.StringUtil;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -26,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 /**

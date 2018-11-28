@@ -8,7 +8,7 @@
         <result column="QRCODE_VERSION" property="qrcodeVersion" jdbcType="VARCHAR"/>
         <result column="ENCODE_MODE" property="encodeMode" jdbcType="VARCHAR"/>
         <result column="GENERATION_MODE" property="generationMode" jdbcType="VARCHAR"/>
-        <result column="EXPIRY_TYPE" property="expireType" jdbcType="VARCHAR"/>
+        <result column="EXPIRY_TYPE" property="expiryType" jdbcType="VARCHAR"/>
         <result column="EXPIRY_DATE" property="expiryDate" jdbcType="VARCHAR"/>
         <result column="ACTION_SCOPE" property="actionScope" jdbcType="VARCHAR"/>
         <result column="READ_MODE" property="readMode" jdbcType="VARCHAR"/>
