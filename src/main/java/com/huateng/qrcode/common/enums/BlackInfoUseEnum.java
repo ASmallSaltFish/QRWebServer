@@ -2,6 +2,9 @@ package com.huateng.qrcode.common.enums;
 
 /**
  * 黑名单有效枚举
+ *
+ * @author qinyupeng
+ * @since 2018-11-29 09:17:33
  */
 public enum BlackInfoUseEnum {
     VALID("1", "启用"),

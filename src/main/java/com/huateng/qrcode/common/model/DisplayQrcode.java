@@ -79,6 +79,10 @@ public class DisplayQrcode implements Serializable {
     @TableField("QR_URL")
     private String qrUrl;
 
+    //二维码生效标志（1-表示一次生成，99-表示按照有效期设置生效）
+    @TableField("TIMES_FLAG")
+    private String timesFlag;
+
     //更新人员
     @TableField("UPDATE_USER")
     private String updateUser;
@@ -284,9 +288,17 @@ public class DisplayQrcode implements Serializable {
         this.updTime = updTime;
     }
 
+    public String getTimesFlag() {
+        return timesFlag;
+    }
+
+    public void setTimesFlag(String timesFlag) {
+        this.timesFlag = timesFlag;
+    }
+
     @Override
     public String toString() {
-        return "IdentityQrcode{" +
+        return "DisplayQrcode{" +
                 "qrcodeId='" + qrcodeId + '\'' +
                 ", templetId='" + templetId + '\'' +
                 ", customModDate='" + customModDate + '\'' +
@@ -302,6 +314,7 @@ public class DisplayQrcode implements Serializable {
                 ", data='" + data + '\'' +
                 ", orgId='" + orgId + '\'' +
                 ", qrUrl='" + qrUrl + '\'' +
+                ", timesFlag='" + timesFlag + '\'' +
                 ", updateUser='" + updateUser + '\'' +
                 ", updDate='" + updDate + '\'' +
                 ", updTime='" + updTime + '\'' +

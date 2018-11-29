@@ -19,4 +19,12 @@ public interface DisplayQrcodeService extends IService<DisplayQrcode> {
      * @return 返回二维码实体对象
      */
     DisplayQrcode findByToken(String token);
+
+    /**
+     * 根据主键更新实体
+     *
+     * @param entity 二维码实体信息
+     * @return true表示更新成功，false表示更新失败
+     */
+    boolean update(DisplayQrcode entity);
 }
