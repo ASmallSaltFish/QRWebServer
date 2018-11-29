@@ -13,14 +13,21 @@ import javax.servlet.ServletContextListener;
  */
 public abstract class BaseListener implements ServletContextListener {
 
+    private ApplicationContext ctx;
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext context = servletContextEvent.getServletContext();
-        ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
+        ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(context);
         //将applicationContext对象存储在工具类中
         SpringContextUtil.getInstance().setApplicationContext(ctx);
         init();
     }
 
     protected abstract void init();
+
+
+    protected Object getBean(String beanName) {
+        return ctx.getBean(beanName);
+    }
 }
