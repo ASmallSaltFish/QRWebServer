@@ -1,6 +1,7 @@
 package com.huateng.qrcode.service.form;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.huateng.qrcode.common.exception.QrcException;
 import com.huateng.qrcode.common.model.DisplayQrcode;
 
 /**
@@ -27,4 +28,15 @@ public interface DisplayQrcodeService extends IService<DisplayQrcode> {
      * @return true表示更新成功，false表示更新失败
      */
     boolean update(DisplayQrcode entity);
+
+    /**
+     * 添加展示类二维码信息
+     *
+     * @return
+     */
+    public boolean addDisplayQrcode(String ewmData, String templetId, String customModDate, String customModTime,
+                                    String token, String beforeToken, String expiryDateTime, String expiryStatus,
+                                    String pictureId, String crtUser, String data, String orgId, String qrUrl,
+                                    String updateUser) throws QrcException;
+
 }

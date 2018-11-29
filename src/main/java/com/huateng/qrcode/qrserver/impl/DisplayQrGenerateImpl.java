@@ -10,21 +10,22 @@ import com.huateng.qrcode.common.model.DisplayQrcode;
 import com.huateng.qrcode.common.model.QrModule;
 import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.qrcode.service.algorithm.TokenService;
+import com.huateng.qrcode.service.form.BlackListInfoService;
 import com.huateng.qrcode.service.form.DisplayQrcodeService;
 import com.huateng.qrcode.service.form.QrModuleService;
-import com.huateng.qrcode.utils.DateUtil;
-import com.huateng.qrcode.utils.QrUtil;
-import com.huateng.qrcode.utils.SeqGeneratorUtil;
-import com.huateng.qrcode.utils.StringUtil;
+import com.huateng.qrcode.service.form.QrcodeTxnService;
+import com.huateng.qrcode.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.image.BufferedImage;
+
 /**
  * @class: DisplayQrGenerateImpl
- * @title: 识别类二维码生成服务
+ * @title: 展示类二维码生成服务
  * @desc:
  * @author: xuzhangsheng
  * @date: 2018年11月21日 下午14:16:53
@@ -43,6 +44,12 @@ public class DisplayQrGenerateImpl implements QrServerManager {
 
     @Autowired
     private DisplayQrcodeService displayQrcodeService;
+
+    @Autowired
+    private BlackListInfoService blackListInfoService;
+
+    @Autowired
+    private QrcodeTxnService qrcodeTxnService;
 
     /**
      * 生成识别类二维码
@@ -71,6 +78,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
         //获取当前日期和时间（yyyyMMddHHmmss格式）
         String currentTime = DateUtil.formatCurrentDateTime();
         try {
+            //-------------------获取参数-------------------//
             //获取系统层数据
 
             //获取应用层数据
@@ -106,6 +114,8 @@ public class DisplayQrGenerateImpl implements QrServerManager {
                 out.setResultMsg(ErrorCodeEnum.E100000.getDesc());
                 return out;
             }
+
+            //-------------------查询模板信息-------------------//
             //二维码模板 = 二维码版本 + 生成方式 + 时效 + 类别域 + 保留位 + 请求系统 + 行业应用 + 用途 + 场景
             String templet = ewmVersion + generationMode + prescription + actionScope
                     + reserve + reqSys + industryApp + useType + scene;
@@ -137,12 +147,28 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             String keyVersion = qrModule.getKeyVersion();
             //失效时间（单位秒）
             String expiryDate = qrModule.getExpiryDate();
-            //有效时间
+            //有效时间 （动静态码的时效配制）
             String effectiveTime = DateUtil.dateFormat(
                     DateUtil.secondAdd(null, Integer.valueOf(expiryDate)), Constants.DATE_TIME_PATTERN_DEFAULT);
 
-            //TODO 请求者合法性查检(黑名单) 应用场景查检以及验证是否有效
-
+            //-------------------逻辑处理-------------------//
+            // 请求者合法性查检(黑名单) 应用场景查检以及验证是否有效
+            //黑名单校验，校验请求系统
+            boolean isValidSys = blackListInfoService.validInBlackListInfo(reqSys, Constants.BLACK_TYPE_SYS);
+            if (isValidSys) {
+                logger.error("请求系统不允许生成二维码！");
+                out.setResultCode(ErrorCodeEnum.E200000.getCode());
+                out.setResultMsg(ErrorCodeEnum.E200000.getDesc());
+                return out;
+            }
+            //黑名单校验，校验模板
+            boolean isValidModule = blackListInfoService.validInBlackListInfo(qrModule.getQrModId(), Constants.BLACK_TYPE_MODULE);
+            if (isValidModule) {
+                logger.error("该二维码暂停使用！");
+                out.setResultCode(ErrorCodeEnum.E200000.getCode());
+                out.setResultMsg(ErrorCodeEnum.E200000.getDesc());
+                return out;
+            }
             // 生成序列号
             String seq = SeqGeneratorUtil.getInstance().getSequenceNo(Constants.SEQ_KEY);
 
@@ -190,8 +216,8 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             logger.info("mingwen:" + ewmData);
             logger.info("miwen:" + ewmDataCipher);
             //TODO 根据风险等级调用加密算法（暂无）
-            //TODO 动静态码的时效配制
-            //TODO 将二维码信息和业务数据入库
+
+            // 将二维码信息和业务数据入库
             DisplayQrcode displayQrcode = new DisplayQrcode();
             displayQrcode.setQrcodeId(ewmData);
             displayQrcode.setTempletId(qrModule.getQrModId());
@@ -200,27 +226,50 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             displayQrcode.setToken(token);
             displayQrcode.setBeforeToken(beforeToken);
             displayQrcode.setExpiryDateTime(effectiveTime);
-            displayQrcode.setExpiryStatus(ExpiryStatusEnum.EFFECTIVE.getCode());
+            displayQrcode.setExpiryStatus(ExpiryStatusEnum.VALID.getCode());
             //
             displayQrcode.setPictureId("");
             displayQrcode.setCrtDate(currentDate);
             displayQrcode.setCrtTime(currentTime.substring(8));
-            //
-            displayQrcode.setCrtUser("");
+            displayQrcode.setCrtUser(Constants.SYS_OPR);
             displayQrcode.setData(paramMap);
-            //
-            displayQrcode.setOrgId("");
+            displayQrcode.setOrgId(Constants.ORG_ID);
             //
             displayQrcode.setQrUrl("");
-            //
-            displayQrcode.setUpdateUser("");
+            displayQrcode.setUpdateUser(Constants.SYS_OPR);
             displayQrcode.setUpdDate(currentDate);
             displayQrcodeService.insert(displayQrcode);
+
+            displayQrcodeService.addDisplayQrcode(ewmData, qrModule.getQrModId(), currentDate, currentTime.substring(8),
+                    token, beforeToken, effectiveTime, ExpiryStatusEnum.VALID.getCode(), ""
+                    , Constants.SYS_OPR, paramMap, Constants.ORG_ID, "", Constants.SYS_OPR);
+
             //TODO 添加交易流水
+
+
             //TODO 生成二维码图片（查看包是否支持多种形式二维码）
-            logger.info("识别类二维码生成服务结束，出参：" + out.toString());
+
+            BufferedImage bufferedImage = QRCodeKit.createQRCode(ewmDataCipher);
+            String imageBase64 = QRCodeKit.imageToBase64String(bufferedImage);
+
+            /*Map<EncodeHintType, Object> qrMap = new Hashtable<EncodeHintType, Object>();
+            qrMap.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            qrMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
+
+            BitMatrix bit = new MultiFormatWriter().encode(ewmDataCipher, BarcodeFormat.QR_CODE, 300, 400, qrMap);
+
+            ByteArrayOutputStream aaa = new ByteArrayOutputStream();
+
+            MatrixToImageWriter.writeToStream(bit, "png", aaa);
+
+            BASE64Encoder encoder = new BASE64Encoder();
+
+            String imageBase64 = new String(encoder.encode(aaa.toByteArray()));*/
+
+
             out.setResultCode(ErrorCodeEnum.SUCCESS.getCode());
             out.setResultMsg(ErrorCodeEnum.SUCCESS.getDesc());
+            logger.info("识别类二维码生成服务结束，出参：" + out.toString());
         } catch (Exception e) {
             //TODO 添加交易流水
             logger.info("识别类二维码生成失败");

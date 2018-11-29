@@ -55,5 +55,9 @@ public class Constants {
     /************其他常量***************/
     //保留位默认值
     public static final String RESERVE = "0";
+    //机构号默认值
+    public static final String ORG_ID = "OOOOOO";
+    //操作人员默认值
+    public static final String SYS_OPR = "SYS_OPR";
 
 }

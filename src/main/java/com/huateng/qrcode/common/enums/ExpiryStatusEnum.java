@@ -5,8 +5,16 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @class: ExpiryStatusEnum
+ * @title: 二维码状态
+ * @desc:
+ * @author: xuzhangsheng
+ * @date: 2018年11月27日 下午14:16:53
+ * @since: 1.0.0
+ */
 public enum ExpiryStatusEnum {
-    EFFECTIVE("1", "有效"),
+    VALID("1", "有效"),
     INVALID("2", "无效");
 
     private String code;
