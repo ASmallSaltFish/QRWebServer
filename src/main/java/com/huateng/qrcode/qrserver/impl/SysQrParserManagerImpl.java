@@ -69,8 +69,8 @@ public class SysQrParserManagerImpl implements QrServerManager {
         //token（13位）
         String token = qrCode.substring(14, 17) + qrCode.substring(18, 20) + qrCode.substring(26);
         //用途 第18位，确认二维码类型
-        String actionScope = qrCode.substring(17, 18);
-        logger.info("用途参数，第18位：actionScope=" + actionScope);
+        String useType = qrCode.substring(17, 18);
+        logger.info("用途参数，第18位：useType=" + useType);
 
         //黑名单校验，校验请求系统
         boolean isValidSys = blackListInfoService.validInBlackListInfo(reqSys, Constants.BLACK_TYPE_SYS);
@@ -79,7 +79,7 @@ public class SysQrParserManagerImpl implements QrServerManager {
             throw new RuntimeException("当前请求系统已经加入黑名单！");
         }
 
-        if (UseTypeEnum.USE_TYPE_IDENTITY.getCode().equals(actionScope)) {
+        if (UseTypeEnum.USE_TYPE_IDENTITY.getCode().equals(useType)) {
             IdentityQrcode identityQrcode = identityQrcodeService.findByToken(token);
             if (identityQrcode == null) {
                 logger.error("根据token查询，没有获取到二维码信息！");
@@ -140,7 +140,7 @@ public class SysQrParserManagerImpl implements QrServerManager {
             qrcodeTxn.setTxnId(IdWorker.getIdStr());
             qrcodeTxn.setQrcodeId(qrcodeId);
             qrcodeTxn.setApplication(industryApp);
-            qrcodeTxn.setPurpose(actionScope);
+            qrcodeTxn.setPurpose(useType);
             qrcodeTxn.setScene(scene);
             qrcodeTxn.setReceiveDate(paramMap.get(Constants.RECEIVE_DATE));
             qrcodeTxn.setReceiveTime(paramMap.get(Constants.RECEIVE_TIME));

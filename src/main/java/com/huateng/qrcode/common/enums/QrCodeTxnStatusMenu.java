@@ -6,7 +6,8 @@ package com.huateng.qrcode.common.enums;
 public enum QrCodeTxnStatusMenu {
 
     VALID("1", "有效"),
-    INVALID("2", "失效");
+    INVALID("2", "失效"),
+    REVERSED("3", "已冲正");
 
     private String code;
     private String desc;

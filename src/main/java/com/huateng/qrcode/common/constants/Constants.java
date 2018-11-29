@@ -24,15 +24,17 @@ public class Constants {
     public static final String HTTP_REQ_SYS_ALIPAY = "ALIPAY";
     //请求参数名，二维码码串
     public static final String REQ_PARAM_QR_CODE = "qrCode";
-
-
-    /****************解析http请求添加参数key常量*********************/
     //扫码客户端系统（微信、支付宝）
     public static final String HTTP_REQ_SYS = "httpReqSys";
     //请求接收日期
     public static final String RECEIVE_DATE = "receiveDate";
     //请求接收时间
     public static final String RECEIVE_TIME = "receiveTime";
+
+
+    /************系统类二维码解析*****************/
+    //二维码流水编号（待定，需要唯一标识二维码流水号）
+    public static final String QR_TXN_ID = "qrTxnId";
 
 
     /************日期格式化常量***************/
@@ -48,6 +50,7 @@ public class Constants {
     public static final String DATE_PATTERN_CROSS = "yyyy-MM-dd";
     //斜杆日期
     public static final String DATE_PATTERN_DIAGONAL = "yyyy/MM/dd";
+
 
     /************其他常量***************/
     //保留位默认值
