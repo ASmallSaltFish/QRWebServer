@@ -120,7 +120,7 @@
     <logger name="java.sql.Statement" value="DEBUG"/>
 
     <!-- root级别   DEBUG -->
-    <root level="INFO">
+    <root level="info">
         <!-- 控制台输出 -->
         <appender-ref ref="STDOUT"/>
         <!-- 文件输出 -->

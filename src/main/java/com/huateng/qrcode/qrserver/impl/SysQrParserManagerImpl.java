@@ -1,19 +1,17 @@
 package com.huateng.qrcode.qrserver.impl;
 
-import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.huateng.qrcode.base.parser.param.RequestVo;
 import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.base.parser.param.base.BusParamBody;
-import com.huateng.qrcode.base.parser.param.base.BusRespBody;
 import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.*;
+import com.huateng.qrcode.common.exception.QrParserException;
 import com.huateng.qrcode.common.model.IdentityQrcode;
 import com.huateng.qrcode.common.model.QrcodeTxn;
 import com.huateng.qrcode.qrserver.QrServerManager;
 import com.huateng.qrcode.service.form.BlackListInfoService;
 import com.huateng.qrcode.service.form.IdentityQrcodeService;
 import com.huateng.qrcode.service.form.QrcodeTxnService;
-import com.huateng.qrcode.utils.DateUtil;
 import com.huateng.qrcode.utils.QrUtil;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,21 +44,21 @@ public class SysQrParserManagerImpl implements QrServerManager {
         ResponseVo responseVo = new ResponseVo();
         BusParamBody busBody = requestVo.getBusBody();
         if (busBody == null) {
-            logger.error("请求报文业务体对象为空！");
-            throw new RuntimeException("报文参数校验错误！");
+            logger.error("请求报文busBody对象为空！");
+            throw new QrParserException(ErrorCodeEnum.ILLEGAL_PARAM, "请求报文busBody对象为空");
         }
 
         //请求报文业务体中的map集合
         Map<String, String> paramMap = busBody.getParamMap();
         if (MapUtils.isEmpty(paramMap)) {
             logger.error("请求报文业务体paramMap集合为空！");
-            throw new RuntimeException("报文参数校验错误！");
+            throw new QrParserException(ErrorCodeEnum.ILLEGAL_PARAM, "请求报文业务体paramMap集合为空");
         }
 
         String qrCode = busBody.getQrCode();
         if (StringUtils.isBlank(qrCode)) {
             logger.error("请求报文中qrCode参数为空！");
-            throw new RuntimeException("报文参数校验错误！");
+            throw new QrParserException(ErrorCodeEnum.ILLEGAL_PARAM, "请求报文中qrCode参数为空");
         }
 
         //请求系统
@@ -83,7 +81,7 @@ public class SysQrParserManagerImpl implements QrServerManager {
             IdentityQrcode identityQrcode = identityQrcodeService.findByToken(token);
             if (identityQrcode == null) {
                 logger.error("根据token查询，没有获取到二维码信息！");
-                throw new RuntimeException("二维码信息不存在！");
+                throw new QrParserException(ErrorCodeEnum.QRCODE_NOT_FOUNT);
             }
 
             //二维码生效标识，1-表示一次生效，99-表示按照按照有效期设置生效
@@ -91,7 +89,7 @@ public class SysQrParserManagerImpl implements QrServerManager {
             if (StringUtils.isBlank(timesFlag) || QrUseTimesFlagEnum.USE_ONECE.getCode().equals(timesFlag)
                     || QrUseTimesFlagEnum.USE_MORE.getCode().equals(timesFlag)) {
                 logger.error("根据token查询，没有获取到二维码信息！");
-                throw new RuntimeException("二维码生效标识未设置或设置值不不合法！");
+                throw new QrParserException(ErrorCodeEnum.QRCODE_STATUS_ILLEGAL, "二维码生效标识未设置或设置值不不合法");
             }
 
             //二维码串码
@@ -112,14 +110,14 @@ public class SysQrParserManagerImpl implements QrServerManager {
             boolean isValidByModule = blackListInfoService.validInBlackListInfo(templateId, Constants.BLACK_TYPE_MODULE);
             if (isValidByModule) {
                 logger.error("当前二维码生成模版已经加入黑名单！");
-                throw new RuntimeException("当前二维码生成模版已经加入黑名单！");
+                throw new QrParserException(ErrorCodeEnum.BLACK_CHECK_ILLEGAL, "当前二维码生成模版已经加入黑名单");
             }
 
             //黑名单校验，校验二维码是是否加入黑名单
             boolean isValidByQrCode = blackListInfoService.validInBlackListInfo(qrcodeId, Constants.BLACK_TYPE_QRCODE);
             if (isValidByQrCode) {
                 logger.error("当前二维码已经加入黑名单！");
-                throw new RuntimeException("当前二维码已经加入黑名单！");
+                throw new QrParserException(ErrorCodeEnum.BLACK_CHECK_ILLEGAL, "当前二维码已经加入黑名单");
             }
 
             //二维码是否失效
@@ -127,45 +125,35 @@ public class SysQrParserManagerImpl implements QrServerManager {
             String expiryDateTime = identityQrcode.getExpiryDateTime();
             if (StringUtils.isBlank(expiryStatus) || StringUtils.isBlank(expiryDateTime)) {
                 logger.error("二维码失效状态或失效时间未设置！");
-                throw new RuntimeException("二维码时效校验错误！");
+                throw new QrParserException(ErrorCodeEnum.EXPIRY_CHECK_ILLEGAL, "二维码时效状态有误或失效时间未设置");
             }
 
             if (QrExpiryStatusEnum.INVALID.getCode().equals(expiryStatus) || QrUtil.isQrExpire(expiryDateTime)) {
                 logger.error("二位码已失效！");
-                throw new RuntimeException("二维码已失效！");
+                throw new QrParserException(ErrorCodeEnum.EXPIRY_CHECK_ILLEGAL, "二维码已失效");
             }
 
             //检验通过，二维码流水入库
-            QrcodeTxn qrcodeTxn = new QrcodeTxn();
-            qrcodeTxn.setTxnId(IdWorker.getIdStr());
-            qrcodeTxn.setQrcodeId(qrcodeId);
-            qrcodeTxn.setApplication(industryApp);
-            qrcodeTxn.setPurpose(useType);
-            qrcodeTxn.setScene(scene);
-            qrcodeTxn.setReceiveDate(paramMap.get(Constants.RECEIVE_DATE));
-            qrcodeTxn.setReceiveTime(paramMap.get(Constants.RECEIVE_TIME));
-            qrcodeTxn.setCrtDate(DateUtil.formatCurrentDate());
-            qrcodeTxn.setCrtTime(DateUtil.formatCurrentTime());
-            qrcodeTxn.setRemark("二维码解析成功！");
-            qrcodeTxn.setStatus(QrCodeTxnStatusMenu.VALID.getCode());
+            String receiveDate = paramMap.get(Constants.RECEIVE_DATE);
+            String receiveTime = paramMap.get(Constants.RECEIVE_TIME);
+            QrcodeTxn qrcodeTxn = QrUtil.getQrcodeTxn(qrcodeId, industryApp, useType, scene, receiveDate,
+                    receiveTime, "二维码解析成功");
             logger.info("开始插入二维码流水表记录");
             qrcodeTxnService.insert(qrcodeTxn);
             logger.info("二维码流水表记录插入成功");
 
             //判断二维码使用次数，如果只能使用一次，则解析完成后，需要置为失效
             if (QrUseTimesFlagEnum.USE_ONECE.getCode().equals(timesFlag)) {
-                logger.info("开始更新二位失效状态");
+                logger.info("开始更新二位失效状态,将当前二维码设置为失效");
                 identityQrcode.setExpiryStatus(ExpiryStatusEnum.INVALID.getCode());
                 identityQrcodeService.update(identityQrcode);
                 logger.info("二维码失效状态更新成功");
             }
         }
 
-        BusRespBody busRespBody = new BusRespBody();
-        busRespBody.setProcessCode(ErrorCodeEnum.SUCCESS.getCode());
-        busRespBody.setProcessStatus(ErrorCodeEnum.SUCCESS.name());
-        busRespBody.setMsg(ErrorCodeEnum.SUCCESS.getDesc());
-        responseVo.setBusRespBody(busRespBody);
-        return responseVo;
+        return QrUtil.wrapResponseVo(ErrorCodeEnum.SUCCESS.getCode(),
+                ErrorCodeEnum.SUCCESS.name(), ErrorCodeEnum.SUCCESS.getDesc());
     }
+
+
 }
