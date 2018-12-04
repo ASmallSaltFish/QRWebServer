@@ -96,7 +96,7 @@ public class QrModule implements Serializable {
     private String qrUrl;
 
     //二维码可用次数标识（1 标识只能用一次，99表示有效期内，能用多次）
-    @TableField("TimesFlag")
+    @TableField("TIMES_FLAG")
     private String timesFlag;
 
     //模板状态

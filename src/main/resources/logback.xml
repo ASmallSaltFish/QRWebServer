@@ -115,12 +115,12 @@
         </encoder>
     </appender>
 
-    <logger name="java.sql.Prepar`edStatement" value="DEBUG"/>
+    <logger name="java.sql.PreparedStatement" value="DEBUG"/>
     <logger name="java.sql.Connection" value="DEBUG"/>
     <logger name="java.sql.Statement" value="DEBUG"/>
 
     <!-- root级别   DEBUG -->
-    <root level="info">
+    <root level="INFO">
         <!-- 控制台输出 -->
         <appender-ref ref="STDOUT"/>
         <!-- 文件输出 -->
