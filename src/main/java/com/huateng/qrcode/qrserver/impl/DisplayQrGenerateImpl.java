@@ -6,6 +6,7 @@ import com.huateng.qrcode.base.parser.param.ResponseVo;
 import com.huateng.qrcode.common.constants.Constants;
 import com.huateng.qrcode.common.enums.ErrorCodeEnum;
 import com.huateng.qrcode.common.enums.ExpiryStatusEnum;
+import com.huateng.qrcode.common.exception.QrcException;
 import com.huateng.qrcode.common.model.DisplayQrcode;
 import com.huateng.qrcode.common.model.QrModule;
 import com.huateng.qrcode.qrserver.QrServerManager;
@@ -59,7 +60,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
      */
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
     @Override
-    public ResponseVo handler(RequestVo in) {
+    public ResponseVo handler(RequestVo in) throws QrcException{
 
         logger.info("识别类二维码生成服务开始，入参：" + in.toString());
         ResponseVo out = new ResponseVo();
@@ -112,7 +113,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
                 logger.error("字段为空！");
                 out.setResultCode(ErrorCodeEnum.E100000.getCode());
                 out.setResultMsg(ErrorCodeEnum.E100000.getDesc());
-                return out;
+                throw new QrcException(ErrorCodeEnum.E100000.getCode(),ErrorCodeEnum.E100000.getDesc());
             }
 
             //-------------------查询模板信息-------------------//
@@ -126,7 +127,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
                 logger.error("生成规则不存在！");
                 out.setResultCode(ErrorCodeEnum.E200000.getCode());
                 out.setResultMsg(ErrorCodeEnum.E200000.getDesc());
-                return out;
+                throw new QrcException(ErrorCodeEnum.E100000.getCode(),ErrorCodeEnum.E100000.getDesc());
             }*/
             QrModule qrModule = new QrModule();
             qrModule.setEncodeMode("1");
@@ -147,19 +148,32 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             String keyVersion = qrModule.getKeyVersion();
             //失效时间（单位秒）
             String expiryDate = qrModule.getExpiryDate();
+            String[] expiryDateArray = expiryDate.split("\\$");
+            if (expiryDateArray.length != 6) {
+                logger.error("有效期数据有误！");
+                out.setResultCode(ErrorCodeEnum.E100000.getCode());
+                out.setResultMsg(ErrorCodeEnum.E100000.getDesc());
+                throw new QrcException(ErrorCodeEnum.E100000.getCode(),ErrorCodeEnum.E100000.getDesc());
+            }
+            Integer year = Integer.valueOf(expiryDateArray[0]);
+            Integer month = Integer.valueOf(expiryDateArray[1]);
+            Integer day = Integer.valueOf(expiryDateArray[2]);
+            Integer hour = Integer.valueOf(expiryDateArray[3]);
+            Integer minute = Integer.valueOf(expiryDateArray[4]);
+            Integer second = Integer.valueOf(expiryDateArray[5]);
             //有效时间 （动静态码的时效配制）
-            String effectiveTime = DateUtil.dateFormat(
-                    DateUtil.secondAdd(null, Integer.valueOf(expiryDate)), Constants.DATE_TIME_PATTERN_DEFAULT);
+            String effectiveTime = DateUtil.dateFormat(DateUtil.timeAdd(
+                    null, year, month, day, hour, minute, second), Constants.DATE_TIME_PATTERN_DEFAULT);
 
             //-------------------逻辑处理-------------------//
             // 请求者合法性查检(黑名单) 应用场景查检以及验证是否有效
-            //黑名单校验，校验请求系统
+            // 黑名单校验，校验请求系统
             boolean isValidSys = blackListInfoService.validInBlackListInfo(reqSys, Constants.BLACK_TYPE_SYS);
             if (isValidSys) {
                 logger.error("请求系统不允许生成二维码！");
                 out.setResultCode(ErrorCodeEnum.E200000.getCode());
                 out.setResultMsg(ErrorCodeEnum.E200000.getDesc());
-                return out;
+                throw new QrcException(ErrorCodeEnum.E100000.getCode(),ErrorCodeEnum.E100000.getDesc());
             }
             //黑名单校验，校验模板
             boolean isValidModule = blackListInfoService.validInBlackListInfo(qrModule.getQrModId(), Constants.BLACK_TYPE_MODULE);
@@ -167,7 +181,7 @@ public class DisplayQrGenerateImpl implements QrServerManager {
                 logger.error("该二维码暂停使用！");
                 out.setResultCode(ErrorCodeEnum.E200000.getCode());
                 out.setResultMsg(ErrorCodeEnum.E200000.getDesc());
-                return out;
+                throw new QrcException(ErrorCodeEnum.E100000.getCode(),ErrorCodeEnum.E100000.getDesc());
             }
             // 生成序列号
             String seq = SeqGeneratorUtil.getInstance().getSequenceNo(Constants.SEQ_KEY);
@@ -270,12 +284,19 @@ public class DisplayQrGenerateImpl implements QrServerManager {
             out.setResultCode(ErrorCodeEnum.SUCCESS.getCode());
             out.setResultMsg(ErrorCodeEnum.SUCCESS.getDesc());
             logger.info("识别类二维码生成服务结束，出参：" + out.toString());
-        } catch (Exception e) {
+        }
+        catch (QrcException e) {
             //TODO 添加交易流水
-            logger.info("识别类二维码生成失败");
+            logger.info("识别类二维码生成失败" + e.getErrMsg());
+            e.printStackTrace();
+            out.setResultCode(e.getErrCode());
+            out.setResultMsg(e.getErrMsg());
+        }catch (Exception e) {
+            //TODO 添加交易流水
+            logger.info("识别类二维码生成失败" + e.getMessage());
+            e.printStackTrace();
             out.setResultCode(ErrorCodeEnum.FAIL.getCode());
             out.setResultMsg(ErrorCodeEnum.FAIL.getDesc());
-            e.printStackTrace();
         }
         return out;
     }

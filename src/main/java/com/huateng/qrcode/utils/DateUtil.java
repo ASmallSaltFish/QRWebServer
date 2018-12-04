@@ -59,8 +59,8 @@ public class DateUtil {
     /**
      * 指定时间字符串格式匹配，将时间字符串转化为Date对象
      *
-     * @param dateTime   时间字符串
-     * @param format 字符串转换格式
+     * @param dateTime 时间字符串
+     * @param format   字符串转换格式
      * @return 返回Date对象
      */
     public static Date parserDate(String dateTime, String format) throws ParseException {
@@ -107,22 +107,32 @@ public class DateUtil {
     }
 
     /**
-     * 日期相加减秒数
-     *
-     * @param date   如果为Null，则为当前时间
-     * @param second 加减秒数
+     * 日期加减
+     * @param date 如果为Null，则为当前时间
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @param second
      * @return
      * @throws ParseException
      */
-    public static Date secondAdd(Date date, int second) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_TIME_PATTERN_DEFAULT);
+    public static Date timeAdd(Date date, Integer year, Integer month, Integer day, Integer hour,
+                                 Integer minute, Integer second) throws ParseException {
+        //SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_TIME_PATTERN_CC);
         if (date == null) {
             date = new Date();
         }
 
-        date = sdf.parse(sdf.format(date));
+        //date = sdf.parse(sdf.format(date));
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
+        cal.add(Calendar.YEAR, year);
+        cal.add(Calendar.MONTH, month);
+        cal.add(Calendar.DATE, day);
+        cal.add(Calendar.HOUR, hour);
+        cal.add(Calendar.MINUTE, minute);
         cal.add(Calendar.SECOND, second);
         return cal.getTime();
     }
@@ -142,6 +152,10 @@ public class DateUtil {
 
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("$1$8$3$4$4$7$".split("\\$"));
     }
 }
 
